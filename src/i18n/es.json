@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "products": "Productos",
+    "customers": "Clientes",
+    "pricing": "Precios",
+    "support": "Soporte",
+    "login": "Iniciar Sesión",
+    "signUp": "Registrarse"
+  },
+  "hero": {
+    "badge": "Seguro, Protegido, Simple",
+    "title": "Banca más Inteligente. Ahorra más Rápido. Invierte Mejor.",
+    "subtitle": "NationalCreditUnionBank empodera a individuos y empresas con banca sin complicaciones, transferencias sin esfuerzo y herramientas inteligentes de inversión.",
+    "openAccount": "Abrir Cuenta",
+    "learnMore": "Más Información",
+    "trustedBy": "Empresas que confían en nosotros"
+  },
+  "features": {
+    "badge": "Construido para el Futuro",
+    "title": "Banca para el Futuro,",
+    "titleHighlight": "Creada para Ti.",
+    "subtitle": "Sin complicaciones, Segura y Adaptada a tus Necesidades. Experimenta la Banca como Nunca Antes.",
+    "zeroFee": {
+      "title": "Transferencias Sin Comisión",
+      "description": "Envía dinero a tus amigos como si fueran abrazos virtuales — sin IOUs incómodos."
+    },
+    "smartWallet": {
+      "title": "Billetera Global Inteligente",
+      "description": "Mejor que tu vieja billetera. Con más de 50 monedas a 0% de comisión FX."
+    },
+    "security": {
+      "title": "Seguridad Blindada",
+      "description": "Encriptación de grado bancario que haría sentir celos a Fort Knox."
+    }
+  },
+  "whyUs": {
+    "badge": "Por qué Elegirnos",
+    "title": "Por qué los Clientes Eligen NationalCreditUnionBank.",
+    "accounts": {
+      "value": "100K+",
+      "label": "Cuentas abiertas globalmente.",
+      "description": "Únete a más de 120,000 clientes satisfechos que confían en NCUBank para sus metas financieras."
+    },
+    "fees": {
+      "value": "Cero",
+      "label": "Comisiones Ocultas",
+      "description": "Nada oculto. Sin costos escondidos. Precios transparentes para todo lo que ofrecemos."
+    },
+    "support": {
+      "value": "24/7",
+      "label": "Acceso a fondos y soporte al cliente.",
+      "description": "Obtén ayuda en tiempo real en cualquier momento. Accede a fondos o soporte cuando lo necesites."
+    }
+  },
+  "howItWorks": {
+    "badge": "Comienza Hoy",
+    "title": "Banca Inteligente. Ahorra Rápido. Invierte Mejor.",
+    "step1": {
+      "title": "Registro Rápido",
+      "description": "Crea una cuenta segura en 2 minutos, verifica tu identidad."
+    },
+    "step2": {
+      "title": "Añade Fondos a tu Bóveda",
+      "description": "Transfiere dinero de forma segura vía transferencia bancaria o tarjeta de crédito."
+    },
+    "step3": {
+      "title": "Comienza tu Viaje de Ahorro",
+      "description": "Establece metas de ahorro y observa crecer tu patrimonio con tasas competitivas."
+    }
+  },
+  "stats": {
+    "badge": "Nuestros Números",
+    "title": "Banca que Trabaja para Ti.",
+    "subtitle": "En NationalCreditUnionBank, no somos solo números, sino una historia de confianza, innovación y seguridad.",
+    "interest": {
+      "value": "2%",
+      "label": "Interés en cuentas de ahorro."
+    },
+    "transactions": {
+      "value": "€500M+",
+      "label": "Transacciones procesadas cada mes."
+    },
+    "countries": {
+      "value": "10+",
+      "label": "Países atendidos con orgullo."
+    }
+  },
+  "pricing": {
+    "badge": "Planes de Precios",
+    "title": "Selecciona tu Plan Perfecto",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "perMonth": "/mes",
+    "recommended": "Recomendado",
+    "openAccount": "Abre una Cuenta Ahora",
+    "basic": {
+      "name": "Básico",
+      "price": "€0",
+      "features": [
+        "Cuenta gratis",
+        "1 bóveda de ahorro",
+        "Análisis básico",
+        "Soporte por email",
+        "Acceso a app móvil"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "€6,99",
+      "features": [
+        "Bóvedas ilimitadas",
+        "Soporte prioritario 24/7",
+        "0% comisiones FX",
+        "Tarjetas virtuales",
+        "Análisis avanzado",
+        "Herramientas de inversión"
+      ]
+    },
+    "business": {
+      "name": "Empresas",
+      "price": "€19,99",
+      "features": [
+        "Todo en Premium",
+        "Acceso multi-usuario",
+        "Integraciones API",
+        "Gerente dedicado",
+        "Reportes personalizados"
+      ]
+    }
+  },
+  "cta": {
+    "badge": "Únete a NCUBank",
+    "title": "¿Listo para Desbloquear tu Potencial Financiero?",
+    "subtitle": "Toma el control de tus finanzas con NationalCreditUnionBank hoy y experimenta una forma más inteligente y sin esfuerzo de administrar tu dinero como nunca antes.",
+    "openVault": "Abrir Bóveda al Instante",
+    "learnMore": "Más Información"
+  },
+  "footer": {
+    "description": "NationalCreditUnionBank - Tu socio de confianza en banca moderna. Seguro, simple y creado para ti.",
+    "solutions": "Soluciones",
+    "personalBanking": "Banca Personal",
+    "businessBanking": "Banca Empresarial",
+    "investments": "Inversiones",
+    "company": "Compañía",
+    "aboutUs": "Sobre Nosotros",
+    "careers": "Carreras",
+    "contact": "Contacto",
+    "learn": "Aprende",
+    "blog": "Blog",
+    "guides": "Guías",
+    "faq": "FAQ",
+    "segments": "Segmentos",
+    "customerSupport": "Soporte al Cliente",
+    "teams": "Equipos",
+    "partners": "Socios",
+    "followUs": "Síguenos",
+    "copyright": "© NationalCreditUnionBank 2024. Todos los Derechos Reservados. Términos y Privacidad"
+  },
+  "currency": {
+    "symbol": "€",
+    "code": "EUR"
+  }
+}
