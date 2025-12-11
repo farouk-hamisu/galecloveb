@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "products": "Products",
+    "customers": "Customers",
+    "pricing": "Pricing",
+    "support": "Support",
+    "login": "Login",
+    "signUp": "Sign Up"
+  },
+  "hero": {
+    "badge": "Safe, Secure, Simple",
+    "title": "Bank Smarter. Save Faster. Invest Better.",
+    "subtitle": "NationalCreditUnionBank empowers individuals and businesses with seamless banking, effortless transfers, and smart investment tools.",
+    "openAccount": "Open Account",
+    "learnMore": "Learn More",
+    "trustedBy": "Trusted by leading companies"
+  },
+  "features": {
+    "badge": "Built for the Future",
+    "title": "Banking for the Future,",
+    "titleHighlight": "Built Around You.",
+    "subtitle": "Seamless, Secure, and Tailored to Your Needs. Experience Banking Like Never Before.",
+    "zeroFee": {
+      "title": "Zero-Fee Transfers",
+      "description": "Pay your friends like you're sending them virtual hugs — no awkward IOUs needed."
+    },
+    "smartWallet": {
+      "title": "Smart Global Wallet",
+      "description": "Better than your old wallet. With 50+ currencies at 0% FX fees."
+    },
+    "security": {
+      "title": "Ironclad Security",
+      "description": "Bank-grade encryption that would make Fort Knox jealous."
+    }
+  },
+  "whyUs": {
+    "badge": "Why Choose NCUBank",
+    "title": "Why Customers Choose NationalCreditUnionBank.",
+    "accounts": {
+      "value": "100K+",
+      "label": "Accounts opened globally.",
+      "description": "Join the ranks of over 120,000 satisfied customers who trust NCUBank for their financial goals."
+    },
+    "fees": {
+      "value": "Zero",
+      "label": "Hidden Fees",
+      "description": "Nothing hidden. No hidden costs. Transparent pricing for everything we offer."
+    },
+    "support": {
+      "value": "24/7",
+      "label": "Access to funds and customer support.",
+      "description": "Get real-time help any time. Access funds or support whenever you need it."
+    }
+  },
+  "howItWorks": {
+    "badge": "Get Started Today",
+    "title": "Bank Smarter. Save Faster. Invest Better.",
+    "step1": {
+      "title": "Quick Sign Up",
+      "description": "Create a secure account in 2 minutes, verify your identity."
+    },
+    "step2": {
+      "title": "Add Funds to Your Vault",
+      "description": "Transfer money securely via bank transfer or credit card."
+    },
+    "step3": {
+      "title": "Begin Your Savings Journey",
+      "description": "Set savings goals and watch your wealth grow with competitive rates."
+    }
+  },
+  "stats": {
+    "badge": "Our Numbers",
+    "title": "Banking That Works for You.",
+    "subtitle": "At NationalCreditUnionBank, we're not just numbers, but a story of trust, innovation, and security.",
+    "interest": {
+      "value": "2%",
+      "label": "Interest on savings accounts."
+    },
+    "transactions": {
+      "value": "$500M+",
+      "label": "Transactions processed every month."
+    },
+    "countries": {
+      "value": "10+",
+      "label": "Countries served proudly."
+    }
+  },
+  "pricing": {
+    "badge": "Pricing Plans",
+    "title": "Select Your Perfect Plan",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "/month",
+    "recommended": "Recommended",
+    "openAccount": "Open an Account Now",
+    "basic": {
+      "name": "Basic",
+      "price": "$0",
+      "features": [
+        "Free account",
+        "1 savings vault",
+        "Basic analytics",
+        "Email support",
+        "Mobile app access"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "$6.99",
+      "features": [
+        "Unlimited vaults",
+        "Priority support 24/7",
+        "0% FX fees",
+        "Virtual cards",
+        "Advanced analytics",
+        "Investment tools"
+      ]
+    },
+    "business": {
+      "name": "Business",
+      "price": "$19.99",
+      "features": [
+        "Everything in Premium",
+        "Multi-user access",
+        "API integrations",
+        "Dedicated manager",
+        "Custom reports"
+      ]
+    }
+  },
+  "cta": {
+    "badge": "Join NCUBank",
+    "title": "Ready to Unlock Your Financial Potential?",
+    "subtitle": "Take charge of your finances with NationalCreditUnionBank today and experience a smarter, effortless way to manage your money like never before.",
+    "openVault": "Open Vault Instantly",
+    "learnMore": "Learn More"
+  },
+  "footer": {
+    "description": "NationalCreditUnionBank - Your trusted partner in modern banking. Secure, simple, and built for you.",
+    "solutions": "Solutions",
+    "personalBanking": "Personal Banking",
+    "businessBanking": "Business Banking",
+    "investments": "Investments",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "contact": "Contact",
+    "learn": "Learn",
+    "blog": "Blog",
+    "guides": "Guides",
+    "faq": "FAQ",
+    "segments": "Segments",
+    "customerSupport": "Customer Support",
+    "teams": "Teams",
+    "partners": "Partners",
+    "followUs": "Follow Us",
+    "copyright": "© NationalCreditUnionBank 2024. All Rights Reserved. Terms & Privacy"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "USD"
+  }
+}
