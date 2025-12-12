@@ -14,7 +14,290 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      accounts: {
+        Row: {
+          account_number: string
+          account_type: string
+          balance: number | null
+          created_at: string | null
+          currency: string | null
+          id: string
+          is_active: boolean | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          account_type: string
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          account_type?: string
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      beneficiaries: {
+        Row: {
+          account_number: string
+          bank_name: string
+          country: string | null
+          created_at: string | null
+          iban: string | null
+          id: string
+          is_favorite: boolean | null
+          name: string
+          swift_code: string | null
+          user_id: string
+        }
+        Insert: {
+          account_number: string
+          bank_name: string
+          country?: string | null
+          created_at?: string | null
+          iban?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          name: string
+          swift_code?: string | null
+          user_id: string
+        }
+        Update: {
+          account_number?: string
+          bank_name?: string
+          country?: string | null
+          created_at?: string | null
+          iban?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          name?: string
+          swift_code?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "beneficiaries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cards: {
+        Row: {
+          account_id: string
+          card_number: string
+          card_type: string | null
+          created_at: string | null
+          cvv: string
+          expiry_date: string
+          id: string
+          is_active: boolean | null
+          is_frozen: boolean | null
+          spending_limit: number | null
+          user_id: string
+        }
+        Insert: {
+          account_id: string
+          card_number: string
+          card_type?: string | null
+          created_at?: string | null
+          cvv: string
+          expiry_date: string
+          id?: string
+          is_active?: boolean | null
+          is_frozen?: boolean | null
+          spending_limit?: number | null
+          user_id: string
+        }
+        Update: {
+          account_id?: string
+          card_number?: string
+          card_type?: string | null
+          created_at?: string | null
+          cvv?: string
+          expiry_date?: string
+          id?: string
+          is_active?: boolean | null
+          is_frozen?: boolean | null
+          spending_limit?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cards_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cards_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          city: string | null
+          country: string | null
+          created_at: string | null
+          email: string
+          first_name: string | null
+          id: string
+          kyc_status: string | null
+          last_name: string | null
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          first_name?: string | null
+          id: string
+          kyc_status?: string | null
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          first_name?: string | null
+          id?: string
+          kyc_status?: string | null
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      support_tickets: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          priority: string | null
+          status: string | null
+          subject: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          priority?: string | null
+          status?: string | null
+          subject: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string
+          priority?: string | null
+          status?: string | null
+          subject?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_tickets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          account_id: string
+          amount: number
+          created_at: string | null
+          currency: string | null
+          description: string | null
+          id: string
+          recipient_account: string | null
+          recipient_name: string | null
+          reference_number: string
+          status: string | null
+          type: string
+        }
+        Insert: {
+          account_id: string
+          amount: number
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          recipient_account?: string | null
+          recipient_name?: string | null
+          reference_number: string
+          status?: string | null
+          type: string
+        }
+        Update: {
+          account_id?: string
+          amount?: number
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          recipient_account?: string | null
+          recipient_name?: string | null
+          reference_number?: string
+          status?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
