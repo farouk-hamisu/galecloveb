@@ -1,12 +1,86 @@
 import { Navbar } from '@/components/layout/Navbar';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, Lock, Eye, EyeOff, User, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import { z } from 'zod';
+
+const signupSchema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  agreeTerms: z.literal(true, { errorMap: () => ({ message: 'You must agree to the terms' }) }),
+});
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { signUp, user, loading: authLoading } = useAuth();
+  const { toast } = useToast();
+  
   const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate('/dashboard');
+    }
+  }, [user, authLoading, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+    
+    const result = signupSchema.safeParse({ firstName, lastName, email, password, agreeTerms });
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as string;
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setLoading(true);
+    const { error } = await signUp(email, password, firstName, lastName);
+    setLoading(false);
+
+    if (error) {
+      let message = error.message;
+      if (error.message.includes('already registered')) {
+        message = 'This email is already registered. Please sign in instead.';
+      }
+      toast({
+        title: 'Sign up failed',
+        description: message,
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Account created!',
+        description: 'Welcome to NCUBank. Your account is ready.',
+      });
+      navigate('/dashboard');
+    }
+  };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-hero">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-hero">
@@ -29,7 +103,7 @@ const Signup = () => {
                 <p className="text-muted-foreground">Start your banking journey with NCUBank</p>
               </div>
 
-              <form className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">First Name</label>
@@ -37,18 +111,24 @@ const Signup = () => {
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <input
                         type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                         placeholder="John"
                         className="w-full h-12 pl-12 pr-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                     </div>
+                    {errors.firstName && <p className="text-sm text-destructive mt-1">{errors.firstName}</p>}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Last Name</label>
                     <input
                       type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       placeholder="Doe"
                       className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
+                    {errors.lastName && <p className="text-sm text-destructive mt-1">{errors.lastName}</p>}
                   </div>
                 </div>
 
@@ -58,10 +138,13 @@ const Signup = () => {
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       className="w-full h-12 pl-12 pr-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                   </div>
+                  {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -70,6 +153,8 @@ const Signup = () => {
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Create a password"
                       className="w-full h-12 pl-12 pr-12 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
@@ -82,10 +167,16 @@ const Signup = () => {
                     </button>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">Must be at least 8 characters</p>
+                  {errors.password && <p className="text-sm text-destructive mt-1">{errors.password}</p>}
                 </div>
 
                 <label className="flex items-start gap-3 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 mt-0.5 rounded border-border text-primary focus:ring-primary" />
+                  <input 
+                    type="checkbox" 
+                    checked={agreeTerms}
+                    onChange={(e) => setAgreeTerms(e.target.checked)}
+                    className="w-4 h-4 mt-0.5 rounded border-border text-primary focus:ring-primary" 
+                  />
                   <span className="text-sm text-muted-foreground">
                     I agree to the{' '}
                     <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
@@ -93,9 +184,17 @@ const Signup = () => {
                     <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
                   </span>
                 </label>
+                {errors.agreeTerms && <p className="text-sm text-destructive">{errors.agreeTerms}</p>}
 
-                <Button variant="hero" size="lg" className="w-full">
-                  Create Account
+                <Button variant="hero" size="lg" className="w-full" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Creating account...
+                    </>
+                  ) : (
+                    'Create Account'
+                  )}
                 </Button>
               </form>
 
