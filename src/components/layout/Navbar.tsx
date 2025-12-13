@@ -14,10 +14,10 @@ export const Navbar = () => {
   };
 
   const navLinks = [
-    { href: '/products', label: t('nav.products') },
-    { href: '/customers', label: t('nav.customers') },
+    { href: '/about', label: 'About' },
     { href: '/pricing', label: t('nav.pricing') },
-    { href: '/support', label: t('nav.support') },
+    { href: '/faq', label: 'FAQ' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   return (
