@@ -1,0 +1,267 @@
+import { useState } from 'react';
+import { AdminLayout } from '@/components/layout/AdminLayout';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { 
+  useAdminCards,
+  useAdminProfiles,
+  useUpdateCard,
+  useDeleteCard,
+  AdminCard,
+} from '@/hooks/useAdminData';
+import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power } from 'lucide-react';
+import { toast } from 'sonner';
+
+const AdminCards = () => {
+  const { data: cards, isLoading } = useAdminCards();
+  const { data: profiles } = useAdminProfiles();
+  const updateCard = useUpdateCard();
+  const deleteCard = useDeleteCard();
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [editingCard, setEditingCard] = useState<AdminCard | null>(null);
+  const [cardForm, setCardForm] = useState({
+    spending_limit: '',
+    is_active: true,
+    is_frozen: false,
+  });
+
+  const getProfileEmail = (userId: string) => {
+    const profile = profiles?.find(p => p.id === userId);
+    return profile?.email || 'Unknown';
+  };
+
+  const filteredCards = cards?.filter(c => 
+    c.card_number.includes(searchTerm) ||
+    getProfileEmail(c.user_id).toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const maskCardNumber = (number: string) => {
+    return `**** **** **** ${number.slice(-4)}`;
+  };
+
+  const handleEdit = (card: AdminCard) => {
+    setEditingCard(card);
+    setCardForm({
+      spending_limit: String(card.spending_limit || 5000),
+      is_active: card.is_active ?? true,
+      is_frozen: card.is_frozen ?? false,
+    });
+  };
+
+  const handleUpdate = async () => {
+    if (!editingCard) return;
+    
+    try {
+      await updateCard.mutateAsync({
+        id: editingCard.id,
+        updates: {
+          spending_limit: parseFloat(cardForm.spending_limit),
+          is_active: cardForm.is_active,
+          is_frozen: cardForm.is_frozen,
+        },
+      });
+      toast.success('Card updated successfully');
+      setEditingCard(null);
+    } catch (error) {
+      toast.error('Failed to update card');
+    }
+  };
+
+  const handleToggleFreeze = async (card: AdminCard) => {
+    try {
+      await updateCard.mutateAsync({
+        id: card.id,
+        updates: { is_frozen: !card.is_frozen },
+      });
+      toast.success(`Card ${card.is_frozen ? 'unfrozen' : 'frozen'} successfully`);
+    } catch (error) {
+      toast.error('Failed to update card');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this card?')) return;
+    
+    try {
+      await deleteCard.mutateAsync(id);
+      toast.success('Card deleted successfully');
+    } catch (error) {
+      toast.error('Failed to delete card');
+    }
+  };
+
+  return (
+    <AdminLayout>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Cards Management</h1>
+          <p className="text-muted-foreground">Manage all user cards</p>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <CardTitle>All Cards ({cards?.length || 0})</CardTitle>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search cards..."
+                  className="pl-10 w-full sm:w-64"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {isLoading ? (
+              <p className="text-muted-foreground">Loading cards...</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Card</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Owner</TableHead>
+                      <TableHead>Expiry</TableHead>
+                      <TableHead>Limit</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredCards?.map((card) => (
+                      <TableRow key={card.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-orange-500/10 rounded-full flex items-center justify-center">
+                              <CardIcon className="w-4 h-4 text-orange-500" />
+                            </div>
+                            <span className="font-mono text-sm">{maskCardNumber(card.card_number)}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="capitalize">{card.card_type}</TableCell>
+                        <TableCell>{getProfileEmail(card.user_id)}</TableCell>
+                        <TableCell>{card.expiry_date}</TableCell>
+                        <TableCell>${(card.spending_limit || 0).toLocaleString()}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {card.is_frozen && (
+                              <Badge variant="secondary">
+                                <Snowflake className="w-3 h-3 mr-1" />
+                                Frozen
+                              </Badge>
+                            )}
+                            {!card.is_active && (
+                              <Badge variant="destructive">Inactive</Badge>
+                            )}
+                            {card.is_active && !card.is_frozen && (
+                              <Badge variant="default">Active</Badge>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Dialog open={editingCard?.id === card.id} onOpenChange={(open) => !open && setEditingCard(null)}>
+                              <DialogTrigger asChild>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  onClick={() => handleEdit(card)}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>Edit Card</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4 pt-4">
+                                  <div className="space-y-2">
+                                    <Label>Card Number</Label>
+                                    <Input value={maskCardNumber(editingCard?.card_number || '')} disabled />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label>Spending Limit</Label>
+                                    <Input
+                                      type="number"
+                                      value={cardForm.spending_limit}
+                                      onChange={(e) => setCardForm({ ...cardForm, spending_limit: e.target.value })}
+                                    />
+                                  </div>
+                                  <div className="flex items-center gap-4">
+                                    <label className="flex items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={cardForm.is_active}
+                                        onChange={(e) => setCardForm({ ...cardForm, is_active: e.target.checked })}
+                                      />
+                                      Active
+                                    </label>
+                                    <label className="flex items-center gap-2">
+                                      <input
+                                        type="checkbox"
+                                        checked={cardForm.is_frozen}
+                                        onChange={(e) => setCardForm({ ...cardForm, is_frozen: e.target.checked })}
+                                      />
+                                      Frozen
+                                    </label>
+                                  </div>
+                                  <Button className="w-full" onClick={handleUpdate}>
+                                    Save Changes
+                                  </Button>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => handleToggleFreeze(card)}
+                              title={card.is_frozen ? 'Unfreeze' : 'Freeze'}
+                            >
+                              <Snowflake className={`w-4 h-4 ${card.is_frozen ? 'text-blue-500' : 'text-muted-foreground'}`} />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => handleDelete(card.id)}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </AdminLayout>
+  );
+};
+
+export default AdminCards;
