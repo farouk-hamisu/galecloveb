@@ -1,8 +1,9 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useAccounts, useBeneficiaries } from '@/hooks/useBankingData';
+import { useTransfer } from '@/hooks/useTransfer';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Send, Globe, Users, ArrowRight, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Globe, ArrowRight, Loader2, CheckCircle2, User, Hash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -13,19 +14,35 @@ const Transfer = () => {
   const { data: accounts } = useAccounts();
   const { data: beneficiaries } = useBeneficiaries();
   const { toast } = useToast();
+  const transferMutation = useTransfer();
   
   const [transferType, setTransferType] = useState<'internal' | 'international'>('internal');
+  const [lookupType, setLookupType] = useState<'account' | 'email'>('account');
   const [fromAccount, setFromAccount] = useState('');
-  const [toAccount, setToAccount] = useState('');
+  const [toIdentifier, setToIdentifier] = useState('');
   const [beneficiaryId, setBeneficiaryId] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successDetails, setSuccessDetails] = useState<{
+    amount: number;
+    currency: string;
+    recipientName: string;
+    referenceNumber: string;
+  } | null>(null);
 
   const currencySymbol = t('currency.symbol');
 
   const formatCurrency = (amount: number) => {
     return `${currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  };
+
+  const resetForm = () => {
+    setFromAccount('');
+    setToIdentifier('');
+    setBeneficiaryId('');
+    setAmount('');
+    setDescription('');
   };
 
   const handleTransfer = async (e: React.FormEvent) => {
@@ -40,10 +57,20 @@ const Transfer = () => {
       return;
     }
 
-    if (transferType === 'internal' && !toAccount) {
+    const transferAmount = parseFloat(amount);
+    if (isNaN(transferAmount) || transferAmount <= 0) {
+      toast({
+        title: 'Invalid amount',
+        description: 'Please enter a valid transfer amount.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (transferType === 'internal' && !toIdentifier.trim()) {
       toast({
         title: 'Missing information',
-        description: 'Please select a destination account.',
+        description: 'Please enter recipient email or account number.',
         variant: 'destructive',
       });
       return;
@@ -58,21 +85,120 @@ const Transfer = () => {
       return;
     }
 
-    setLoading(true);
-    
-    // Simulate transfer
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setLoading(false);
-    toast({
-      title: 'Transfer initiated!',
-      description: `${currencySymbol}${amount} transfer has been initiated successfully.`,
-    });
-    
-    // Reset form
-    setAmount('');
-    setDescription('');
+    try {
+      const result = await transferMutation.mutateAsync({
+        fromAccountId: fromAccount,
+        toIdentifier: toIdentifier.trim(),
+        amount: transferAmount,
+        description: description || undefined,
+        transferType,
+        beneficiaryId: beneficiaryId || undefined
+      });
+
+      setSuccessDetails({
+        amount: result.amount,
+        currency: result.currency,
+        recipientName: result.recipientName,
+        referenceNumber: result.referenceNumber
+      });
+      setShowSuccess(true);
+      resetForm();
+    } catch (error: any) {
+      toast({
+        title: 'Transfer Failed',
+        description: error.message || 'An error occurred during the transfer.',
+        variant: 'destructive',
+      });
+    }
   };
+
+  const handleNewTransfer = () => {
+    setShowSuccess(false);
+    setSuccessDetails(null);
+  };
+
+  // Success Screen
+  if (showSuccess && successDetails) {
+    const currSymbol = successDetails.currency === 'EUR' ? '€' : '$';
+    return (
+      <DashboardLayout>
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-md w-full text-center"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+              className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
+              <CheckCircle2 className="w-14 h-14 text-white" />
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-3xl font-bold text-foreground mb-2"
+            >
+              Transfer Successful!
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-muted-foreground mb-8"
+            >
+              Your money is on its way
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-card border border-border rounded-2xl p-6 mb-6"
+            >
+              <div className="text-4xl font-bold text-foreground mb-4">
+                {currSymbol}{successDetails.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              </div>
+
+              <div className="space-y-3 text-left">
+                <div className="flex justify-between py-2 border-b border-border">
+                  <span className="text-muted-foreground">Recipient</span>
+                  <span className="font-medium text-foreground">{successDetails.recipientName}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-border">
+                  <span className="text-muted-foreground">Reference</span>
+                  <span className="font-mono text-sm text-foreground">{successDetails.referenceNumber}</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="text-muted-foreground">Status</span>
+                  <span className="text-green-500 font-medium">Completed</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex gap-4"
+            >
+              <Button variant="outline" className="flex-1" onClick={handleNewTransfer}>
+                New Transfer
+              </Button>
+              <Button variant="hero" className="flex-1" asChild>
+                <Link to="/transactions">View Transactions</Link>
+              </Button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>
@@ -82,7 +208,7 @@ const Transfer = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Transfer Money</h1>
-          <p className="text-muted-foreground">Send money instantly to your accounts or beneficiaries.</p>
+          <p className="text-muted-foreground">Send money instantly to anyone, anywhere.</p>
         </motion.div>
 
         {/* Transfer Type Selector */}
@@ -108,7 +234,7 @@ const Transfer = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-foreground">Internal Transfer</h3>
-                <p className="text-sm text-muted-foreground">Between your own accounts</p>
+                <p className="text-sm text-muted-foreground">Send to any bank user</p>
               </div>
             </div>
           </button>
@@ -164,19 +290,45 @@ const Transfer = () => {
               {/* To Account / Beneficiary */}
               {transferType === 'internal' ? (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">To Account</label>
-                  <select
-                    value={toAccount}
-                    onChange={(e) => setToAccount(e.target.value)}
-                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="">Select account</option>
-                    {accounts?.filter(acc => acc.id !== fromAccount).map((acc) => (
-                      <option key={acc.id} value={acc.id}>
-                        {acc.account_type.charAt(0).toUpperCase() + acc.account_type.slice(1)} - ****{acc.account_number.slice(-4)}
-                      </option>
-                    ))}
-                  </select>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Send To
+                  </label>
+                  
+                  {/* Lookup Type Toggle */}
+                  <div className="flex gap-2 mb-3">
+                    <button
+                      type="button"
+                      onClick={() => setLookupType('account')}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm transition-all ${
+                        lookupType === 'account'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      }`}
+                    >
+                      <Hash className="w-4 h-4" />
+                      Account Number
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLookupType('email')}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm transition-all ${
+                        lookupType === 'email'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      }`}
+                    >
+                      <User className="w-4 h-4" />
+                      Email Address
+                    </button>
+                  </div>
+
+                  <input
+                    type={lookupType === 'email' ? 'email' : 'text'}
+                    value={toIdentifier}
+                    onChange={(e) => setToIdentifier(e.target.value)}
+                    placeholder={lookupType === 'email' ? 'recipient@example.com' : 'NCU1234567890'}
+                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
                 </div>
               ) : (
                 <div>
@@ -244,9 +396,9 @@ const Transfer = () => {
             )}
 
             <div className="flex justify-end gap-4">
-              <Button type="button" variant="outline">Cancel</Button>
-              <Button type="submit" variant="hero" disabled={loading}>
-                {loading ? (
+              <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+              <Button type="submit" variant="hero" disabled={transferMutation.isPending}>
+                {transferMutation.isPending ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     Processing...
