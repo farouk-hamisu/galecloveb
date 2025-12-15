@@ -44,10 +44,10 @@ const Accounts = () => {
         description: `Your new ${accountType} account has been opened successfully.`,
       });
       setDialogOpen(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error',
-        description: error.message || 'Failed to create account.',
+        description: (error as Error).message || 'Failed to create account.',
         variant: 'destructive',
       });
     }

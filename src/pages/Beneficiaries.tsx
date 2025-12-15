@@ -5,8 +5,10 @@ import { Users, Plus, Star, Globe, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const Beneficiaries = () => {
+  const { t } = useTranslation();
   const { data: beneficiaries, isLoading } = useBeneficiaries();
   const createBeneficiary = useCreateBeneficiary();
   const { toast } = useToast();
@@ -24,8 +26,8 @@ const Beneficiaries = () => {
     
     if (!name || !bankName || !accountNumber) {
       toast({
-        title: 'Missing information',
-        description: 'Please fill in all required fields.',
+        title: t('beneficiaries_page.toasts.missing_info_title'),
+        description: t('beneficiaries_page.toasts.missing_info_desc'),
         variant: 'destructive',
       });
       return;
@@ -43,8 +45,8 @@ const Beneficiaries = () => {
       });
       
       toast({
-        title: 'Beneficiary added!',
-        description: `${name} has been added to your beneficiaries.`,
+        title: t('beneficiaries_page.toasts.success_title'),
+        description: t('beneficiaries_page.toasts.success_desc', { name }),
       });
       
       setShowForm(false);
@@ -56,8 +58,8 @@ const Beneficiaries = () => {
       setCountry('');
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to add beneficiary. Please try again.',
+        title: t('beneficiaries_page.toasts.error_title'),
+        description: t('beneficiaries_page.toasts.error_desc'),
         variant: 'destructive',
       });
     }
@@ -72,12 +74,12 @@ const Beneficiaries = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Beneficiaries</h1>
-            <p className="text-muted-foreground">Manage your saved beneficiaries for quick transfers.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('beneficiaries_page.title')}</h1>
+            <p className="text-muted-foreground">{t('beneficiaries_page.subtitle')}</p>
           </div>
           <Button variant="hero" onClick={() => setShowForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
-            Add Beneficiary
+            {t('beneficiaries_page.add_beneficiary')}
           </Button>
         </motion.div>
 
@@ -88,80 +90,80 @@ const Beneficiaries = () => {
             animate={{ opacity: 1, y: 0 }}
             className="p-6 rounded-2xl bg-card border border-border"
           >
-            <h2 className="text-lg font-semibold text-foreground mb-6">Add New Beneficiary</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-6">{t('beneficiaries_page.add_new_beneficiary')}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.full_name')}</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="John Doe"
+                    placeholder={t('beneficiaries_page.full_name_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Bank Name *</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.bank_name')}</label>
                   <input
                     type="text"
                     value={bankName}
                     onChange={(e) => setBankName(e.target.value)}
-                    placeholder="Chase Bank"
+                    placeholder={t('beneficiaries_page.bank_name_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Account Number *</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.account_number')}</label>
                   <input
                     type="text"
                     value={accountNumber}
                     onChange={(e) => setAccountNumber(e.target.value)}
-                    placeholder="1234567890"
+                    placeholder={t('beneficiaries_page.account_number_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Country</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.country')}</label>
                   <input
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    placeholder="United States"
+                    placeholder={t('beneficiaries_page.country_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">SWIFT Code</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.swift_code')}</label>
                   <input
                     type="text"
                     value={swiftCode}
                     onChange={(e) => setSwiftCode(e.target.value)}
-                    placeholder="CHASUS33"
+                    placeholder={t('beneficiaries_page.swift_code_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">IBAN</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('beneficiaries_page.iban')}</label>
                   <input
                     type="text"
                     value={iban}
                     onChange={(e) => setIban(e.target.value)}
-                    placeholder="US12345678901234567890"
+                    placeholder={t('beneficiaries_page.iban_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               </div>
               <div className="flex justify-end gap-4">
-                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>{t('beneficiaries_page.cancel')}</Button>
                 <Button type="submit" variant="hero" disabled={createBeneficiary.isPending}>
                   {createBeneficiary.isPending ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Adding...
+                      {t('beneficiaries_page.adding')}
                     </>
                   ) : (
-                    'Add Beneficiary'
+                    t('beneficiaries_page.add_beneficiary')
                   )}
                 </Button>
               </div>
@@ -208,7 +210,7 @@ const Beneficiaries = () => {
                   <p className="text-sm text-muted-foreground mb-3">{ben.bank_name}</p>
                   <div className="space-y-1">
                     <p className="text-xs text-muted-foreground">
-                      Account: ****{ben.account_number.slice(-4)}
+                      {t('beneficiaries_page.account_label', { lastFour: ben.account_number.slice(-4) })}
                     </p>
                     {ben.country && (
                       <p className="text-xs text-muted-foreground flex items-center gap-1">
@@ -223,11 +225,11 @@ const Beneficiaries = () => {
           ) : (
             <div className="text-center py-12 rounded-2xl bg-card border border-border">
               <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No beneficiaries yet</h3>
-              <p className="text-muted-foreground mb-4">Add beneficiaries for quick and easy transfers.</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t('beneficiaries_page.no_beneficiaries')}</h3>
+              <p className="text-muted-foreground mb-4">{t('beneficiaries_page.no_beneficiaries_subtitle')}</p>
               <Button variant="hero" onClick={() => setShowForm(true)}>
                 <Plus className="w-4 h-4 mr-2" />
-                Add Your First Beneficiary
+                {t('beneficiaries_page.add_first_beneficiary')}
               </Button>
             </div>
           )}

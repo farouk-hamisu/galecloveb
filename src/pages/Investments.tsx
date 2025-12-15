@@ -20,11 +20,11 @@ const Investments = () => {
   };
 
   const holdings = [
-    { name: 'S&P 500 ETF', symbol: 'VOO', value: 15000, change: 2.3, shares: 35 },
-    { name: 'Apple Inc.', symbol: 'AAPL', value: 8500, change: -0.8, shares: 50 },
-    { name: 'Microsoft Corp.', symbol: 'MSFT', value: 12000, change: 1.5, shares: 30 },
-    { name: 'Bitcoin', symbol: 'BTC', value: 5250, change: 5.2, shares: 0.08 },
-    { name: 'Gold ETF', symbol: 'GLD', value: 5000, change: 0.3, shares: 25 },
+    { name: t('investments_page.sp500_etf'), symbol: 'VOO', value: 15000, change: 2.3, shares: 35 },
+    { name: t('investments_page.apple_inc'), symbol: 'AAPL', value: 8500, change: -0.8, shares: 50 },
+    { name: t('investments_page.microsoft_corp'), symbol: 'MSFT', value: 12000, change: 1.5, shares: 30 },
+    { name: t('investments_page.bitcoin'), symbol: 'BTC', value: 5250, change: 5.2, shares: 0.08 },
+    { name: t('investments_page.gold_etf'), symbol: 'GLD', value: 5000, change: 0.3, shares: 25 },
   ];
 
   return (
@@ -36,12 +36,12 @@ const Investments = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Investments</h1>
-            <p className="text-muted-foreground">Track and manage your investment portfolio.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('investments_page.title')}</h1>
+            <p className="text-muted-foreground">{t('investments_page.subtitle')}</p>
           </div>
           <Button variant="hero">
             <TrendingUp className="w-4 h-4 mr-2" />
-            Buy Assets
+            {t('investments_page.buy_assets')}
           </Button>
         </motion.div>
 
@@ -58,7 +58,7 @@ const Investments = () => {
                 <PieChart className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-sm opacity-90">Portfolio Value</p>
+                <p className="text-sm opacity-90">{t('investments_page.portfolio_value')}</p>
                 <p className="text-3xl font-bold">{formatCurrency(portfolio.totalValue)}</p>
               </div>
             </div>
@@ -68,7 +68,7 @@ const Investments = () => {
                 <span className="font-semibold">+{formatCurrency(portfolio.totalGain)}</span>
                 <span className="opacity-75">({portfolio.percentGain}%)</span>
               </div>
-              <span className="text-sm opacity-75">All time</span>
+              <span className="text-sm opacity-75">{t('investments_page.all_time')}</span>
             </div>
           </div>
 
@@ -78,7 +78,7 @@ const Investments = () => {
                 <BarChart3 className="w-6 h-6 text-green-500" />
               </div>
             </div>
-            <p className="text-sm text-muted-foreground mb-1">Today's Change</p>
+            <p className="text-sm text-muted-foreground mb-1">{t('investments_page.todays_change')}</p>
             <p className="text-2xl font-bold text-green-500">+{formatCurrency(125.50)}</p>
             <p className="text-sm text-green-500">+0.27%</p>
           </div>
@@ -91,15 +91,15 @@ const Investments = () => {
           transition={{ delay: 0.2 }}
           className="p-6 rounded-2xl bg-card border border-border"
         >
-          <h2 className="text-lg font-semibold text-foreground mb-6">Your Holdings</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-6">{t('investments_page.your_holdings')}</h2>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left pb-4 text-sm font-medium text-muted-foreground">Asset</th>
-                  <th className="text-left pb-4 text-sm font-medium text-muted-foreground">Holdings</th>
-                  <th className="text-right pb-4 text-sm font-medium text-muted-foreground">Value</th>
-                  <th className="text-right pb-4 text-sm font-medium text-muted-foreground">Change</th>
+                  <th className="text-left pb-4 text-sm font-medium text-muted-foreground">{t('investments_page.asset')}</th>
+                  <th className="text-left pb-4 text-sm font-medium text-muted-foreground">{t('investments_page.holdings')}</th>
+                  <th className="text-right pb-4 text-sm font-medium text-muted-foreground">{t('investments_page.value')}</th>
+                  <th className="text-right pb-4 text-sm font-medium text-muted-foreground">{t('investments_page.change')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,7 +117,7 @@ const Investments = () => {
                       </div>
                     </td>
                     <td className="py-4">
-                      <span className="text-foreground">{holding.shares} {holding.shares === 1 ? 'share' : 'shares'}</span>
+                      <span className="text-foreground">{holding.shares} {holding.shares === 1 ? t('investments_page.share') : t('investments_page.shares')}</span>
                     </td>
                     <td className="py-4 text-right">
                       <span className="font-semibold text-foreground">{formatCurrency(holding.value)}</span>
@@ -149,7 +149,7 @@ const Investments = () => {
           className="p-4 rounded-xl bg-muted/50 border border-border"
         >
           <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Disclaimer:</strong> Investment values can go up and down. Past performance is not indicative of future results. Please invest responsibly.
+            <strong className="text-foreground">{t('investments_page.disclaimer_title')}</strong> {t('investments_page.disclaimer_text')}
           </p>
         </motion.div>
       </div>

@@ -26,6 +26,12 @@ interface StatementData {
   userName: string;
 }
 
+interface jsPDFWithAutoTable extends jsPDF {
+  lastAutoTable: {
+    finalY: number;
+  };
+}
+
 const formatCurrency = (amount: number, currency: string = 'USD') => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -82,7 +88,7 @@ const addFooter = (doc: jsPDF, pageNumber: number) => {
 };
 
 export const generateTransactionReceipt = (transaction: TransactionReceipt) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF() as jsPDFWithAutoTable;
   
   addHeader(doc);
 
@@ -145,7 +151,7 @@ export const generateTransactionReceipt = (transaction: TransactionReceipt) => {
   });
 
   // Amount highlight box
-  const finalY = (doc as any).lastAutoTable.finalY + 15;
+  const finalY = doc.lastAutoTable.finalY + 15;
   doc.setFillColor(255, 77, 77, 0.1);
   doc.roundedRect(20, finalY, 170, 30, 3, 3, 'F');
   doc.setFontSize(12);
@@ -162,7 +168,7 @@ export const generateTransactionReceipt = (transaction: TransactionReceipt) => {
 };
 
 export const generateMonthlyStatement = (data: StatementData) => {
-  const doc = new jsPDF();
+  const doc = new jsPDF() as jsPDFWithAutoTable;
   let currentPage = 1;
 
   addHeader(doc);
@@ -210,7 +216,7 @@ export const generateMonthlyStatement = (data: StatementData) => {
   });
 
   // Transaction history
-  let tableStartY = (doc as any).lastAutoTable.finalY + 15;
+  const tableStartY = doc.lastAutoTable.finalY + 15;
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(15, 15, 15);
@@ -250,7 +256,7 @@ export const generateMonthlyStatement = (data: StatementData) => {
   });
 
   // Summary stats
-  const finalY = (doc as any).lastAutoTable.finalY + 15;
+  const finalY = doc.lastAutoTable.finalY + 15;
   const totalCredits = data.transactions
     .filter((tx) => tx.type === 'credit')
     .reduce((sum, tx) => sum + tx.amount, 0);
@@ -277,6 +283,7 @@ export const generateMonthlyStatement = (data: StatementData) => {
 
   return doc;
 };
+
 
 export const downloadPDF = (doc: jsPDF, filename: string) => {
   doc.save(filename);

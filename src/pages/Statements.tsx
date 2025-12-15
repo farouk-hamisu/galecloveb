@@ -13,6 +13,19 @@ import {
   exportTransactionsCSV,
 } from '@/lib/pdfGenerator';
 
+interface Transaction {
+  id: string;
+  type: string;
+  amount: number;
+  currency: string;
+  description?: string;
+  reference_number: string;
+  status: string;
+  created_at: string;
+  recipient_name?: string;
+  recipient_account?: string;
+}
+
 const Statements = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -64,8 +77,8 @@ const Statements = () => {
   const handleDownloadStatement = (periodDate: string, periodName: string) => {
     if (!accounts?.length || !transactions?.length || !user) {
       toast({
-        title: 'Unable to generate statement',
-        description: 'No account data available.',
+        title: t('statements_page.toasts.unable_to_generate_title'),
+        description: t('statements_page.toasts.unable_to_generate_desc'),
         variant: 'destructive',
       });
       return;
@@ -107,12 +120,12 @@ const Statements = () => {
     downloadPDF(doc, `NCUBank_Statement_${periodDate}.pdf`);
 
     toast({
-      title: 'Statement downloaded',
-      description: `Your ${periodName} statement has been downloaded.`,
+      title: t('statements_page.toasts.download_success_title'),
+      description: t('statements_page.toasts.download_success_desc', { period: periodName }),
     });
   };
 
-  const handleDownloadReceipt = (tx: any) => {
+  const handleDownloadReceipt = (tx: Transaction) => {
     const receipt = {
       id: tx.id,
       type: tx.type.includes('in') || tx.type === 'deposit' || tx.type === 'credit' ? 'credit' : 'debit',
@@ -131,16 +144,16 @@ const Statements = () => {
     downloadPDF(doc, `NCUBank_Receipt_${tx.reference_number}.pdf`);
 
     toast({
-      title: 'Receipt downloaded',
-      description: 'Your transaction receipt has been downloaded.',
+      title: t('statements_page.toasts.receipt_success_title'),
+      description: t('statements_page.toasts.receipt_success_desc'),
     });
   };
 
   const handleExportCSV = () => {
     if (!transactions?.length) {
       toast({
-        title: 'No transactions',
-        description: 'There are no transactions to export.',
+        title: t('statements_page.toasts.no_transactions_title'),
+        description: t('statements_page.toasts.no_transactions_desc'),
         variant: 'destructive',
       });
       return;
@@ -160,8 +173,8 @@ const Statements = () => {
     exportTransactionsCSV(csvData, `NCUBank_Transactions_${new Date().toISOString().split('T')[0]}.csv`);
 
     toast({
-      title: 'Export complete',
-      description: 'Your transactions have been exported to CSV.',
+      title: t('statements_page.toasts.export_complete_title'),
+      description: t('statements_page.toasts.export_complete_desc'),
     });
   };
 
@@ -174,12 +187,12 @@ const Statements = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Statements & Receipts</h1>
-            <p className="text-muted-foreground">Download your monthly bank statements and transaction receipts.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('statements_page.title')}</h1>
+            <p className="text-muted-foreground">{t('statements_page.subtitle')}</p>
           </div>
           <Button variant="outline" onClick={handleExportCSV}>
             <FileDown className="w-4 h-4 mr-2" />
-            Export CSV
+            {t('statements_page.export_csv')}
           </Button>
         </motion.div>
 
@@ -191,9 +204,9 @@ const Statements = () => {
           className="p-4 rounded-xl bg-card border border-border flex flex-col sm:flex-row gap-4"
         >
           <div className="flex-1">
-            <label className="block text-sm font-medium text-foreground mb-2">Select Account</label>
+            <label className="block text-sm font-medium text-foreground mb-2">{t('statements_page.select_account')}</label>
             <select className="w-full h-11 px-4 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
-              <option value="">All Accounts</option>
+              <option value="">{t('statements_page.all_accounts')}</option>
               {accounts?.map((acc) => (
                 <option key={acc.id} value={acc.id}>
                   {acc.account_type.charAt(0).toUpperCase() + acc.account_type.slice(1)} - ****{acc.account_number.slice(-4)}
@@ -204,7 +217,7 @@ const Statements = () => {
           <div className="flex items-end">
             <Button variant="outline" className="h-11">
               <Calendar className="w-4 h-4 mr-2" />
-              Custom Date Range
+              {t('statements_page.custom_date_range')}
             </Button>
           </div>
         </motion.div>
@@ -215,7 +228,7 @@ const Statements = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Monthly Statements</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('statements_page.monthly_statements')}</h2>
           {statementPeriods.length > 0 ? (
             <div className="space-y-3">
               {statementPeriods.map((statement, index) => (
@@ -233,7 +246,7 @@ const Statements = () => {
                     <div>
                       <h3 className="font-medium text-foreground">{statement.period}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {statement.transactions} transactions • {formatCurrency(statement.amount)} total
+                        {t('statements_page.transactions_total', { count: statement.transactions, amount: formatCurrency(statement.amount) })}
                       </p>
                     </div>
                   </div>
@@ -243,7 +256,7 @@ const Statements = () => {
                     onClick={() => handleDownloadStatement(statement.date, statement.period)}
                   >
                     <Download className="w-4 h-4 mr-2" />
-                    PDF
+                    {t('statements_page.download_pdf')}
                   </Button>
                 </motion.div>
               ))}
@@ -251,7 +264,7 @@ const Statements = () => {
           ) : (
             <div className="text-center py-8 rounded-xl bg-card border border-border">
               <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">No statements available yet. Make some transactions first!</p>
+              <p className="text-muted-foreground">{t('statements_page.no_statements')}</p>
             </div>
           )}
         </motion.div>
@@ -262,7 +275,7 @@ const Statements = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Recent Transaction Receipts</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('statements_page.recent_receipts')}</h2>
           {transactions && transactions.length > 0 ? (
             <div className="space-y-3">
               {transactions.slice(0, 5).map((tx, index) => (
@@ -276,7 +289,7 @@ const Statements = () => {
                   <div>
                     <h3 className="font-medium text-foreground">{tx.description || tx.type}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {new Date(tx.created_at!).toLocaleDateString()} • Ref: {tx.reference_number}
+                      {new Date(tx.created_at!).toLocaleDateString()} • {t('statements_page.ref')} {tx.reference_number}
                     </p>
                   </div>
                   <div className="flex items-center gap-4">
@@ -298,7 +311,7 @@ const Statements = () => {
           ) : (
             <div className="text-center py-8 rounded-xl bg-card border border-border">
               <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">No transaction receipts available yet.</p>
+              <p className="text-muted-foreground">{t('statements_page.no_receipts')}</p>
             </div>
           )}
         </motion.div>

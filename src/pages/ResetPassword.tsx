@@ -65,10 +65,10 @@ const ResetPassword = () => {
       setTimeout(() => {
         navigate('/login');
       }, 3000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error',
-        description: error.message || 'Something went wrong. Please try again.',
+        description: (error as Error).message || 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     } finally {

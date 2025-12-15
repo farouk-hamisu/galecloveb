@@ -50,8 +50,8 @@ const Transfer = () => {
     
     if (!fromAccount || !amount) {
       toast({
-        title: 'Missing information',
-        description: 'Please fill in all required fields.',
+        title: t('transfer_page.toasts.missing_info_title'),
+        description: t('transfer_page.toasts.missing_info_desc'),
         variant: 'destructive',
       });
       return;
@@ -60,8 +60,8 @@ const Transfer = () => {
     const transferAmount = parseFloat(amount);
     if (isNaN(transferAmount) || transferAmount <= 0) {
       toast({
-        title: 'Invalid amount',
-        description: 'Please enter a valid transfer amount.',
+        title: t('transfer_page.toasts.invalid_amount_title'),
+        description: t('transfer_page.toasts.invalid_amount_desc'),
         variant: 'destructive',
       });
       return;
@@ -69,8 +69,8 @@ const Transfer = () => {
 
     if (transferType === 'internal' && !toIdentifier.trim()) {
       toast({
-        title: 'Missing information',
-        description: 'Please enter recipient email or account number.',
+        title: t('transfer_page.toasts.missing_info_title'),
+        description: t('transfer_page.toasts.missing_recipient_desc'),
         variant: 'destructive',
       });
       return;
@@ -78,8 +78,8 @@ const Transfer = () => {
 
     if (transferType === 'international' && !beneficiaryId) {
       toast({
-        title: 'Missing information',
-        description: 'Please select a beneficiary.',
+        title: t('transfer_page.toasts.missing_info_title'),
+        description: t('transfer_page.toasts.missing_beneficiary_desc'),
         variant: 'destructive',
       });
       return;
@@ -103,10 +103,10 @@ const Transfer = () => {
       });
       setShowSuccess(true);
       resetForm();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
-        title: 'Transfer Failed',
-        description: error.message || 'An error occurred during the transfer.',
+        title: t('transfer_page.toasts.transfer_failed_title'),
+        description: (error as Error).message || t('transfer_page.toasts.transfer_failed_desc'),
         variant: 'destructive',
       });
     }
@@ -143,7 +143,7 @@ const Transfer = () => {
               transition={{ delay: 0.3 }}
               className="text-3xl font-bold text-foreground mb-2"
             >
-              Transfer Successful!
+              {t('transfer_page.success_title')}
             </motion.h1>
 
             <motion.p
@@ -152,7 +152,7 @@ const Transfer = () => {
               transition={{ delay: 0.4 }}
               className="text-muted-foreground mb-8"
             >
-              Your money is on its way
+              {t('transfer_page.success_subtitle')}
             </motion.p>
 
             <motion.div
@@ -167,16 +167,16 @@ const Transfer = () => {
 
               <div className="space-y-3 text-left">
                 <div className="flex justify-between py-2 border-b border-border">
-                  <span className="text-muted-foreground">Recipient</span>
+                  <span className="text-muted-foreground">{t('transfer_page.recipient')}</span>
                   <span className="font-medium text-foreground">{successDetails.recipientName}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-border">
-                  <span className="text-muted-foreground">Reference</span>
+                  <span className="text-muted-foreground">{t('transfer_page.reference')}</span>
                   <span className="font-mono text-sm text-foreground">{successDetails.referenceNumber}</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-muted-foreground">Status</span>
-                  <span className="text-green-500 font-medium">Completed</span>
+                  <span className="text-muted-foreground">{t('transfer_page.status')}</span>
+                  <span className="text-green-500 font-medium">{t('transfer_page.completed')}</span>
                 </div>
               </div>
             </motion.div>
@@ -188,10 +188,10 @@ const Transfer = () => {
               className="flex gap-4"
             >
               <Button variant="outline" className="flex-1" onClick={handleNewTransfer}>
-                New Transfer
+                {t('transfer_page.new_transfer')}
               </Button>
               <Button variant="hero" className="flex-1" asChild>
-                <Link to="/transactions">View Transactions</Link>
+                <Link to="/transactions">{t('transfer_page.view_transactions')}</Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -207,8 +207,8 @@ const Transfer = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Transfer Money</h1>
-          <p className="text-muted-foreground">Send money instantly to anyone, anywhere.</p>
+          <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('transfer_page.title')}</h1>
+          <p className="text-muted-foreground">{t('transfer_page.subtitle')}</p>
         </motion.div>
 
         {/* Transfer Type Selector */}
@@ -233,8 +233,8 @@ const Transfer = () => {
                 <Send className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">Internal Transfer</h3>
-                <p className="text-sm text-muted-foreground">Send to any bank user</p>
+                <h3 className="font-semibold text-foreground">{t('transfer_page.internal_transfer')}</h3>
+                <p className="text-sm text-muted-foreground">{t('transfer_page.internal_subtitle')}</p>
               </div>
             </div>
           </button>
@@ -254,8 +254,8 @@ const Transfer = () => {
                 <Globe className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-semibold text-foreground">International Transfer</h3>
-                <p className="text-sm text-muted-foreground">SWIFT transfers worldwide</p>
+                <h3 className="font-semibold text-foreground">{t('transfer_page.international_transfer')}</h3>
+                <p className="text-sm text-muted-foreground">{t('transfer_page.international_subtitle')}</p>
               </div>
             </div>
           </button>
@@ -272,13 +272,13 @@ const Transfer = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {/* From Account */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">From Account</label>
+                <label className="block text-sm font-medium text-foreground mb-2">{t('transfer_page.from_account')}</label>
                 <select
                   value={fromAccount}
                   onChange={(e) => setFromAccount(e.target.value)}
                   className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 >
-                  <option value="">Select account</option>
+                  <option value="">{t('transfer_page.select_account')}</option>
                   {accounts?.map((acc) => (
                     <option key={acc.id} value={acc.id}>
                       {acc.account_type.charAt(0).toUpperCase() + acc.account_type.slice(1)} - ****{acc.account_number.slice(-4)} ({formatCurrency(Number(acc.balance))})
@@ -291,7 +291,7 @@ const Transfer = () => {
               {transferType === 'internal' ? (
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Send To
+                    {t('transfer_page.send_to')}
                   </label>
                   
                   {/* Lookup Type Toggle */}
@@ -306,7 +306,7 @@ const Transfer = () => {
                       }`}
                     >
                       <Hash className="w-4 h-4" />
-                      Account Number
+                      {t('transfer_page.account_number')}
                     </button>
                     <button
                       type="button"
@@ -318,7 +318,7 @@ const Transfer = () => {
                       }`}
                     >
                       <User className="w-4 h-4" />
-                      Email Address
+                      {t('transfer_page.email_address')}
                     </button>
                   </div>
 
@@ -333,9 +333,9 @@ const Transfer = () => {
               ) : (
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Beneficiary
+                    {t('transfer_page.beneficiary')}
                     <Link to="/beneficiaries" className="text-primary text-xs ml-2 hover:underline">
-                      + Add new
+                      {t('transfer_page.add_new')}
                     </Link>
                   </label>
                   <select
@@ -343,7 +343,7 @@ const Transfer = () => {
                     onChange={(e) => setBeneficiaryId(e.target.value)}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value="">Select beneficiary</option>
+                    <option value="">{t('transfer_page.select_beneficiary')}</option>
                     {beneficiaries?.map((ben) => (
                       <option key={ben.id} value={ben.id}>
                         {ben.name} - {ben.bank_name}
@@ -357,7 +357,7 @@ const Transfer = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Amount */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Amount</label>
+                <label className="block text-sm font-medium text-foreground mb-2">{t('transfer_page.amount')}</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
                     {currencySymbol}
@@ -376,12 +376,12 @@ const Transfer = () => {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Description (Optional)</label>
+                <label className="block text-sm font-medium text-foreground mb-2">{t('transfer_page.description')}</label>
                 <input
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Payment for..."
+                  placeholder={t('transfer_page.payment_for')}
                   className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
@@ -390,22 +390,22 @@ const Transfer = () => {
             {transferType === 'international' && (
               <div className="p-4 rounded-xl bg-muted/50 border border-border">
                 <p className="text-sm text-muted-foreground">
-                  <strong className="text-foreground">Note:</strong> International transfers may take 1-3 business days to complete. SWIFT fees may apply.
+                  <strong className="text-foreground">{t('transfer_page.note')}</strong> {t('transfer_page.international_note')}
                 </p>
               </div>
             )}
 
             <div className="flex justify-end gap-4">
-              <Button type="button" variant="outline" onClick={resetForm}>Cancel</Button>
+              <Button type="button" variant="outline" onClick={resetForm}>{t('transfer_page.cancel')}</Button>
               <Button type="submit" variant="hero" disabled={transferMutation.isPending}>
                 {transferMutation.isPending ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Processing...
+                    {t('transfer_page.processing')}
                   </>
                 ) : (
                   <>
-                    Send Transfer
+                    {t('transfer_page.send_transfer')}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </>
                 )}

@@ -16,7 +16,8 @@ import {
   Menu,
   X,
   Bell,
-  Search
+  Search,
+  Globe
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -25,22 +26,8 @@ interface DashboardLayoutProps {
   children: ReactNode;
 }
 
-const navItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-  { icon: CreditCard, label: 'Accounts', path: '/accounts' },
-  { icon: ArrowLeftRight, label: 'Transactions', path: '/transactions' },
-  { icon: ArrowLeftRight, label: 'Transfer', path: '/transfer' },
-  { icon: Users, label: 'Beneficiaries', path: '/beneficiaries' },
-  { icon: CreditCard, label: 'Cards', path: '/cards' },
-  { icon: PiggyBank, label: 'Savings', path: '/savings' },
-  { icon: TrendingUp, label: 'Investments', path: '/investments' },
-  { icon: FileText, label: 'Statements', path: '/statements' },
-  { icon: HelpCircle, label: 'Support', path: '/support' },
-  { icon: Settings, label: 'Settings', path: '/settings' },
-];
-
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,6 +37,24 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     await signOut();
     navigate('/');
   };
+
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === 'en' ? 'tr' : 'en');
+  };
+
+  const navItems = [
+    { icon: LayoutDashboard, label: t('dashboard_nav.dashboard'), path: '/dashboard' },
+    { icon: CreditCard, label: t('dashboard_nav.accounts'), path: '/accounts' },
+    { icon: ArrowLeftRight, label: t('dashboard_nav.transactions'), path: '/transactions' },
+    { icon: ArrowLeftRight, label: t('dashboard_nav.transfer'), path: '/transfer' },
+    { icon: Users, label: t('dashboard_nav.beneficiaries'), path: '/beneficiaries' },
+    { icon: CreditCard, label: t('dashboard_nav.cards'), path: '/cards' },
+    { icon: PiggyBank, label: t('dashboard_nav.savings'), path: '/savings' },
+    { icon: TrendingUp, label: t('dashboard_nav.investments'), path: '/investments' },
+    { icon: FileText, label: t('dashboard_nav.statements'), path: '/statements' },
+    { icon: HelpCircle, label: t('dashboard_nav.support'), path: '/support' },
+    { icon: Settings, label: t('dashboard_nav.settings'), path: '/settings' },
+  ];
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -114,7 +119,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 <p className="text-sm font-medium text-foreground truncate">
                   {user?.email}
                 </p>
-                <p className="text-xs text-muted-foreground">Personal Account</p>
+                <p className="text-xs text-muted-foreground">{t('dashboard_misc.personal_account')}</p>
               </div>
             </div>
             <Button 
@@ -123,7 +128,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               onClick={handleSignOut}
             >
               <LogOut className="w-5 h-5" />
-              Sign Out
+              {t('dashboard_misc.sign_out')}
             </Button>
           </div>
         </div>
@@ -146,12 +151,19 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input 
                 type="text"
-                placeholder="Search transactions..."
+                placeholder={t('dashboard_misc.search_transactions')}
                 className="h-10 w-64 pl-10 pr-4 rounded-xl border border-border bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
           <div className="flex items-center gap-3">
+          <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 px-3 py-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
+            >
+              <Globe className="w-4 h-4" />
+              {i18n.language.toUpperCase()}
+            </button>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="w-5 h-5" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" />
@@ -167,3 +179,4 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     </div>
   );
 };
+

@@ -53,7 +53,14 @@ export const useTransfer = () => {
         throw new Error('Insufficient funds');
       }
 
-      let recipientAccount: any = null;
+      interface Account {
+  id: string;
+  balance: number;
+  account_number: string;
+  user_id: string;
+}
+
+let recipientAccount: Account | null = null;
       let recipientUserId: string | null = null;
       let recipientName = '';
 

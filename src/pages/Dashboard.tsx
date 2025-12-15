@@ -40,9 +40,9 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
-            Welcome back, {profile?.first_name || 'User'}!
+            {t('dashboard_page.welcome', { name: profile?.first_name || 'User' })}
           </h1>
-          <p className="text-muted-foreground">Here's what's happening with your accounts.</p>
+          <p className="text-muted-foreground">{t('dashboard_page.subtitle')}</p>
         </motion.div>
 
         {/* Quick Actions */}
@@ -57,7 +57,7 @@ const Dashboard = () => {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Send className="w-5 h-5 text-primary" />
               </div>
-              <span className="text-sm font-medium text-foreground">Send Money</span>
+              <span className="text-sm font-medium text-foreground">{t('dashboard_page.quick_actions.send')}</span>
             </div>
           </Link>
           <Link to="/accounts">
@@ -65,7 +65,7 @@ const Dashboard = () => {
               <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
                 <Download className="w-5 h-5 text-green-500" />
               </div>
-              <span className="text-sm font-medium text-foreground">Deposit</span>
+              <span className="text-sm font-medium text-foreground">{t('dashboard_page.quick_actions.deposit')}</span>
             </div>
           </Link>
           <Link to="/cards">
@@ -73,7 +73,7 @@ const Dashboard = () => {
               <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center">
                 <CreditCard className="w-5 h-5 text-blue-500" />
               </div>
-              <span className="text-sm font-medium text-foreground">Cards</span>
+              <span className="text-sm font-medium text-foreground">{t('dashboard_page.quick_actions.cards')}</span>
             </div>
           </Link>
           <Link to="/savings">
@@ -81,7 +81,7 @@ const Dashboard = () => {
               <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center">
                 <PiggyBank className="w-5 h-5 text-purple-500" />
               </div>
-              <span className="text-sm font-medium text-foreground">Savings</span>
+              <span className="text-sm font-medium text-foreground">{t('dashboard_page.quick_actions.savings')}</span>
             </div>
           </Link>
         </motion.div>
@@ -95,35 +95,35 @@ const Dashboard = () => {
         >
           <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm opacity-90">Total Balance</span>
+              <span className="text-sm opacity-90">{t('dashboard_page.stats.total_balance')}</span>
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5" />
               </div>
             </div>
             <p className="text-3xl font-bold mb-1">{formatCurrency(totalBalance)}</p>
-            <p className="text-sm opacity-75">+2.5% from last month</p>
+            <p className="text-sm opacity-75">{t('dashboard_page.stats.balance_change')}</p>
           </div>
 
           <div className="p-6 rounded-2xl bg-card border border-border">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm text-muted-foreground">This Month Income</span>
+              <span className="text-sm text-muted-foreground">{t('dashboard_page.stats.income')}</span>
               <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
                 <ArrowDownRight className="w-5 h-5 text-green-500" />
               </div>
             </div>
             <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(2450)}</p>
-            <p className="text-sm text-green-500">+12% from last month</p>
+            <p className="text-sm text-green-500">{t('dashboard_page.stats.income_change')}</p>
           </div>
 
           <div className="p-6 rounded-2xl bg-card border border-border">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm text-muted-foreground">This Month Expenses</span>
+              <span className="text-sm text-muted-foreground">{t('dashboard_page.stats.expenses')}</span>
               <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
                 <ArrowUpRight className="w-5 h-5 text-red-500" />
               </div>
             </div>
             <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(1280)}</p>
-            <p className="text-sm text-red-500">+5% from last month</p>
+            <p className="text-sm text-red-500">{t('dashboard_page.stats.expenses_change')}</p>
           </div>
         </motion.div>
 
@@ -137,9 +137,9 @@ const Dashboard = () => {
             className="p-6 rounded-2xl bg-card border border-border"
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-foreground">My Accounts</h2>
+              <h2 className="text-lg font-semibold text-foreground">{t('dashboard_page.accounts.title')}</h2>
               <Link to="/accounts">
-                <Button variant="ghost" size="sm">View All</Button>
+                <Button variant="ghost" size="sm">{t('dashboard_page.accounts.view_all')}</Button>
               </Link>
             </div>
             <div className="space-y-4">
@@ -157,7 +157,7 @@ const Dashboard = () => {
                         <CreditCard className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium text-foreground capitalize">{account.account_type} Account</p>
+                        <p className="font-medium text-foreground capitalize">{t('dashboard_page.accounts.account_type', { type: account.account_type })}</p>
                         <p className="text-sm text-muted-foreground">****{account.account_number.slice(-4)}</p>
                       </div>
                     </div>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-muted-foreground text-center py-4">No accounts found</p>
+                <p className="text-muted-foreground text-center py-4">{t('dashboard_page.accounts.no_accounts')}</p>
               )}
             </div>
           </motion.div>
@@ -178,9 +178,9 @@ const Dashboard = () => {
             className="p-6 rounded-2xl bg-card border border-border"
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-foreground">Recent Transactions</h2>
+              <h2 className="text-lg font-semibold text-foreground">{t('dashboard_page.transactions.title')}</h2>
               <Link to="/transactions">
-                <Button variant="ghost" size="sm">View All</Button>
+                <Button variant="ghost" size="sm">{t('dashboard_page.transactions.view_all')}</Button>
               </Link>
             </div>
             <div className="space-y-4">
@@ -217,7 +217,7 @@ const Dashboard = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-muted-foreground text-center py-4">No transactions yet</p>
+                <p className="text-muted-foreground text-center py-4">{t('dashboard_page.transactions.no_transactions')}</p>
               )}
             </div>
           </motion.div>
@@ -231,9 +231,9 @@ const Dashboard = () => {
           className="p-6 rounded-2xl bg-card border border-border"
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-foreground">My Cards</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t('dashboard_page.cards.title')}</h2>
             <Link to="/cards">
-              <Button variant="ghost" size="sm">Manage Cards</Button>
+              <Button variant="ghost" size="sm">{t('dashboard_page.cards.manage')}</Button>
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -249,11 +249,11 @@ const Dashboard = () => {
                 >
                   {card.is_frozen && (
                     <div className="absolute top-2 right-2 px-2 py-1 bg-white/20 rounded text-xs">
-                      Frozen
+                      {t('dashboard_page.cards.frozen')}
                     </div>
                   )}
                   <div className="flex justify-between items-start mb-8">
-                    <span className="text-sm opacity-75 capitalize">{card.card_type} Card</span>
+                    <span className="text-sm opacity-75 capitalize">{t('dashboard_page.cards.card_type', { type: card.card_type })}</span>
                     <CreditCard className="w-8 h-8" />
                   </div>
                   <p className="font-mono text-lg mb-4 tracking-wider">
@@ -261,11 +261,11 @@ const Dashboard = () => {
                   </p>
                   <div className="flex justify-between items-end">
                     <div>
-                      <p className="text-xs opacity-75">Expires</p>
+                      <p className="text-xs opacity-75">{t('dashboard_page.cards.expires')}</p>
                       <p className="font-mono">{card.expiry_date}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs opacity-75">Limit</p>
+                      <p className="text-xs opacity-75">{t('dashboard_page.cards.limit')}</p>
                       <p className="font-semibold">{formatCurrency(Number(card.spending_limit))}</p>
                     </div>
                   </div>
@@ -277,7 +277,7 @@ const Dashboard = () => {
                 className="flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer min-h-[180px]"
               >
                 <Plus className="w-8 h-8 text-muted-foreground mb-2" />
-                <span className="text-sm text-muted-foreground">Create your first card</span>
+                <span className="text-sm text-muted-foreground">{t('dashboard_page.cards.create_card')}</span>
               </Link>
             )}
           </div>

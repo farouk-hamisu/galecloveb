@@ -26,10 +26,10 @@ const ForgotPassword = () => {
       if (error) throw error;
 
       setIsSuccess(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error',
-        description: error.message || 'Something went wrong. Please try again.',
+        description: (error as Error).message || 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     } finally {

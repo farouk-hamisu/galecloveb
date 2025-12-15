@@ -23,8 +23,8 @@ const Cards = () => {
   const handleCreateCard = async () => {
     if (!accounts || accounts.length === 0) {
       toast({
-        title: 'No accounts available',
-        description: 'You need at least one account to create a card.',
+        title: t('cards_page.toasts.no_accounts_title'),
+        description: t('cards_page.toasts.no_accounts_desc'),
         variant: 'destructive',
       });
       return;
@@ -33,13 +33,13 @@ const Cards = () => {
     try {
       await createCard.mutateAsync({ accountId: accounts[0].id });
       toast({
-        title: 'Card created!',
-        description: 'Your new virtual card is ready to use.',
+        title: t('cards_page.toasts.create_success_title'),
+        description: t('cards_page.toasts.create_success_desc'),
       });
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to create card. Please try again.',
+        title: t('cards_page.toasts.create_error_title'),
+        description: t('cards_page.toasts.create_error_desc'),
         variant: 'destructive',
       });
     }
@@ -49,15 +49,15 @@ const Cards = () => {
     try {
       await toggleFreeze.mutateAsync({ cardId, isFrozen: !currentlyFrozen });
       toast({
-        title: currentlyFrozen ? 'Card unfrozen' : 'Card frozen',
+        title: currentlyFrozen ? t('cards_page.toasts.unfreeze_title') : t('cards_page.toasts.freeze_title'),
         description: currentlyFrozen 
-          ? 'Your card is now active again.'
-          : 'Your card has been frozen. No transactions will be processed.',
+          ? t('cards_page.toasts.unfreeze_desc')
+          : t('cards_page.toasts.freeze_desc'),
       });
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to update card status. Please try again.',
+        title: t('cards_page.toasts.status_error_title'),
+        description: t('cards_page.toasts.status_error_desc'),
         variant: 'destructive',
       });
     }
@@ -76,8 +76,8 @@ const Cards = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Virtual Cards</h1>
-            <p className="text-muted-foreground">Create and manage your virtual cards securely.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('cards_page.title')}</h1>
+            <p className="text-muted-foreground">{t('cards_page.subtitle')}</p>
           </div>
           <Button 
             variant="hero" 
@@ -87,12 +87,12 @@ const Cards = () => {
             {createCard.isPending ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Creating...
+                {t('cards_page.creating')}
               </>
             ) : (
               <>
                 <Plus className="w-4 h-4 mr-2" />
-                Create New Card
+                {t('cards_page.create_new_card')}
               </>
             )}
           </Button>
@@ -131,12 +131,12 @@ const Cards = () => {
                     {card.is_frozen && (
                       <div className="absolute top-4 right-4 flex items-center gap-1 px-2 py-1 bg-white/20 rounded text-xs">
                         <Snowflake className="w-3 h-3" />
-                        Frozen
+                        {t('cards_page.frozen')}
                       </div>
                     )}
                     
                     <div className="absolute top-4 left-6">
-                      <span className="text-sm opacity-75 capitalize">{card.card_type} Card</span>
+                      <span className="text-sm opacity-75 capitalize">{t('cards_page.card_type', { type: card.card_type })}</span>
                     </div>
                     
                     <div className="absolute top-4 right-6">
@@ -151,11 +151,11 @@ const Cards = () => {
 
                     <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
                       <div>
-                        <p className="text-xs opacity-75">Expires</p>
+                        <p className="text-xs opacity-75">{t('cards_page.expires')}</p>
                         <p className="font-mono">{card.expiry_date}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs opacity-75">CVV</p>
+                        <p className="text-xs opacity-75">{t('cards_page.cvv')}</p>
                         <p className="font-mono">{card.cvv}</p>
                       </div>
                     </div>
@@ -176,12 +176,12 @@ const Cards = () => {
                       {card.is_frozen ? (
                         <>
                           <Play className="w-4 h-4 mr-2" />
-                          Unfreeze
+                          {t('cards_page.unfreeze')}
                         </>
                       ) : (
                         <>
                           <Snowflake className="w-4 h-4 mr-2" />
-                          Freeze
+                          {t('cards_page.freeze')}
                         </>
                       )}
                     </Button>
@@ -193,7 +193,7 @@ const Cards = () => {
                   {/* Card Details */}
                   <div className="p-4 rounded-xl bg-card border border-border">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Spending Limit</span>
+                      <span className="text-sm text-muted-foreground">{t('cards_page.spending_limit')}</span>
                       <span className="font-semibold text-foreground">
                         {formatCurrency(Number(card.spending_limit))}
                       </span>
@@ -205,18 +205,18 @@ const Cards = () => {
           ) : (
             <div className="text-center py-12 rounded-2xl bg-card border border-border">
               <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No cards yet</h3>
-              <p className="text-muted-foreground mb-4">Create your first virtual card to start shopping online.</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t('cards_page.no_cards')}</h3>
+              <p className="text-muted-foreground mb-4">{t('cards_page.no_cards_subtitle')}</p>
               <Button variant="hero" onClick={handleCreateCard} disabled={createCard.isPending}>
                 {createCard.isPending ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creating...
+                    {t('cards_page.creating')}
                   </>
                 ) : (
                   <>
                     <Plus className="w-4 h-4 mr-2" />
-                    Create Your First Card
+                    {t('cards_page.create_first_card')}
                   </>
                 )}
               </Button>
