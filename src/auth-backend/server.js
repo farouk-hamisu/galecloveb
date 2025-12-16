@@ -256,52 +256,51 @@ app.post("/reset-password", async (req, res) => {
 
     const emailLower = email.trim().toLowerCase();
 
-    // Get the latest valid token
-    const {data: rows, error: tokenErr} = await db
+    const {data: rows, error} = await db
       .from("password_reset_tokens")
       .select("*")
       .eq("email", emailLower)
-      .eq("consumed", false)
-      .order("created_at", {ascending: false});
+      .eq("consumed", false);
 
-    if (tokenErr || !rows.length) {
+    if (error || !rows?.length) {
       return res.status(400).json({error: "Invalid or expired password reset link."});
     }
 
-    const record = rows[0];
+    let matchedRecord = null;
+    for (const row of rows) {
+      const isMatch = await bcrypt.compare(token, row.token_hash);
+      if (isMatch) {
+        matchedRecord = row;
+        break;
+      }
+    }
 
-    // Check expiry
-    if (new Date(record.expires_at) < new Date()) {
+    if (!matchedRecord) {
+      return res.status(400).json({error: "Invalid or expired password reset link."});
+    }
+
+    if (Date.parse(matchedRecord.expires_at) < Date.now()) {
       return res.status(400).json({error: "Password reset link has expired."});
     }
 
-    // Compare the provided token with the hashed token in the DB
-    const validToken = await bcrypt.compare(token, record.token_hash);
-    if (!validToken) {
-      return res.status(400).json({error: "Invalid or expired password reset link."});
-    }
-
-    // Update user's password in Supabase Auth
-    const {error: updateErr} = await db.auth.admin.updateUserById(record.user_id, {
-      password: newPassword,
-    });
+    const {error: updateErr} = await db.auth.admin.updateUserById(
+      matchedRecord.user_id,
+      {password: newPassword}
+    );
 
     if (updateErr) {
-      console.error("PASSWORD UPDATE ERROR:", updateErr);
       return res.status(500).json({error: "Failed to update password."});
     }
 
-    // Mark the token as consumed
     await db
       .from("password_reset_tokens")
       .update({consumed: true})
-      .eq("id", record.id);
+      .eq("id", matchedRecord.id);
 
     return res.json({success: true, message: "Password has been reset successfully."});
-
   } catch (err) {
     console.error("RESET PASSWORD ERROR:", err);
-    return res.status(500).json({error: err.toString()});
+    return res.status(500).json({error: "Server error"});
   }
 });
 
