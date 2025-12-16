@@ -97,7 +97,7 @@ const handler = async (req: Request): Promise<Response> => {
     if (senderProfile.email) {
       emailPromises.push(
         resend.emails.send({
-          from: "National Credit Union Bank <onboarding@resend.dev>",
+          from: "National Region Bank <onboarding@resend.dev>",
           to: [senderProfile.email],
           subject: `Transfer Confirmation - ${referenceNumber}`,
           html: `
@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <p style="color: #666; font-size: 12px; text-align: center;">
-                  Thank you for banking with National Credit Union Bank.
+                  Thank you for banking with National Region Bank.
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
     if (recipientProfile.email) {
       emailPromises.push(
         resend.emails.send({
-          from: "National Credit Union Bank <onboarding@resend.dev>",
+          from: "National Region Bank <onboarding@resend.dev>",
           to: [recipientProfile.email],
           subject: `You've Received Money - ${referenceNumber}`,
           html: `
@@ -181,7 +181,7 @@ const handler = async (req: Request): Promise<Response> => {
                 </div>
                 
                 <p style="color: #666; font-size: 12px; text-align: center;">
-                  Thank you for banking with National Credit Union Bank.
+                  Thank you for banking with National Region Bank.
                 </p>
               </div>
             </div>

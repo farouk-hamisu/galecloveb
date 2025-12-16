@@ -11,7 +11,7 @@
   "hero": {
     "badge": "Güvenli, Emniyetli, Basit",
     "title": "Daha Akıllı Bankacılık. Daha Hızlı Tasarruf. Daha İyi Yatırım.",
-    "subtitle": "NationalCreditUnionBank, bireyleri ve işletmeleri sorunsuz bankacılık, zahmetsiz transferler ve akıllı yatırım araçlarıyla güçlendirir.",
+    "subtitle": "NationalRegionBank, bireyleri ve işletmeleri sorunsuz bankacılık, zahmetsiz transferler ve akıllı yatırım araçlarıyla güçlendirir.",
     "openAccount": "Hesap Aç",
     "learnMore": "Daha Fazla Bilgi",
     "trustedBy": "Lider şirketler tarafından güveniliyor"
@@ -35,12 +35,12 @@
     }
   },
   "whyUs": {
-    "badge": "Neden NCUBank'i Seçmelisiniz",
-    "title": "Müşteriler Neden NationalCreditUnionBank'i Seçiyor?",
+    "badge": "Neden NRBank'i Seçmelisiniz",
+    "title": "Müşteriler Neden NationalRegionBank'i Seçiyor?",
     "accounts": {
       "value": "100K+",
       "label": "Dünya çapında açılan hesaplar.",
-      "description": "Finansal hedefleri için NCUBank'e güvenen 120.000'den fazla memnun müşterinin arasına katılın."
+      "description": "Finansal hedefleri için NRBank'e güvenen 120.000'den fazla memnun müşterinin arasına katılın."
     },
     "fees": {
       "value": "Sıfır",
@@ -72,7 +72,7 @@
   "stats": {
     "badge": "Rakamlarımız",
     "title": "Sizin İçin Çalışan Bankacılık.",
-    "subtitle": "NationalCreditUnionBank'te biz sadece rakamlar değil, aynı zamanda bir güven, yenilik ve güvenlik hikayesiyiz.",
+    "subtitle": "NationalRegionBank'te biz sadece rakamlar değil, aynı zamanda bir güven, yenilik ve güvenlik hikayesiyiz.",
     "interest": {
       "value": "%2",
       "label": "Tasarruf hesaplarında faiz."
@@ -130,14 +130,14 @@
     }
   },
   "cta": {
-    "badge": "NCUBank'e Katılın",
+    "badge": "NRBank'e Katılın",
     "title": "Finansal Potansiyelinizi Açığa Çıkarmaya Hazır mısınız?",
-    "subtitle": "NationalCreditUnionBank ile bugün mali durumunuzun kontrolünü elinize alın ve paranızı daha önce hiç olmadığı kadar akıllı ve zahmetsiz bir şekilde yönetmeyi deneyimleyin.",
+    "subtitle": "NationalRegionBank ile bugün mali durumunuzun kontrolünü elinize alın ve paranızı daha önce hiç olmadığı kadar akıllı ve zahmetsiz bir şekilde yönetmeyi deneyimleyin.",
     "openVault": "Anında Kasa Aç",
     "learnMore": "Daha Fazla Bilgi"
   },
   "footer": {
-    "description": "NationalCreditUnionBank - Modern bankacılıkta güvenilir ortağınız. Güvenli, basit ve sizin için tasarlandı.",
+    "description": "NationalRegionBank - Modern bankacılıkta güvenilir ortağınız. Güvenli, basit ve sizin için tasarlandı.",
     "solutions": "Çözümler",
     "personalBanking": "Bireysel Bankacılık",
     "businessBanking": "Ticari Bankacılık",
@@ -155,7 +155,7 @@
     "teams": "Ekipler",
     "partners": "Ortaklar",
     "followUs": "Bizi Takip Edin",
-    "copyright": "© NationalCreditUnionBank 2024. Tüm Hakları Saklıdır. Şartlar ve Gizlilik"
+    "copyright": "© NationalRegionBank 2024. Tüm Hakları Saklıdır. Şartlar ve Gizlilik"
   },
   "currency": {
     "symbol": "₺",

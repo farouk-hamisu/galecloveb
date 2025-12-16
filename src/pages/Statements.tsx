@@ -117,7 +117,7 @@ const Statements = () => {
     };
 
     const doc = generateMonthlyStatement(statementData);
-    downloadPDF(doc, `NCUBank_Statement_${periodDate}.pdf`);
+    downloadPDF(doc, `NRBank_Statement_${periodDate}.pdf`);
 
     toast({
       title: t('statements_page.toasts.download_success_title'),
@@ -141,7 +141,7 @@ const Statements = () => {
     };
 
     const doc = generateTransactionReceipt(receipt);
-    downloadPDF(doc, `NCUBank_Receipt_${tx.reference_number}.pdf`);
+    downloadPDF(doc, `NRBank_Receipt_${tx.reference_number}.pdf`);
 
     toast({
       title: t('statements_page.toasts.receipt_success_title'),
@@ -170,7 +170,7 @@ const Statements = () => {
       date: tx.created_at!,
     }));
 
-    exportTransactionsCSV(csvData, `NCUBank_Transactions_${new Date().toISOString().split('T')[0]}.csv`);
+    exportTransactionsCSV(csvData, `NRBank_Transactions_${new Date().toISOString().split('T')[0]}.csv`);
 
     toast({
       title: t('statements_page.toasts.export_complete_title'),

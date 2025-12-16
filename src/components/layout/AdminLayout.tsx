@@ -66,7 +66,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
               </div>
               <div>
                 <span className="font-bold text-lg text-foreground block">Admin Panel</span>
-                <span className="text-xs text-muted-foreground">NCUBank</span>
+                <span className="text-xs text-muted-foreground">NRBank</span>
               </div>
             </Link>
           </div>

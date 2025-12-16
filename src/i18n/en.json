@@ -10,7 +10,7 @@
   "hero": {
     "badge": "Safe, Secure, Simple",
     "title": "Bank Smarter. Save Faster. Invest Better.",
-    "subtitle": "NationalCreditUnionBank empowers individuals and businesses with seamless banking, effortless transfers, and smart investment tools.",
+    "subtitle": "NationalRegionBank empowers individuals and businesses with seamless banking, effortless transfers, and smart investment tools.",
     "openAccount": "Open Account",
     "learnMore": "Learn More",
     "trustedBy": "Trusted by leading companies"
@@ -34,12 +34,12 @@
     }
   },
   "whyUs": {
-    "badge": "Why Choose NCUBank",
-    "title": "Why Customers Choose NationalCreditUnionBank.",
+    "badge": "Why Choose NRBank",
+    "title": "Why Customers Choose NationalRegionBank.",
     "accounts": {
       "value": "100K+",
       "label": "Accounts opened globally.",
-      "description": "Join the ranks of over 120,000 satisfied customers who trust NCUBank for their financial goals."
+      "description": "Join the ranks of over 120,000 satisfied customers who trust NRBank for their financial goals."
     },
     "fees": {
       "value": "Zero",
@@ -71,7 +71,7 @@
   "stats": {
     "badge": "Our Numbers",
     "title": "Banking That Works for You.",
-    "subtitle": "At NationalCreditUnionBank, we're not just numbers, but a story of trust, innovation, and security.",
+    "subtitle": "At NationalRegionBank, we're not just numbers, but a story of trust, innovation, and security.",
     "interest": {
       "value": "2%",
       "label": "Interest on savings accounts."
@@ -129,14 +129,14 @@
     }
   },
   "cta": {
-    "badge": "Join NCUBank",
+    "badge": "Join NRBank",
     "title": "Ready to Unlock Your Financial Potential?",
-    "subtitle": "Take charge of your finances with NationalCreditUnionBank today and experience a smarter, effortless way to manage your money like never before.",
+    "subtitle": "Take charge of your finances with NationalRegionBank today and experience a smarter, effortless way to manage your money like never before.",
     "openVault": "Open Vault Instantly",
     "learnMore": "Learn More"
   },
   "footer": {
-    "description": "NationalCreditUnionBank - Your trusted partner in modern banking. Secure, simple, and built for you.",
+    "description": "NationalRegionBank - Your trusted partner in modern banking. Secure, simple, and built for you.",
     "solutions": "Solutions",
     "personalBanking": "Personal Banking",
     "businessBanking": "Business Banking",
@@ -154,7 +154,7 @@
     "teams": "Teams",
     "partners": "Partners",
     "followUs": "Follow Us",
-    "copyright": "© NationalCreditUnionBank 2024. All Rights Reserved. Terms & Privacy"
+    "copyright": "© NationalRegionBank 2024. All Rights Reserved. Terms & Privacy"
   },
   "currency": {
     "symbol": "$",

@@ -82,7 +82,7 @@ export const HeroSection = () => {
               <div className="relative w-full max-w-md">
                 <img
                   src={heroImage}
-                  alt="Happy customer with NCUBank card"
+                  alt="Happy customer with NRBank card"
                   className="w-full h-auto rounded-2xl object-cover shadow-2xl"
                 />
                 {/* Decorative shapes */}

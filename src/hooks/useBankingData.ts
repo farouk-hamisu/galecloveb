@@ -70,6 +70,16 @@ export interface Card {
   created_at: string;
 }
 
+export interface Notification {
+  id: string;
+  user_id: string;
+  title: string;
+  message: string;
+  type: string;
+  is_read: boolean;
+  created_at: string;
+}
+
 export interface SupportTicket {
   id: string;
   user_id: string;
@@ -207,6 +217,26 @@ export const useSupportTickets = () => {
   });
 };
 
+export const useNotifications = () => {
+  const { user } = useAuth();
+
+  return useQuery({
+    queryKey: ['notifications', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return [];
+      const { data, error } = await supabase
+        .from('notifications')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data as Notification[];
+    },
+    enabled: !!user?.id,
+  });
+};
+
 export const useCreateCard = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
@@ -309,6 +339,24 @@ export const useCreateSupportTicket = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['support_tickets'] });
+    },
+  });
+};
+
+export const useMarkNotificationAsRead = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (notificationId: string) => {
+      const { error } = await supabase
+        .from('notifications')
+        .update({ is_read: true })
+        .eq('id', notificationId);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
   });
 };

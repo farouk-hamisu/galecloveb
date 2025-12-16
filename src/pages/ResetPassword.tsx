@@ -84,7 +84,7 @@ const ResetPassword = () => {
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-xl">N</span>
           </div>
-          <span className="text-hero-foreground font-bold text-xl">NCUBank</span>
+          <span className="text-hero-foreground font-bold text-xl">NRBank</span>
         </Link>
 
         <div>
@@ -97,7 +97,7 @@ const ResetPassword = () => {
         </div>
 
         <p className="text-hero-foreground/50 text-sm">
-          © {new Date().getFullYear()} NationalCreditUnionBank. All rights reserved.
+          © {new Date().getFullYear()} NationalRegionBank. All rights reserved.
         </p>
       </div>
 
@@ -114,7 +114,7 @@ const ResetPassword = () => {
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-xl">N</span>
               </div>
-              <span className="text-foreground font-bold text-xl">NCUBank</span>
+              <span className="text-foreground font-bold text-xl">NRBank</span>
             </Link>
 
             {!isSuccess ? (

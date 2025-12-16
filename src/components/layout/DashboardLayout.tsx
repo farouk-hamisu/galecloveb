@@ -18,10 +18,19 @@ import {
   Bell,
   Search,
   Globe,
-  Wallet
+  Wallet,
+  MailOpen,
+  Mail
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useNotifications, useMarkNotificationAsRead } from '@/hooks/useBankingData';
+import { formatDistanceToNow } from 'date-fns';
+import { Separator } from '@/components/ui/separator';
+import { useQueryClient } from '@tanstack/react-query';
+
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -33,14 +42,25 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data: notifications } = useNotifications();
+  const markAsRead = useMarkNotificationAsRead();
+  const queryClient = useQueryClient();
+
+  const unreadNotificationsCount = notifications?.filter(n => !n.is_read).length || 0;
 
   const handleSignOut = async () => {
     await signOut();
+    queryClient.invalidateQueries({ queryKey: ['notifications'] });
     navigate('/');
   };
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'tr' : 'en');
+  };
+
+  const handleNotificationClick = (notificationId: string) => {
+    markAsRead.mutate(notificationId);
+    // Optionally navigate to a specific page based on notification type
   };
 
   const navItems = [
@@ -80,7 +100,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-xl">N</span>
               </div>
-              <span className="font-bold text-lg text-foreground">NCUBank</span>
+              <span className="font-bold text-lg text-foreground">NRBank</span>
             </Link>
           </div>
 
@@ -166,10 +186,62 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <Globe className="w-4 h-4" />
               {i18n.language.toUpperCase()}
             </button>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" />
-            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="w-5 h-5" />
+                  {unreadNotificationsCount > 0 && (
+                    <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                      {unreadNotificationsCount}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <div className="flex items-center justify-between p-4">
+                  <h4 className="text-sm font-semibold text-foreground">Notifications</h4>
+                  {unreadNotificationsCount > 0 && (
+                    <span className="text-xs text-muted-foreground">{unreadNotificationsCount} unread</span>
+                  )}
+                </div>
+                <Separator />
+                <ScrollArea className="h-[280px]">
+                  {notifications && notifications.length > 0 ? (
+                    notifications.map((notification) => (
+                      <div 
+                        key={notification.id} 
+                        className={cn(
+                          "flex gap-3 p-4 border-b border-border last:border-b-0 cursor-pointer hover:bg-muted/50 transition-colors",
+                          !notification.is_read && "bg-muted/30"
+                        )}
+                        onClick={() => handleNotificationClick(notification.id)}
+                      >
+                        <div className="flex-shrink-0">
+                          {notification.is_read ? (
+                            <MailOpen className="w-5 h-5 text-muted-foreground" />
+                          ) : (
+                            <Mail className="w-5 h-5 text-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <p className={cn("text-sm font-medium", !notification.is_read && "text-foreground")}>
+                            {notification.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {notification.message}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="p-4 text-center text-sm text-muted-foreground">No new notifications.</p>
+                  )}
+                </ScrollArea>
+              </PopoverContent>
+            </Popover>
           </div>
         </header>
 
@@ -181,4 +253,5 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     </div>
   );
 };
+
 

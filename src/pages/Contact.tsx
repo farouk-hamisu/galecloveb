@@ -40,14 +40,14 @@ const Contact = () => {
       icon: Mail,
       title: 'Email Us',
       description: 'For general inquiries',
-      value: 'support@ncubank.com',
-      action: 'mailto:support@ncubank.com',
+      value: 'support@nrbank.com',
+      action: 'mailto:support@nrbank.com',
     },
     {
       icon: Phone,
       title: 'Call Us',
       description: '24/7 Customer Support',
-      value: '+1 (800) NCU-BANK',
+      value: '+1 (800) NRB-BANK',
       action: 'tel:+18006282265',
     },
     {
@@ -221,11 +221,11 @@ const Contact = () => {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-hero-foreground/80">
                       <Mail className="w-5 h-5" />
-                      <span>business@ncubank.com</span>
+                      <span>business@nrbank.com</span>
                     </div>
                     <div className="flex items-center gap-3 text-hero-foreground/80">
                       <Phone className="w-5 h-5" />
-                      <span>+1 (800) NCU-CORP</span>
+                      <span>+1 (800) NRB-CORP</span>
                     </div>
                   </div>
                 </div>

@@ -68,7 +68,7 @@ const Signup = () => {
     } else {
       toast({
         title: 'Account created!',
-        description: 'Welcome to NCUBank. Your account is ready.',
+        description: 'Welcome to NRBank. Your account is ready.',
       });
       navigate('/dashboard');
     }
@@ -100,7 +100,7 @@ const Signup = () => {
                   </div>
                 </Link>
                 <h1 className="text-2xl font-bold text-foreground mb-2">Create your account</h1>
-                <p className="text-muted-foreground">Start your banking journey with NCUBank</p>
+                <p className="text-muted-foreground">Start your banking journey with NRBank</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">

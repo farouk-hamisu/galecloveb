@@ -143,7 +143,9 @@ const Transactions = () => {
                         </div>
                       </td>
                       <td className="p-4">
-                        <p className="font-medium text-foreground">{tx.description || tx.type}</p>
+                        <p className="font-medium text-foreground">
+                          {tx.type === 'transfer_out' ? 'Debit' : tx.type === 'transfer_in' ? 'Credit' : tx.description || tx.type}
+                        </p>
                         {tx.recipient_name && (
                           <p className="text-sm text-muted-foreground">{tx.recipient_name}</p>
                         )}

@@ -48,7 +48,7 @@ const About = () => {
                 Banking Reimagined for the Modern World
               </h1>
               <p className="text-hero-foreground/70 text-lg md:text-xl leading-relaxed">
-                NationalCreditUnionBank was founded with a simple mission: to make banking accessible,
+                NationalRegionBank was founded with a simple mission: to make banking accessible,
                 transparent, and empowering for everyone. We believe financial services should work
                 for you, not against you.
               </p>
@@ -68,7 +68,7 @@ const About = () => {
                 <h2 className="section-title text-foreground mb-6">Our Story</h2>
                 <div className="space-y-4 text-muted-foreground text-lg">
                   <p>
-                    Founded in 2020, NCUBank emerged from a vision to transform how people interact
+                    Founded in 2020, NRBank emerged from a vision to transform how people interact
                     with their money. Our founders, veterans of traditional banking, saw firsthand
                     the frustrations customers faced with hidden fees, poor service, and outdated systems.
                   </p>
@@ -113,7 +113,7 @@ const About = () => {
             <div className="text-center max-w-2xl mx-auto mb-16">
               <h2 className="section-title text-foreground mb-4">Our Values</h2>
               <p className="text-muted-foreground text-lg">
-                The principles that guide everything we do at NationalCreditUnionBank.
+                The principles that guide everything we do at NationalRegionBank.
               </p>
             </div>
 

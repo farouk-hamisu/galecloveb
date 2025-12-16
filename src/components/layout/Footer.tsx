@@ -57,7 +57,7 @@ export const Footer = () => {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">N</span>
               </div>
-              <span className="font-bold text-lg">NCUBank</span>
+              <span className="font-bold text-lg">NRBank</span>
             </Link>
             <p className="text-hero-foreground/70 text-sm max-w-xs mb-6">
               {t('footer.description')}

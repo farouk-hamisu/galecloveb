@@ -112,8 +112,8 @@ const Support = () => {
           {[
             { title: 'FAQ', description: 'Find answers to common questions', icon: HelpCircle },
             { title: 'Live Chat', description: 'Chat with our support team', icon: MessageSquare },
-            { title: 'Call Us', description: '1-800-NCU-BANK', icon: HelpCircle },
-            { title: 'Email', description: 'support@ncubank.com', icon: MessageSquare },
+            { title: 'Call Us', description: '1-800-NRB-BANK', icon: HelpCircle },
+            { title: 'Email', description: 'support@nrbank.com', icon: MessageSquare },
           ].map((item, index) => (
             <div 
               key={index}

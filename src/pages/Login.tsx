@@ -94,7 +94,7 @@ const Login = () => {
                   </div>
                 </Link>
                 <h1 className="text-2xl font-bold text-foreground mb-2">Welcome back</h1>
-                <p className="text-muted-foreground">Sign in to your NCUBank account</p>
+                <p className="text-muted-foreground">Sign in to your NRBank account</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">

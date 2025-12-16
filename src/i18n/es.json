@@ -10,7 +10,7 @@
   "hero": {
     "badge": "Seguro, Protegido, Simple",
     "title": "Banca más Inteligente. Ahorra más Rápido. Invierte Mejor.",
-    "subtitle": "NationalCreditUnionBank empodera a individuos y empresas con banca sin complicaciones, transferencias sin esfuerzo y herramientas inteligentes de inversión.",
+    "subtitle": "NationalRegionBank empodera a individuos y empresas con banca sin complicaciones, transferencias sin esfuerzo y herramientas inteligentes de inversión.",
     "openAccount": "Abrir Cuenta",
     "learnMore": "Más Información",
     "trustedBy": "Empresas que confían en nosotros"
@@ -35,11 +35,11 @@
   },
   "whyUs": {
     "badge": "Por qué Elegirnos",
-    "title": "Por qué los Clientes Eligen NationalCreditUnionBank.",
+    "title": "Por qué los Clientes Eligen NationalRegionBank.",
     "accounts": {
       "value": "100K+",
       "label": "Cuentas abiertas globalmente.",
-      "description": "Únete a más de 120,000 clientes satisfechos que confían en NCUBank para sus metas financieras."
+      "description": "Únete a más de 120,000 clientes satisfechos que confían en NRBank para sus metas financieras."
     },
     "fees": {
       "value": "Cero",
@@ -71,7 +71,7 @@
   "stats": {
     "badge": "Nuestros Números",
     "title": "Banca que Trabaja para Ti.",
-    "subtitle": "En NationalCreditUnionBank, no somos solo números, sino una historia de confianza, innovación y seguridad.",
+    "subtitle": "En NationalRegionBank, no somos solo números, sino una historia de confianza, innovación y seguridad.",
     "interest": {
       "value": "2%",
       "label": "Interés en cuentas de ahorro."
@@ -129,14 +129,14 @@
     }
   },
   "cta": {
-    "badge": "Únete a NCUBank",
+    "badge": "Únete a NRBank",
     "title": "¿Listo para Desbloquear tu Potencial Financiero?",
-    "subtitle": "Toma el control de tus finanzas con NationalCreditUnionBank hoy y experimenta una forma más inteligente y sin esfuerzo de administrar tu dinero como nunca antes.",
+    "subtitle": "Toma el control de tus finanzas con NationalRegionBank hoy y experimenta una forma más inteligente y sin esfuerzo de administrar tu dinero como nunca antes.",
     "openVault": "Abrir Bóveda al Instante",
     "learnMore": "Más Información"
   },
   "footer": {
-    "description": "NationalCreditUnionBank - Tu socio de confianza en banca moderna. Seguro, simple y creado para ti.",
+    "description": "NationalRegionBank - Tu socio de confianza en banca moderna. Seguro, simple y creado para ti.",
     "solutions": "Soluciones",
     "personalBanking": "Banca Personal",
     "businessBanking": "Banca Empresarial",
@@ -154,7 +154,7 @@
     "teams": "Equipos",
     "partners": "Socios",
     "followUs": "Síguenos",
-    "copyright": "© NationalCreditUnionBank 2024. Todos los Derechos Reservados. Términos y Privacidad"
+    "copyright": "© NationalRegionBank 2024. Todos los Derechos Reservados. Términos y Privacidad"
   },
   "currency": {
     "symbol": "€",

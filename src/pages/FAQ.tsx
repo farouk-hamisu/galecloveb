@@ -18,7 +18,7 @@ const FAQ = () => {
       category: 'Account & Getting Started',
       questions: [
         {
-          q: 'How do I open an account with NCUBank?',
+          q: 'How do I open an account with NRBank?',
           a: 'Opening an account is simple! Click on "Open Account" or "Sign Up" and follow the guided process. You\'ll need to provide basic personal information, verify your identity (KYC), and you\'ll be ready to bank within minutes.',
         },
         {
@@ -40,7 +40,7 @@ const FAQ = () => {
         },
         {
           q: 'Are there any fees for transfers?',
-          a: 'Internal transfers between NCUBank accounts are always free. International transfers have transparent fees displayed before you confirm. Premium members enjoy 0% FX fees.',
+          a: 'Internal transfers between NRBank accounts are always free. International transfers have transparent fees displayed before you confirm. Premium members enjoy 0% FX fees.',
         },
         {
           q: 'What currencies do you support?',
@@ -121,7 +121,7 @@ const FAQ = () => {
                 Frequently Asked Questions
               </h1>
               <p className="text-hero-foreground/70 text-lg md:text-xl leading-relaxed">
-                Find answers to common questions about NCUBank. Can't find what you're looking for?
+                Find answers to common questions about NRBank. Can't find what you're looking for?
                 Contact our 24/7 support team.
               </p>
             </motion.div>

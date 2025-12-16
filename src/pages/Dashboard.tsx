@@ -28,8 +28,22 @@ const Dashboard = () => {
   const currencySymbol = t('currency.symbol');
 
   const formatCurrency = (amount: number) => {
-    return `${currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+    return `${currencySymbol}${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
   };
+  
+  const now = new Date();
+  const currentMonthTransactions = transactions?.filter(tx => {
+    const txDate = new Date(tx.created_at);
+    return txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear();
+  }) || [];
+
+  const thisMonthIncome = currentMonthTransactions
+    .filter(tx => tx.type === 'transfer_in' || tx.type === 'deposit')
+    .reduce((sum, tx) => sum + Number(tx.amount), 0);
+
+  const thisMonthExpenses = currentMonthTransactions
+    .filter(tx => tx.type === 'transfer_out' || tx.type === 'withdrawal' || tx.type === 'card_payment')
+    .reduce((sum, tx) => sum + Number(tx.amount), 0);
 
   return (
     <DashboardLayout>
@@ -60,7 +74,7 @@ const Dashboard = () => {
               <span className="text-sm font-medium text-foreground">{t('dashboard_page.quick_actions.send')}</span>
             </div>
           </Link>
-          <Link to="/accounts">
+          <Link to="/deposits">
             <div className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
               <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
                 <Download className="w-5 h-5 text-green-500" />
@@ -111,7 +125,7 @@ const Dashboard = () => {
                 <ArrowDownRight className="w-5 h-5 text-green-500" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(2450)}</p>
+            <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(thisMonthIncome)}</p>
             <p className="text-sm text-green-500">{t('dashboard_page.stats.income_change')}</p>
           </div>
 
@@ -122,7 +136,7 @@ const Dashboard = () => {
                 <ArrowUpRight className="w-5 h-5 text-red-500" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(1280)}</p>
+            <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(thisMonthExpenses)}</p>
             <p className="text-sm text-red-500">{t('dashboard_page.stats.expenses_change')}</p>
           </div>
         </motion.div>
@@ -200,7 +214,9 @@ const Dashboard = () => {
                         )}
                       </div>
                       <div>
-                        <p className="font-medium text-foreground text-sm">{tx.description || tx.type}</p>
+                        <p className="font-medium text-foreground text-sm">
+                          {tx.type === 'transfer_out' ? 'Debit' : tx.type === 'transfer_in' ? 'Credit' : tx.description || tx.type}
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           {new Date(tx.created_at).toLocaleDateString()}
                         </p>
