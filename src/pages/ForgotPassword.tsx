@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, Mail, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 const ForgotPassword = () => {
@@ -19,17 +18,26 @@ const ForgotPassword = () => {
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+      const res = await fetch('http://localhost:5000/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
       });
 
-      if (error) throw error;
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send reset email');
+      }
 
       setIsSuccess(true);
-    } catch (error: unknown) {
+    } catch (error) {
       toast({
         title: 'Error',
-        description: (error as Error).message || 'Something went wrong. Please try again.',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -53,7 +61,7 @@ const ForgotPassword = () => {
             Reset Your Password
           </h1>
           <p className="text-hero-foreground/70 text-lg max-w-md">
-            Don't worry, it happens to the best of us. Enter your email and we'll send you a link to reset your password.
+            Enter your email and we’ll send you instructions to reset your password.
           </p>
         </div>
 
@@ -70,7 +78,6 @@ const ForgotPassword = () => {
           className="w-full max-w-md"
         >
           <div className="bg-card rounded-2xl p-8 shadow-xl border border-border">
-            {/* Mobile Logo */}
             <Link to="/" className="lg:hidden flex items-center gap-2 mb-8 justify-center">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-xl">N</span>
@@ -84,9 +91,9 @@ const ForgotPassword = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Mail className="w-8 h-8 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground mb-2">Forgot Password?</h2>
+                  <h2 className="text-2xl font-bold mb-2">Forgot Password?</h2>
                   <p className="text-muted-foreground">
-                    Enter your email address and we'll send you instructions to reset your password.
+                    Enter your email address and we’ll send you reset instructions.
                   </p>
                 </div>
 
@@ -113,18 +120,12 @@ const ForgotPassword = () => {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Check Your Email</h2>
+                <h2 className="text-2xl font-bold mb-2">Check Your Email</h2>
                 <p className="text-muted-foreground mb-6">
-                  We've sent a password reset link to <strong>{email}</strong>. Click the link in the email to create a new password.
+                  We sent a reset link to <strong>{email}</strong>.
                 </p>
-                <p className="text-sm text-muted-foreground mb-6">
-                  Didn't receive the email? Check your spam folder or try again.
-                </p>
-                <Button
-                  variant="outline"
-                  onClick={() => setIsSuccess(false)}
-                  className="mb-4"
-                >
+
+                <Button variant="outline" onClick={() => setIsSuccess(false)}>
                   Try Again
                 </Button>
               </div>
@@ -133,7 +134,7 @@ const ForgotPassword = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Login
@@ -147,3 +148,4 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+

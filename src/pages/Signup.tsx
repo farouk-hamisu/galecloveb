@@ -18,7 +18,7 @@ const signupSchema = z.object({
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { signUp, user, loading: authLoading } = useAuth();
+  const { signIn, user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   
   const [showPassword, setShowPassword] = useState(false);
@@ -35,45 +35,52 @@ const Signup = () => {
       navigate('/dashboard');
     }
   }, [user, authLoading, navigate]);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setErrors({});
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-    
-    const result = signupSchema.safeParse({ firstName, lastName, email, password, agreeTerms });
-    if (!result.success) {
-      const fieldErrors: Record<string, string> = {};
-      result.error.errors.forEach((err) => {
-        const field = err.path[0] as string;
-        fieldErrors[field] = err.message;
-      });
-      setErrors(fieldErrors);
-      return;
-    }
+  const result = signupSchema.safeParse({ firstName, lastName, email, password, agreeTerms });
+  if (!result.success) {
+    const fieldErrors: Record<string, string> = {};
+    result.error.errors.forEach((err) => {
+      const field = err.path[0] as string;
+      fieldErrors[field] = err.message;
+    });
+    setErrors(fieldErrors);
+    return;
+  }
 
-    setLoading(true);
-    const { error } = await signUp(email, password, firstName, lastName);
-    setLoading(false);
+  setLoading(true);
 
-    if (error) {
-      let message = error.message;
-      if (error.message.includes('already registered')) {
-        message = 'This email is already registered. Please sign in instead.';
-      }
-      toast({
-        title: 'Sign up failed',
-        description: message,
-        variant: 'destructive',
-      });
-    } else {
-      toast({
-        title: 'Account created!',
-        description: 'Welcome to NRBank. Your account is ready.',
-      });
-      navigate('/dashboard');
-    }
-  };
+  const res = await fetch("http://localhost:5000/send-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
+  setLoading(false);
+
+  if (!res.ok) {
+    const data = await res.json();
+    toast({
+      title: "Signup failed",
+      description: data.error || "Something went wrong",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  toast({
+    title: "Verification code sent",
+    description: "A 6-digit code has been sent to your email",
+  });
+
+  navigate("/verify-email", {
+    state: { email },
+  });
+};
+
+ 
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-hero">

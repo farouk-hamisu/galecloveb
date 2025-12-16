@@ -26,12 +26,16 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
-  useEffect(() => {
-    if (user && !authLoading) {
-      navigate('/dashboard');
+useEffect(() => {
+  if (!authLoading && user) {
+    if (user.email_confirmed_at) {
+      navigate('/dashboard', { replace: true });
+    } else {
+      navigate('/verify-email', { replace: true });
     }
-  }, [user, authLoading, navigate]);
-
+  }
+}, [user, authLoading, navigate]);
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});

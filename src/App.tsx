@@ -36,6 +36,7 @@ import AdminTransactions from "./pages/admin/AdminTransactions";
 import AdminBeneficiaries from "./pages/admin/AdminBeneficiaries";
 import AdminCards from "./pages/admin/AdminCards";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import VerifyEmail from "./pages/VerifyEmail"; 
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,8 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
             <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
