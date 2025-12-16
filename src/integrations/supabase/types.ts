@@ -361,6 +361,16 @@ export type Database = {
         }
         Returns: boolean
       }
+      lookup_transfer_recipient: {
+        Args: { p_identifier: string; p_is_email: boolean }
+        Returns: {
+          account_id: string
+          account_number: string
+          first_name: string
+          last_name: string
+          user_id: string
+        }[]
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
