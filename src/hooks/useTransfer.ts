@@ -53,14 +53,8 @@ export const useTransfer = () => {
         throw new Error('Insufficient funds');
       }
 
-      interface Account {
-  id: string;
-  balance: number;
-  account_number: string;
-  user_id: string;
-}
-
-let recipientAccount: Account | null = null;
+      let recipientAccountId: string | null = null;
+      let recipientAccountNumber: string | null = null;
       let recipientUserId: string | null = null;
       let recipientName = '';
 
@@ -68,63 +62,34 @@ let recipientAccount: Account | null = null;
         // Check if identifier is an email
         const isEmail = toIdentifier.includes('@');
 
-        if (isEmail) {
-          // Find user by email
-          const { data: recipientProfile, error: profileError } = await supabase
-            .from('profiles')
-            .select('id, first_name, last_name')
-            .eq('email', toIdentifier.toLowerCase().trim())
-            .maybeSingle();
+        // Use the database function to look up recipient (bypasses RLS)
+        const { data: recipientData, error: lookupError } = await supabase
+          .rpc('lookup_transfer_recipient', {
+            p_identifier: toIdentifier.trim(),
+            p_is_email: isEmail
+          });
 
-          if (profileError || !recipientProfile) {
-            throw new Error('Recipient not found. Please check the email address.');
-          }
-
-          recipientUserId = recipientProfile.id;
-          recipientName = `${recipientProfile.first_name || ''} ${recipientProfile.last_name || ''}`.trim() || 'User';
-
-          // Get recipient's primary (first active) account
-          const { data: accounts, error: accError } = await supabase
-            .from('accounts')
-            .select('*')
-            .eq('user_id', recipientProfile.id)
-            .eq('is_active', true)
-            .order('created_at', { ascending: true })
-            .limit(1);
-
-          if (accError || !accounts || accounts.length === 0) {
-            throw new Error('Recipient has no active accounts');
-          }
-
-          recipientAccount = accounts[0];
-        } else {
-          // Find account by account number
-          const { data: account, error: accError } = await supabase
-            .from('accounts')
-            .select('*')
-            .eq('account_number', toIdentifier.trim())
-            .eq('is_active', true)
-            .maybeSingle();
-
-          if (accError || !account) {
-            throw new Error('Recipient account not found. Please check the account number.');
-          }
-
-          recipientAccount = account;
-          recipientUserId = account.user_id;
-
-          // Get recipient name
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('first_name, last_name')
-            .eq('id', account.user_id)
-            .single();
-
-          recipientName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'User' : 'User';
+        if (lookupError) {
+          console.error('Lookup error:', lookupError);
+          throw new Error(isEmail 
+            ? 'Recipient not found. Please check the email address.'
+            : 'Recipient account not found. Please check the account number.');
         }
 
+        if (!recipientData || recipientData.length === 0) {
+          throw new Error(isEmail 
+            ? 'Recipient not found. Please check the email address.'
+            : 'Recipient account not found. Please check the account number.');
+        }
+
+        const recipient = recipientData[0];
+        recipientAccountId = recipient.account_id;
+        recipientAccountNumber = recipient.account_number;
+        recipientUserId = recipient.user_id;
+        recipientName = `${recipient.first_name || ''} ${recipient.last_name || ''}`.trim() || 'User';
+
         // Prevent self-transfer to same account
-        if (recipientAccount.id === fromAccountId) {
+        if (recipientAccountId === fromAccountId) {
           throw new Error('Cannot transfer to the same account');
         }
       } else {
@@ -144,6 +109,7 @@ let recipientAccount: Account | null = null;
         }
 
         recipientName = beneficiary.name;
+        recipientAccountNumber = beneficiary.account_number;
       }
 
       const referenceNumber = generateReferenceNumber();
@@ -171,7 +137,7 @@ let recipientAccount: Account | null = null;
           description: description || `Transfer to ${recipientName}`,
           reference_number: referenceNumber,
           recipient_name: recipientName,
-          recipient_account: recipientAccount?.account_number || 'International',
+          recipient_account: recipientAccountNumber || 'International',
           status: 'completed'
         });
 
@@ -185,16 +151,21 @@ let recipientAccount: Account | null = null;
       }
 
       // For internal transfers, credit recipient
-      if (transferType === 'internal' && recipientAccount) {
-        const newRecipientBalance = Number(recipientAccount.balance) + amount;
-        
-        const { error: creditError } = await supabase
+      if (transferType === 'internal' && recipientAccountId) {
+        // Get recipient's current balance
+        const { data: recipientAccData } = await supabase
           .from('accounts')
-          .update({ balance: newRecipientBalance })
-          .eq('id', recipientAccount.id);
+          .select('balance')
+          .eq('id', recipientAccountId)
+          .single();
 
-        if (creditError) {
-          console.error('Failed to credit recipient:', creditError);
+        if (recipientAccData) {
+          const newRecipientBalance = Number(recipientAccData.balance) + amount;
+          
+          await supabase
+            .from('accounts')
+            .update({ balance: newRecipientBalance })
+            .eq('id', recipientAccountId);
         }
 
         // Create credit transaction for recipient
@@ -209,7 +180,7 @@ let recipientAccount: Account | null = null;
         await supabase
           .from('transactions')
           .insert({
-            account_id: recipientAccount.id,
+            account_id: recipientAccountId,
             type: 'transfer_in',
             amount: amount,
             currency,
@@ -283,6 +254,80 @@ export const useCreateAccount = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
+    }
+  });
+};
+
+export const useDeposit = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async ({ 
+      accountId, 
+      amount, 
+      method, 
+      description 
+    }: { 
+      accountId: string; 
+      amount: number; 
+      method: string;
+      description?: string;
+    }) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      // Get current account balance
+      const { data: account, error: accError } = await supabase
+        .from('accounts')
+        .select('balance, currency, account_number')
+        .eq('id', accountId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (accError || !account) {
+        throw new Error('Account not found');
+      }
+
+      const referenceNumber = 'DEP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
+      const newBalance = Number(account.balance) + amount;
+
+      // Update balance
+      const { error: updateError } = await supabase
+        .from('accounts')
+        .update({ balance: newBalance })
+        .eq('id', accountId);
+
+      if (updateError) {
+        throw new Error('Failed to update account balance');
+      }
+
+      // Create transaction record
+      const { error: txError } = await supabase
+        .from('transactions')
+        .insert({
+          account_id: accountId,
+          type: 'deposit',
+          amount: amount,
+          currency: account.currency || 'USD',
+          description: description || `Deposit via ${method}`,
+          reference_number: referenceNumber,
+          status: 'completed'
+        });
+
+      if (txError) {
+        // Rollback
+        await supabase
+          .from('accounts')
+          .update({ balance: account.balance })
+          .eq('id', accountId);
+        throw new Error('Failed to create transaction record');
+      }
+
+      return { success: true, referenceNumber };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
     }
   });
 };

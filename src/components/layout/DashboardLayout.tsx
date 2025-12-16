@@ -17,7 +17,8 @@ import {
   X,
   Bell,
   Search,
-  Globe
+  Globe,
+  Wallet
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -47,6 +48,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { icon: CreditCard, label: t('dashboard_nav.accounts'), path: '/accounts' },
     { icon: ArrowLeftRight, label: t('dashboard_nav.transactions'), path: '/transactions' },
     { icon: ArrowLeftRight, label: t('dashboard_nav.transfer'), path: '/transfer' },
+    { icon: Wallet, label: t('dashboard_nav.deposits') || 'Deposits', path: '/deposits' },
     { icon: Users, label: t('dashboard_nav.beneficiaries'), path: '/beneficiaries' },
     { icon: CreditCard, label: t('dashboard_nav.cards'), path: '/cards' },
     { icon: PiggyBank, label: t('dashboard_nav.savings'), path: '/savings' },
