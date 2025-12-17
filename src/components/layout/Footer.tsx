@@ -11,7 +11,6 @@ export const Footer = () => {
       links: [
         { label: t('footer.personalBanking'), href: '/personal' },
         { label: t('footer.businessBanking'), href: '/business' },
-        { label: t('footer.investments'), href: '/investments' },
       ],
     },
     {

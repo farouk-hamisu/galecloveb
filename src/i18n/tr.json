@@ -11,7 +11,7 @@
   "hero": {
     "badge": "Güvenli, Emniyetli, Basit",
     "title": "Daha Akıllı Bankacılık. Daha Hızlı Tasarruf. Daha İyi Yatırım.",
-    "subtitle": "NationalRegionBank, bireyleri ve işletmeleri sorunsuz bankacılık, zahmetsiz transferler ve akıllı yatırım araçlarıyla güçlendirir.",
+    "subtitle": "NationalRegionBank, bireyleri ve işletmeleri sorunsuz bankacılık ve zahmetsiz transferler ile güçlendirir.",
     "openAccount": "Hesap Aç",
     "learnMore": "Daha Fazla Bilgi",
     "trustedBy": "Lider şirketler tarafından güveniliyor"
@@ -113,8 +113,7 @@
         "7/24 öncelikli destek",
         "%0 FX ücreti",
         "Sanal kartlar",
-        "Gelişmiş analizler",
-        "Yatırım araçları"
+        "Gelişmiş analizler"
       ]
     },
     "business": {
@@ -141,7 +140,7 @@
     "solutions": "Çözümler",
     "personalBanking": "Bireysel Bankacılık",
     "businessBanking": "Ticari Bankacılık",
-    "investments": "Yatırımlar",
+    
     "company": "Şirket",
     "aboutUs": "Hakkımızda",
     "careers": "Kariyer",
@@ -165,7 +164,7 @@
     "dashboard": "Panel",
     "transactions": "İşlemler",
     "accounts": "Hesaplar",
-    "investments": "Yatırımlar",
+    
     "cards": "Kartlar",
     "savings": "Tasarruflar",
     "deposits": "Para Yatırma",
@@ -369,28 +368,6 @@
     "emergency_fund": "Acil Durum Fonu",
     "vacation": "Tatil",
     "new_car": "Yeni Araba"
-  },
-  "investments_page": {
-    "title": "Yatırımlar",
-    "subtitle": "Yatırım portföyünüzü takip edin ve yönetin.",
-    "buy_assets": "Varlık Satın Al",
-    "portfolio_value": "Portföy Değeri",
-    "all_time": "Tüm zamanlar",
-    "todays_change": "Bugünkü Değişim",
-    "your_holdings": "Varlıklarınız",
-    "asset": "Varlık",
-    "holdings": "Miktar",
-    "value": "Değer",
-    "change": "Değişim",
-    "share": "hisse",
-    "shares": "hisse",
-    "disclaimer_title": "Yasal Uyarı:",
-    "disclaimer_text": "Yatırım değerleri artabilir veya azalabilir. Geçmiş performans gelecekteki sonuçların bir göstergesi değildir. Lütfen sorumlu bir şekilde yatırım yapın.",
-    "sp500_etf": "S&P 500 ETF",
-    "apple_inc": "Apple Inc.",
-    "microsoft_corp": "Microsoft Corp.",
-    "bitcoin": "Bitcoin",
-    "gold_etf": "Altın ETF"
   },
   "statements_page": {
     "title": "Ekstreler ve Makbuzlar",

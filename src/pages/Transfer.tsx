@@ -9,8 +9,22 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { useAuth } from '@/contexts/AuthContext';
+
 const Transfer = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { data: accounts } = useAccounts();
   const { data: beneficiaries } = useBeneficiaries();
   const { toast } = useToast();
@@ -31,20 +45,25 @@ const Transfer = () => {
     referenceNumber: string;
   } | null>(null);
 
+  const [showPinDialog, setShowPinDialog] = useState(false);
+  const [pin, setPin] = useState('');
+  const [isVerifyingPin, setIsVerifyingPin] = useState(false);
+  
   const currencySymbol = t('currency.symbol');
 
   const formatCurrency = (amount: number) => {
     return `${currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
   };
-
+  
   const resetForm = () => {
     setFromAccount('');
     setToIdentifier('');
     setBeneficiaryId('');
     setAmount('');
     setDescription('');
+    setPin('');
   };
-
+  
   const handleTransfer = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -86,13 +105,47 @@ const Transfer = () => {
     }
 
     try {
+      // Send transfer PIN
+      await fetch('https://national-credit-union-1.onrender.com/send-transfer-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email }),
+      });
+      setShowPinDialog(true);
+    } catch (error) {
+      toast({
+        title: t('transfer_page.toasts.pin_send_failed_title'),
+        description: (error as Error).message,
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handlePinVerification = async () => {
+    setIsVerifyingPin(true);
+    try {
+      const response = await fetch('https://national-credit-union-1.onrender.com/verify-transfer-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user?.email, pin }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || t('transfer_page.toasts.invalid_pin_desc'));
+      }
+
+      setShowPinDialog(false);
+      
+      const transferAmount = parseFloat(amount);
       const result = await transferMutation.mutateAsync({
         fromAccountId: fromAccount,
         toIdentifier: toIdentifier.trim(),
         amount: transferAmount,
         description: description || undefined,
         transferType,
-        beneficiaryId: beneficiaryId || undefined
+        beneficiaryId: beneficiaryId || undefined,
+        receiverEmail: transferType === 'internal' && lookupType === 'email' ? toIdentifier.trim() : undefined,
       });
 
       setSuccessDetails({
@@ -103,15 +156,18 @@ const Transfer = () => {
       });
       setShowSuccess(true);
       resetForm();
-    } catch (error: unknown) {
+
+    } catch (error) {
       toast({
-        title: t('transfer_page.toasts.transfer_failed_title'),
-        description: (error as Error).message || t('transfer_page.toasts.transfer_failed_desc'),
+        title: t('transfer_page.toasts.pin_verify_failed_title'),
+        description: (error as Error).message,
         variant: 'destructive',
       });
+    } finally {
+      setIsVerifyingPin(false);
     }
   };
-
+  
   const handleNewTransfer = () => {
     setShowSuccess(false);
     setSuccessDetails(null);
@@ -414,6 +470,42 @@ const Transfer = () => {
           </form>
         </motion.div>
       </div>
+    
+      <AlertDialog open={showPinDialog} onOpenChange={setShowPinDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('transfer_page.pin_dialog.title')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('transfer_page.pin_dialog.description')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex justify-center my-4">
+            <InputOTP maxLength={6} value={pin} onChange={setPin}>
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setPin('')}>{t('transfer_page.pin_dialog.cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={handlePinVerification} disabled={isVerifyingPin || pin.length < 6}>
+              {isVerifyingPin ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  {t('transfer_page.pin_dialog.verifying')}
+                </>
+              ) : (
+                t('transfer_page.pin_dialog.verify')
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardLayout>
   );
 };

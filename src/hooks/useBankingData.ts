@@ -47,6 +47,7 @@ export interface Beneficiary {
   id: string;
   user_id: string;
   name: string;
+  email: string | null;
   bank_name: string;
   account_number: string;
   swift_code: string | null;

@@ -10,7 +10,7 @@
   "hero": {
     "badge": "Seguro, Protegido, Simple",
     "title": "Banca más Inteligente. Ahorra más Rápido. Invierte Mejor.",
-    "subtitle": "NationalRegionBank empodera a individuos y empresas con banca sin complicaciones, transferencias sin esfuerzo y herramientas inteligentes de inversión.",
+    "subtitle": "NationalRegionBank empodera a individuos y empresas con banca sin complicaciones y transferencias sin esfuerzo.",
     "openAccount": "Abrir Cuenta",
     "learnMore": "Más Información",
     "trustedBy": "Empresas que confían en nosotros"
@@ -112,8 +112,7 @@
         "Soporte prioritario 24/7",
         "0% comisiones FX",
         "Tarjetas virtuales",
-        "Análisis avanzado",
-        "Herramientas de inversión"
+        "Análisis avanzado"
       ]
     },
     "business": {
@@ -140,7 +139,6 @@
     "solutions": "Soluciones",
     "personalBanking": "Banca Personal",
     "businessBanking": "Banca Empresarial",
-    "investments": "Inversiones",
     "company": "Compañía",
     "aboutUs": "Sobre Nosotros",
     "careers": "Carreras",

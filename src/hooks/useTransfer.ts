@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {supabase} from '@/integrations/supabase/client';
+import {useAuth} from '@/contexts/AuthContext';
 
 interface TransferRequest {
   fromAccountId: string;
@@ -9,12 +9,14 @@ interface TransferRequest {
   description?: string;
   transferType: 'internal' | 'international';
   beneficiaryId?: string;
+  receiverEmail?: string;
 }
 
 interface TransferResult {
   success: boolean;
   referenceNumber: string;
   recipientName: string;
+  recipientEmail: string;
   amount: number;
   currency: string;
 }
@@ -29,18 +31,19 @@ const generateReferenceNumber = () => {
 
 export const useTransfer = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
     mutationFn: async (request: TransferRequest): Promise<TransferResult> => {
+      console.log('Initiating transfer:', request);
       if (!user?.id) throw new Error('Not authenticated');
 
-      const { fromAccountId, toIdentifier, amount, description, transferType, beneficiaryId } = request;
+      const {fromAccountId, toIdentifier, amount, description, transferType, beneficiaryId} = request;
 
       if (transferType === 'internal') {
         const isEmail = toIdentifier.includes('@');
-        
-        const { data, error } = await supabase.rpc('internal_transfer', {
+
+        const {data, error} = await supabase.rpc('internal_transfer', {
           p_sender_user_id: user.id,
           p_from_account_id: fromAccountId,
           p_to_identifier: toIdentifier.trim(),
@@ -59,18 +62,19 @@ export const useTransfer = () => {
         if (!result.success) {
           throw new Error(result.message);
         }
-        
+
         return {
           success: true,
           referenceNumber: result.reference_number,
           recipientName: result.recipient_name,
+          recipientEmail: result.recipient_email,
           amount,
           currency: result.currency
         };
 
       } else {
         // --- Keep existing international transfer logic ---
-        const { data: senderAccount, error: senderError } = await supabase
+        const {data: senderAccount, error: senderError} = await supabase
           .from('accounts')
           .select('*')
           .eq('id', fromAccountId)
@@ -89,9 +93,9 @@ export const useTransfer = () => {
           throw new Error('Please select a beneficiary for international transfer');
         }
 
-        const { data: beneficiary, error: benError } = await supabase
+        const {data: beneficiary, error: benError} = await supabase
           .from('beneficiaries')
-          .select('*')
+          .select('name, email')
           .eq('id', beneficiaryId)
           .single();
 
@@ -103,18 +107,18 @@ export const useTransfer = () => {
         const recipientAccountNumber = beneficiary.account_number;
         const referenceNumber = generateReferenceNumber();
         const currency = senderAccount.currency || 'USD';
-        
+
         const newSenderBalance = Number(senderAccount.balance) - amount;
-        const { error: debitError } = await supabase
+        const {error: debitError} = await supabase
           .from('accounts')
-          .update({ balance: newSenderBalance })
+          .update({balance: newSenderBalance})
           .eq('id', fromAccountId);
 
         if (debitError) {
           throw new Error('Failed to debit account');
         }
 
-        const { error: senderTxError } = await supabase
+        const {error: senderTxError} = await supabase
           .from('transactions')
           .insert({
             account_id: fromAccountId,
@@ -129,7 +133,7 @@ export const useTransfer = () => {
           });
 
         if (senderTxError) {
-          await supabase.from('accounts').update({ balance: senderAccount.balance }).eq('id', fromAccountId);
+          await supabase.from('accounts').update({balance: senderAccount.balance}).eq('id', fromAccountId);
           throw new Error('Failed to create transaction record');
         }
 
@@ -137,30 +141,73 @@ export const useTransfer = () => {
           success: true,
           referenceNumber,
           recipientName,
+          recipientEmail: beneficiary.email,
           amount,
           currency
         };
       }
     },
-    onSuccess: () => {
+    onSuccess: async (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      queryClient.invalidateQueries({ queryKey: ['notifications'] }); // Invalidate notifications as well
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+
+      console.log('Transfer successful, sending notification...');
+      
+      let senderName = user?.user_metadata.full_name;
+      if (!senderName) {
+        const { data: profile } = await supabase.from('profiles').select('first_name, last_name').eq('id', user?.id).single();
+        if (profile && profile.first_name && profile.last_name) {
+          senderName = `${profile.first_name} ${profile.last_name}`;
+        } else {
+          senderName = user?.email; // fallback to email
+        }
+      }
+
+      // Send transaction notification
+      const senderEmail = user?.email;
+      const receiverEmail = variables.receiverEmail || data.recipientEmail;
+      
+      fetch('https://national-credit-union-1.onrender.com/send-transaction-notification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          senderName,
+          receiverName: data.recipientName,
+          amount: new Intl.NumberFormat('en-US', { style: 'currency', currency: data.currency }).format(data.amount),
+          senderEmail,
+          receiverEmail: receiverEmail,
+          date: new Date().toLocaleDateString(),
+        }),
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Transaction notification sent successfully.');
+        } else {
+          console.error('Failed to send transaction notification.');
+        }
+      })
+      .catch(error => {
+        console.error('Error sending transaction notification:', error);
+      });
+    },
+    onError: (error) => {
+      console.error('Transfer failed:', error);
     }
   });
 };
 
 export const useCreateAccount = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
-    mutationFn: async ({ accountType }: { accountType: 'checking' | 'savings' }) => {
+    mutationFn: async ({accountType}: {accountType: 'checking' | 'savings'}) => {
       if (!user?.id) throw new Error('Not authenticated');
 
       const accountNumber = 'NRB' + Math.random().toString().slice(2, 12).padEnd(10, '0');
 
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('accounts')
         .insert({
           user_id: user.id,
@@ -177,31 +224,31 @@ export const useCreateAccount = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({queryKey: ['accounts']});
     }
   });
 };
 
 export const useDeposit = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
-    mutationFn: async ({ 
-      accountId, 
-      amount, 
-      method, 
-      description 
-    }: { 
-      accountId: string; 
-      amount: number; 
+    mutationFn: async ({
+      accountId,
+      amount,
+      method,
+      description
+    }: {
+      accountId: string;
+      amount: number;
       method: string;
       description?: string;
     }) => {
       if (!user?.id) throw new Error('Not authenticated');
 
       // Get current account balance
-      const { data: account, error: accError } = await supabase
+      const {data: account, error: accError} = await supabase
         .from('accounts')
         .select('balance, currency, account_number')
         .eq('id', accountId)
@@ -216,9 +263,9 @@ export const useDeposit = () => {
       const newBalance = Number(account.balance) + amount;
 
       // Update balance
-      const { error: updateError } = await supabase
+      const {error: updateError} = await supabase
         .from('accounts')
-        .update({ balance: newBalance })
+        .update({balance: newBalance})
         .eq('id', accountId);
 
       if (updateError) {
@@ -226,7 +273,7 @@ export const useDeposit = () => {
       }
 
       // Create transaction record
-      const { error: txError } = await supabase
+      const {error: txError} = await supabase
         .from('transactions')
         .insert({
           account_id: accountId,
@@ -242,16 +289,16 @@ export const useDeposit = () => {
         // Rollback
         await supabase
           .from('accounts')
-          .update({ balance: account.balance })
+          .update({balance: account.balance})
           .eq('id', accountId);
         throw new Error('Failed to create transaction record');
       }
 
-      return { success: true, referenceNumber };
+      return {success: true, referenceNumber};
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['accounts'] });
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({queryKey: ['accounts']});
+      queryClient.invalidateQueries({queryKey: ['transactions']});
     }
   });
 };

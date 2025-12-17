@@ -24,7 +24,6 @@ import Beneficiaries from "./pages/Beneficiaries";
 import Cards from "./pages/Cards";
 import Savings from "./pages/Savings";
 import Deposits from "./pages/Deposits";
-import Investments from "./pages/Investments";
 import Statements from "./pages/Statements";
 import Support from "./pages/Support";
 import Settings from "./pages/Settings";
@@ -67,7 +66,6 @@ const App = () => (
             <Route path="/cards" element={<ProtectedRoute><Cards /></ProtectedRoute>} />
             <Route path="/savings" element={<ProtectedRoute><Savings /></ProtectedRoute>} />
             <Route path="/deposits" element={<ProtectedRoute><Deposits /></ProtectedRoute>} />
-            <Route path="/investments" element={<ProtectedRoute><Investments /></ProtectedRoute>} />
             <Route path="/statements" element={<ProtectedRoute><Statements /></ProtectedRoute>} />
             <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

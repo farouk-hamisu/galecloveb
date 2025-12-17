@@ -10,7 +10,7 @@
   "hero": {
     "badge": "Safe, Secure, Simple",
     "title": "Bank Smarter. Save Faster. Invest Better.",
-    "subtitle": "NationalRegionBank empowers individuals and businesses with seamless banking, effortless transfers, and smart investment tools.",
+    "subtitle": "NationalRegionBank empowers individuals and businesses with seamless banking and effortless transfers.",
     "openAccount": "Open Account",
     "learnMore": "Learn More",
     "trustedBy": "Trusted by leading companies"
@@ -112,8 +112,7 @@
         "Priority support 24/7",
         "0% FX fees",
         "Virtual cards",
-        "Advanced analytics",
-        "Investment tools"
+        "Advanced analytics"
       ]
     },
     "business": {
@@ -140,7 +139,7 @@
     "solutions": "Solutions",
     "personalBanking": "Personal Banking",
     "businessBanking": "Business Banking",
-    "investments": "Investments",
+    
     "company": "Company",
     "aboutUs": "About Us",
     "careers": "Careers",
@@ -164,7 +163,7 @@
     "dashboard": "Dashboard",
     "transactions": "Transactions",
     "accounts": "Accounts",
-    "investments": "Investments",
+    
     "cards": "Cards",
     "savings": "Savings",
     "deposits": "Deposits",
@@ -285,7 +284,17 @@
       "missing_recipient_desc": "Please enter recipient email or account number.",
       "missing_beneficiary_desc": "Please select a beneficiary.",
       "transfer_failed_title": "Transfer Failed",
-      "transfer_failed_desc": "An error occurred during the transfer."
+      "transfer_failed_desc": "An error occurred during the transfer.",
+      "pin_send_failed_title": "Failed to Send PIN",
+      "pin_verify_failed_title": "PIN Verification Failed",
+      "invalid_pin_desc": "The PIN you entered is invalid. Please try again."
+    },
+    "pin_dialog": {
+      "title": "Enter Transfer PIN",
+      "description": "A 6-digit PIN has been sent to your registered email address. Please enter it below to authorize the transfer.",
+      "cancel": "Cancel",
+      "verifying": "Verifying...",
+      "verify": "Verify & Transfer"
     }
   },
   "beneficiaries_page": {
@@ -368,28 +377,6 @@
     "emergency_fund": "Emergency Fund",
     "vacation": "Vacation",
     "new_car": "New Car"
-  },
-  "investments_page": {
-    "title": "Investments",
-    "subtitle": "Track and manage your investment portfolio.",
-    "buy_assets": "Buy Assets",
-    "portfolio_value": "Portfolio Value",
-    "all_time": "All time",
-    "todays_change": "Today's Change",
-    "your_holdings": "Your Holdings",
-    "asset": "Asset",
-    "holdings": "Holdings",
-    "value": "Value",
-    "change": "Change",
-    "share": "share",
-    "shares": "shares",
-    "disclaimer_title": "Disclaimer:",
-    "disclaimer_text": "Investment values can go up and down. Past performance is not indicative of future results. Please invest responsibly.",
-    "sp500_etf": "S&P 500 ETF",
-    "apple_inc": "Apple Inc.",
-    "microsoft_corp": "Microsoft Corp.",
-    "bitcoin": "Bitcoin",
-    "gold_etf": "Gold ETF"
   },
   "statements_page": {
     "title": "Statements & Receipts",

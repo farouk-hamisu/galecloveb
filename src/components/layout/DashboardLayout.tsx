@@ -72,7 +72,6 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { icon: Users, label: t('dashboard_nav.beneficiaries'), path: '/beneficiaries' },
     { icon: CreditCard, label: t('dashboard_nav.cards'), path: '/cards' },
     { icon: PiggyBank, label: t('dashboard_nav.savings'), path: '/savings' },
-    { icon: TrendingUp, label: t('dashboard_nav.investments'), path: '/investments' },
     { icon: FileText, label: t('dashboard_nav.statements'), path: '/statements' },
     { icon: HelpCircle, label: t('dashboard_nav.support'), path: '/support' },
     { icon: Settings, label: t('dashboard_nav.settings'), path: '/settings' },

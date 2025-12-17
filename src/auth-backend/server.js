@@ -39,6 +39,9 @@ const __dirname = path.dirname(__filename);
 
 const verificationEmailTemplate = fs.readFileSync(path.join(__dirname, 'emails', 'verification-email.html'), 'utf8');
 const passwordResetEmailTemplate = fs.readFileSync(path.join(__dirname, 'emails', 'password-reset-email.html'), 'utf8');
+const transferPinEmailTemplate = fs.readFileSync(path.join(__dirname, 'emails', 'transfer-pin-email.html'), 'utf8');
+const debitNotificationEmailTemplate = fs.readFileSync(path.join(__dirname, 'emails', 'debit-notification-email.html'), 'utf8');
+const creditNotificationEmailTemplate = fs.readFileSync(path.join(__dirname, 'emails', 'credit-notification-email.html'), 'utf8');
 
 
 // ---------------------------
@@ -53,10 +56,10 @@ const genOtp = () =>
 // ---------------------------
 app.post("/send-otp", async (req, res) => {
   try {
-    const {email, password} = req.body;
+    const {email, password, firstName, lastName} = req.body;
 
-    if (!email || !password)
-      return res.status(400).json({error: "Email & password required"});
+    if (!email || !password || !firstName || !lastName)
+      return res.status(400).json({error: "Email, password, first name and last name required"});
 
     const emailLower = email.trim().toLowerCase();
 
@@ -65,7 +68,12 @@ app.post("/send-otp", async (req, res) => {
       await db.auth.admin.createUser({
         email: emailLower,
         password,
-        email_confirm: false
+        email_confirm: false,
+        user_metadata: {
+          first_name: firstName,
+          last_name: lastName,
+          full_name: `${firstName} ${lastName}`
+        }
       });
 
     if (userErr) {
@@ -305,6 +313,117 @@ app.post("/reset-password", async (req, res) => {
 });
 
 // ---------------------------
+// ROUTE: SEND TRANSFER PIN
+// POST /send-transfer-pin
+// ---------------------------
+app.post("/send-transfer-pin", async (req, res) => {
+  try {
+    const {email} = req.body;
+
+    if (!email) {
+      return res.status(400).json({error: "Email is required"});
+    }
+
+    const emailLower = email.trim().toLowerCase();
+
+    // Get user from Supabase auth
+    const {data: {users}, error: userErr} = await db.auth.admin.listUsers({
+      email: emailLower,
+    });
+
+    if (userErr || !users || users.length === 0) {
+      console.error("User lookup error:", userErr);
+      return res.status(404).json({error: "User not found"});
+    }
+
+    const user = users[0];
+    const userId = user.id;
+
+    // Generate PIN
+    const pin = genOtp();
+    const pinHash = await bcrypt.hash(pin, 10);
+    const expires = new Date(Date.now() + 3 * 60 * 1000).toISOString();
+
+    // Save PIN
+    const {error: insertErr} = await db
+      .from("transfer_pins")
+      .insert({
+        user_id: userId,
+        email: emailLower,
+        pin_hash: pinHash,
+        expires_at: expires,
+        consumed: false
+      });
+
+    if (insertErr) {
+      console.error("PIN INSERT ERROR:", insertErr);
+      return res.status(500).json({error: "Failed to save PIN"});
+    }
+
+    // Send Email
+    const emailHtml = transferPinEmailTemplate.replace('{{otp}}', pin);
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: emailLower,
+      subject: "Your Transfer PIN",
+      html: emailHtml
+    });
+
+    return res.json({success: true, message: "Transfer PIN sent"});
+  } catch (err) {
+    console.error("SEND TRANSFER PIN ERROR:", err);
+    return res.status(500).json({error: err.toString()});
+  }
+});
+
+// ---------------------------
+// ROUTE: VERIFY TRANSFER PIN
+// POST /verify-transfer-pin
+// ---------------------------
+app.post("/verify-transfer-pin", async (req, res) => {
+  try {
+    const {email, pin} = req.body;
+
+    if (!email || !pin)
+      return res.status(400).json({error: "Email & PIN required"});
+
+    const emailLower = email.trim().toLowerCase();
+
+    // Get latest PIN record
+    const {data: rows, error} = await db
+      .from("transfer_pins")
+      .select("*")
+      .eq("email", emailLower)
+      .eq("consumed", false)
+      .order("created_at", {ascending: false});
+
+    if (error || !rows.length)
+      return res.status(400).json({error: "Invalid PIN"});
+
+    const record = rows[0];
+
+    // Compare PIN
+    const valid = await bcrypt.compare(pin, record.pin_hash);
+    if (!valid) return res.status(400).json({error: "Invalid PIN"});
+
+    // Check expiry
+    if (new Date(record.expires_at) < new Date())
+      return res.status(400).json({error: "PIN expired"});
+
+    // Mark consumed
+    await db
+      .from("transfer_pins")
+      .update({consumed: true})
+      .eq("id", record.id);
+
+    return res.json({success: true, message: "PIN verified"});
+  } catch (err) {
+    console.error("VERIFY TRANSFER PIN ERROR:", err);
+    return res.status(500).json({error: err.toString()});
+  }
+});
+
+// ---------------------------
 // ROUTE: VERIFY OTP
 // POST /verify-otp
 // ---------------------------
@@ -353,6 +472,62 @@ app.post("/verify-otp", async (req, res) => {
     return res.json({success: true, message: "Email verified"});
   } catch (err) {
     console.error("VERIFY OTP ERROR:", err);
+    return res.status(500).json({error: err.toString()});
+  }
+});
+
+// ---------------------------
+// ROUTE: SEND TRANSACTION NOTIFICATION
+// POST /send-transaction-notification
+// ---------------------------
+app.post("/send-transaction-notification", async (req, res) => {
+  console.log('Received request to send transaction notification');
+  console.log('Request body:', req.body);
+  try {
+    const {senderName, receiverName, amount, senderEmail, receiverEmail, date} = req.body;
+
+    console.log('senderName:', senderName);
+    console.log('receiverName:', receiverName);
+    console.log('amount:', amount);
+    console.log('senderEmail:', senderEmail);
+    console.log('receiverEmail:', receiverEmail);
+    console.log('date:', date);
+
+    if (!senderName || !receiverName || !amount || !senderEmail || !receiverEmail || !date) {
+      return res.status(400).json({error: "Missing required fields"});
+    }
+
+    // Send Debit Notification
+    const debitEmailHtml = debitNotificationEmailTemplate
+      .replace('{{senderName}}', senderName)
+      .replace('{{amount}}', amount)
+      .replace('{{receiverName}}', receiverName)
+      .replace('{{date}}', date);
+
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: senderEmail,
+      subject: "Debit Transaction Notification",
+      html: debitEmailHtml
+    });
+
+    // Send Credit Notification
+    const creditEmailHtml = creditNotificationEmailTemplate
+      .replace('{{receiverName}}', receiverName)
+      .replace('{{amount}}', amount)
+      .replace('{{senderName}}', senderName)
+      .replace('{{date}}', date);
+
+    await resend.emails.send({
+      from: RESEND_FROM,
+      to: receiverEmail,
+      subject: "Credit Transaction Notification",
+      html: creditEmailHtml
+    });
+
+    return res.json({success: true, message: "Transaction notifications sent"});
+  } catch (err) {
+    console.error("SEND TRANSACTION NOTIFICATION ERROR:", err);
     return res.status(500).json({error: err.toString()});
   }
 });

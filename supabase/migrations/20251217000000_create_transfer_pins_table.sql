@@ -1,0 +1,9 @@
+CREATE TABLE transfer_pins (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  pin_hash TEXT NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  consumed BOOLEAN DEFAULT false
+);

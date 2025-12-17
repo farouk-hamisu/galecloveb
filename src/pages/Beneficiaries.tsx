@@ -15,6 +15,7 @@ const Beneficiaries = () => {
   
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [bankName, setBankName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [swiftCode, setSwiftCode] = useState('');
@@ -24,7 +25,7 @@ const Beneficiaries = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !bankName || !accountNumber) {
+    if (!name || !bankName || !accountNumber || !email) {
       toast({
         title: t('beneficiaries_page.toasts.missing_info_title'),
         description: t('beneficiaries_page.toasts.missing_info_desc'),
@@ -36,6 +37,7 @@ const Beneficiaries = () => {
     try {
       await createBeneficiary.mutateAsync({
         name,
+        email,
         bank_name: bankName,
         account_number: accountNumber,
         swift_code: swiftCode || null,
@@ -51,6 +53,7 @@ const Beneficiaries = () => {
       
       setShowForm(false);
       setName('');
+      setEmail('');
       setBankName('');
       setAccountNumber('');
       setSwiftCode('');
@@ -100,6 +103,16 @@ const Beneficiaries = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t('beneficiaries_page.full_name_placeholder')}
+                    className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="beneficiary@example.com"
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>

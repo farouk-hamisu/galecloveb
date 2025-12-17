@@ -55,7 +55,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   const res = await fetch("https://national-credit-union-1.onrender.com/send-otp", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, firstName, lastName }),
   });
 
   setLoading(false);
