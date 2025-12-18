@@ -63,25 +63,31 @@ app.post("/send-otp", async (req, res) => {
 
     const emailLower = email.trim().toLowerCase();
 
-    // Create supabase user
     const {data: userData, error: userErr} =
       await db.auth.admin.createUser({
         email: emailLower,
         password,
         email_confirm: false,
-        user_metadata: {
-          first_name: firstName,
-          last_name: lastName,
-          full_name: `${firstName} ${lastName}`
-        }
       });
 
     if (userErr) {
       console.error("CREATE USER ERROR:", userErr);
       return res.status(400).json({error: userErr.message});
     }
-
+    
     const userId = userData.user.id;
+
+    const { error: updateError } = await db.auth.admin.updateUserById(
+        userId,
+        { user_metadata: { first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}` } }
+    );
+
+    if (updateError) {
+        console.error("UPDATE USER METADATA ERROR:", updateError);
+        // NOTE: In a real-world scenario, you might want to delete the created user if metadata update fails.
+        return res.status(500).json({ error: 'Failed to update user metadata' });
+    }
+
 
     // Generate OTP
     const otp = genOtp();
@@ -293,7 +299,7 @@ app.post("/reset-password", async (req, res) => {
 
     const {error: updateErr} = await db.auth.admin.updateUserById(
       matchedRecord.user_id,
-      {password: newPassword}
+      {password: newPassword, email_confirm: true}
     );
 
     if (updateErr) {

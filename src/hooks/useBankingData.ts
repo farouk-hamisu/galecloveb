@@ -65,6 +65,7 @@ export interface Card {
   card_type: string;
   expiry_date: string;
   cvv: string;
+  pin: string;
   spending_limit: number;
   is_frozen: boolean;
   is_active: boolean;
@@ -92,6 +93,18 @@ export interface SupportTicket {
   updated_at: string;
 }
 
+export interface SavingsVault {
+  id: string;
+  user_id: string;
+  name: string;
+  target_amount: number;
+  current_balance: number;
+  is_locked: boolean;
+  maturity_date: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export const useProfile = () => {
   const { user } = useAuth();
   
@@ -109,6 +122,31 @@ export const useProfile = () => {
       return data as Profile | null;
     },
     enabled: !!user?.id,
+  });
+};
+
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async (profile: Omit<Profile, 'id' | 'email' | 'created_at' | 'updated_at' | 'kyc_status'>) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .update(profile)
+        .eq('id', user.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    },
   });
 };
 
@@ -131,6 +169,106 @@ export const useAccounts = () => {
     enabled: !!user?.id,
   });
 };
+
+export const useSavingsVaults = () => {
+  const { user } = useAuth();
+
+  return useQuery({
+    queryKey: ['savings_vaults', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return [];
+      const { data, error } = await supabase
+        .from('savings_vaults')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      return data as SavingsVault[];
+    },
+    enabled: !!user?.id,
+  });
+};
+
+export const useCreateSavingsVault = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async (vault: Omit<SavingsVault, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'current_balance'>) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('savings_vaults')
+        .insert({
+          ...vault,
+          user_id: user.id,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
+    },
+  });
+};
+
+export const useDepositToVault = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async ({ vaultId, amount, fromAccountId }: { vaultId: string; amount: number; fromAccountId: string }) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase.rpc('deposit_to_vault', {
+        p_vault_id: vaultId,
+        p_amount: amount,
+        p_from_account_id: fromAccountId,
+        p_user_id: user.id,
+      });
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+    },
+  });
+};
+
+export const useWithdrawFromVault = () => {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async ({ vaultId, amount, toAccountId }: { vaultId: string; amount: number; toAccountId: string }) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase.rpc('withdraw_from_vault', {
+        p_vault_id: vaultId,
+        p_amount: amount,
+        p_to_account_id: toAccountId,
+        p_user_id: user.id,
+      });
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+    },
+  });
+};
+
+
 
 export const useTransactions = (accountId?: string) => {
   const { user } = useAuth();
@@ -243,7 +381,7 @@ export const useCreateCard = () => {
   const { user } = useAuth();
   
   return useMutation({
-    mutationFn: async ({ accountId }: { accountId: string }) => {
+    mutationFn: async ({ accountId, pin }: { accountId: string; pin: string }) => {
       if (!user?.id) throw new Error('Not authenticated');
       
       const cardNumber = `4${Math.random().toString().slice(2, 17).padEnd(15, '0')}`;
@@ -260,6 +398,7 @@ export const useCreateCard = () => {
           card_type: 'virtual',
           expiry_date: `${expiryMonth}/${expiryYear}`,
           cvv,
+          pin,
           spending_limit: 5000,
         })
         .select()
@@ -282,6 +421,25 @@ export const useToggleCardFreeze = () => {
       const { error } = await supabase
         .from('cards')
         .update({ is_frozen: isFrozen })
+        .eq('id', cardId);
+      
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cards'] });
+    },
+  });
+};
+
+
+export const useUpdateCardLimit = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async ({ cardId, limit }: { cardId: string; limit: number }) => {
+      const { error } = await supabase
+        .from('cards')
+        .update({ spending_limit: limit })
         .eq('id', cardId);
       
       if (error) throw error;

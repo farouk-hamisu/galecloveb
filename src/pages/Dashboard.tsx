@@ -32,18 +32,49 @@ const Dashboard = () => {
   };
   
   const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+  
+  const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
   const currentMonthTransactions = transactions?.filter(tx => {
     const txDate = new Date(tx.created_at);
-    return txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear();
+    return txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear;
   }) || [];
 
-  const thisMonthIncome = currentMonthTransactions
+  const lastMonthTransactions = transactions?.filter(tx => {
+    const txDate = new Date(tx.created_at);
+    return txDate.getMonth() === lastMonth && txDate.getFullYear() === lastMonthYear;
+  }) || [];
+
+  const getIncome = (txs: any[]) => txs
     .filter(tx => tx.type === 'transfer_in' || tx.type === 'deposit')
     .reduce((sum, tx) => sum + Number(tx.amount), 0);
 
-  const thisMonthExpenses = currentMonthTransactions
+  const getExpenses = (txs: any[]) => txs
     .filter(tx => tx.type === 'transfer_out' || tx.type === 'withdrawal' || tx.type === 'card_payment')
     .reduce((sum, tx) => sum + Number(tx.amount), 0);
+
+  const thisMonthIncome = getIncome(currentMonthTransactions);
+  const thisMonthExpenses = getExpenses(currentMonthTransactions);
+  const lastMonthIncome = getIncome(lastMonthTransactions);
+  const lastMonthExpenses = getExpenses(lastMonthTransactions);
+
+  const calculatePercentageChange = (current: number, previous: number) => {
+    if (previous === 0) {
+      return current > 0 ? 100 : 0;
+    }
+    return ((current - previous) / previous) * 100;
+  };
+
+  const incomeChange = calculatePercentageChange(thisMonthIncome, lastMonthIncome);
+  const expensesChange = calculatePercentageChange(thisMonthExpenses, lastMonthExpenses);
+
+  const formatPercentage = (change: number) => {
+    const symbol = change >= 0 ? '+' : '-';
+    return `${symbol}${Math.abs(change).toFixed(1)}% vs last month`;
+  }
 
   return (
     <DashboardLayout>
@@ -126,7 +157,7 @@ const Dashboard = () => {
               </div>
             </div>
             <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(thisMonthIncome)}</p>
-            <p className="text-sm text-green-500">{t('dashboard_page.stats.income_change')}</p>
+            <p className="text-sm text-green-500">{formatPercentage(incomeChange)}</p>
           </div>
 
           <div className="p-6 rounded-2xl bg-card border border-border">
@@ -137,7 +168,7 @@ const Dashboard = () => {
               </div>
             </div>
             <p className="text-3xl font-bold text-foreground mb-1">{formatCurrency(thisMonthExpenses)}</p>
-            <p className="text-sm text-red-500">{t('dashboard_page.stats.expenses_change')}</p>
+            <p className="text-sm text-red-500">{formatPercentage(expensesChange)}</p>
           </div>
         </motion.div>
 

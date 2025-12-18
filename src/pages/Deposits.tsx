@@ -1,3 +1,4 @@
+import { useAuth } from '@/contexts/AuthContext';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useAccounts } from '@/hooks/useBankingData';
 import { useDeposit, useCreateAccount } from '@/hooks/useTransfer';
@@ -81,6 +82,7 @@ const cryptoWallets = {
 const Deposits = () => {
   const { t } = useTranslation();
   const { data: accounts, isLoading } = useAccounts();
+  const { user } = useAuth();
   const depositMutation = useDeposit();
   const createAccountMutation = useCreateAccount();
   const { toast } = useToast();
@@ -101,19 +103,19 @@ const Deposits = () => {
   const checkingAccounts = accounts?.filter(acc => acc.account_type === 'checking') || [];
   const savingsAccounts = accounts?.filter(acc => acc.account_type === 'savings') || [];
   const allAccounts = [...checkingAccounts, ...savingsAccounts];
+  const primaryAccount = allAccounts.length > 0 ? allAccounts[0] : null;
+
 
   const formatCurrency = (amount: number) => {
     return `${currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
   };
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
-    setCopiedAddress(true);
     toast({
       title: 'Copied!',
-      description: 'Wallet address copied to clipboard.',
+      description: `${field} copied to clipboard.`,
     });
-    setTimeout(() => setCopiedAddress(false), 2000);
   };
 
   const handleDeposit = async () => {
@@ -283,64 +285,74 @@ const Deposits = () => {
             </DialogContent>
           </Dialog>
         </motion.div>
+        
+        {/* Your Deposit Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="p-6 rounded-2xl bg-card border border-border"
+        >
+          <h2 className="text-lg font-semibold text-foreground mb-4">Your Deposit Information</h2>
+          <p className="text-muted-foreground mb-6">Use these details to receive funds from others.</p>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Account Number
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={primaryAccount ? primaryAccount.account_number : 'Loading...'}
+                  readOnly
+                  className="flex-1 h-12 px-4 rounded-xl border border-border bg-muted text-foreground font-mono text-sm"
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => copyToClipboard(primaryAccount?.account_number || '', 'Account Number')}
+                  disabled={!primaryAccount}
+                  className="h-12 w-12"
+                >
+                  <Copy className="w-5 h-5" />
+                </Button>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Email Address
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={user?.email || 'Loading...'}
+                  readOnly
+                  className="flex-1 h-12 px-4 rounded-xl border border-border bg-muted text-foreground font-mono text-sm"
+                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => copyToClipboard(user?.email || '', 'Email Address')}
+                  disabled={!user}
+                  className="h-12 w-12"
+                >
+                  <Copy className="w-5 h-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
 
         {/* Deposit Methods */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Select Deposit Method</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Choose a Deposit Method</h2>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Account Number */}
-            <button
-              onClick={() => { setDepositMethod('Account Number'); setIdentifierType('account'); }}
-              className={`p-6 rounded-2xl border-2 transition-all text-left ${
-                depositMethod === 'Account Number'
-                  ? 'border-primary bg-primary/5'
-                  : 'border-border bg-card hover:border-primary/50'
-              }`}
-            >
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                <Hash className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Account Number</h3>
-              <p className="text-sm text-muted-foreground">Transfer via account number</p>
-            </button>
-
-            {/* Email Address */}
-            <button
-              onClick={() => { setDepositMethod('Email Address'); setIdentifierType('email'); }}
-              className={`p-6 rounded-2xl border-2 transition-all text-left ${
-                depositMethod === 'Email Address'
-                  ? 'border-primary bg-primary/5'
-                  : 'border-border bg-card hover:border-primary/50'
-              }`}
-            >
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4">
-                <Mail className="w-6 h-6 text-blue-500" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Email Address</h3>
-              <p className="text-sm text-muted-foreground">Receive via email</p>
-            </button>
-
-            {/* Bank Card */}
-            <button
-              onClick={() => setDepositMethod('Bank Card')}
-              className={`p-6 rounded-2xl border-2 transition-all text-left ${
-                depositMethod === 'Bank Card'
-                  ? 'border-primary bg-primary/5'
-                  : 'border-border bg-card hover:border-primary/50'
-              }`}
-            >
-              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
-                <CreditCard className="w-6 h-6 text-purple-500" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-1">Bank Card</h3>
-              <p className="text-sm text-muted-foreground">Debit or credit card</p>
-            </button>
-
+          <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* Cryptocurrency */}
             <button
               onClick={() => setDepositMethod('Cryptocurrency')}
@@ -358,108 +370,6 @@ const Deposits = () => {
             </button>
           </div>
         </motion.div>
-
-        {/* Deposit Form based on method */}
-        {depositMethod && depositMethod !== 'Cryptocurrency' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-6 rounded-2xl bg-card border border-border"
-          >
-            <h3 className="text-lg font-semibold text-foreground mb-6">Deposit via {depositMethod}</h3>
-            
-            <div className="space-y-6">
-              {/* Target Account */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Deposit to Account
-                </label>
-                <select
-                  value={selectedAccount}
-                  onChange={(e) => setSelectedAccount(e.target.value)}
-                  className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground"
-                >
-                  <option value="">Select account</option>
-                  {allAccounts.map((acc) => (
-                    <option key={acc.id} value={acc.id}>
-                      {acc.account_type.charAt(0).toUpperCase() + acc.account_type.slice(1)} - ****{acc.account_number.slice(-4)} ({formatCurrency(Number(acc.balance))})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Amount */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Amount</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                    {currencySymbol}
-                  </span>
-                  <input
-                    type="number"
-                    value={depositAmount}
-                    onChange={(e) => setDepositAmount(e.target.value)}
-                    placeholder="0.00"
-                    className="w-full h-12 pl-8 pr-4 rounded-xl border border-border bg-background text-foreground"
-                  />
-                </div>
-              </div>
-
-              {/* Bank Card specific fields */}
-              {depositMethod === 'Bank Card' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Card Number</label>
-                    <input
-                      type="text"
-                      placeholder="4242 4242 4242 4242"
-                      className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Expiry Date</label>
-                      <input
-                        type="text"
-                        placeholder="MM/YY"
-                        className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">CVV</label>
-                      <input
-                        type="text"
-                        placeholder="123"
-                        className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground"
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
-
-              <div className="flex gap-4">
-                <Button variant="outline" onClick={() => setDepositMethod(null)}>
-                  Cancel
-                </Button>
-                <Button 
-                  variant="hero" 
-                  className="flex-1"
-                  onClick={handleDeposit}
-                  disabled={depositMutation.isPending}
-                >
-                  {depositMutation.isPending ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    'Complete Deposit'
-                  )}
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        )}
 
         {/* Cryptocurrency Deposit */}
         {depositMethod === 'Cryptocurrency' && (
@@ -527,7 +437,7 @@ const Deposits = () => {
                       <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => copyToClipboard(cryptoWallets[selectedCrypto].address)}
+                        onClick={() => copyToClipboard(cryptoWallets[selectedCrypto].address, 'Wallet Address')}
                         className="h-12 w-12"
                       >
                         {copiedAddress ? (

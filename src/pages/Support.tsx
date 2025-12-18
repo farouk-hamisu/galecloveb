@@ -1,10 +1,39 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useSupportTickets, useCreateSupportTicket } from '@/hooks/useBankingData';
 import { motion } from 'framer-motion';
-import { HelpCircle, Plus, MessageSquare, Clock, CheckCircle, Loader2 } from 'lucide-react';
+import { HelpCircle, Plus, MessageSquare, Clock, CheckCircle, Loader2, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+const faqData = [
+    {
+      question: "How do I open a new account?",
+      answer: "You can open a new account directly from your dashboard. Click the 'Open New Account' button and choose between a checking or savings account. Follow the on-screen instructions to complete the process."
+    },
+    {
+      question: "What are the requirements for a loan?",
+      answer: "Loan requirements vary depending on the type of loan. Generally, we look at your credit score, income, and debt-to-income ratio. For specific details, please navigate to the 'Loans' section or contact our support team."
+    },
+    {
+      question: "How can I reset my password?",
+      answer: "If you've forgotten your password, click the 'Forgot Password' link on the login page. You'll receive an email with instructions to reset your password. For security reasons, our support team cannot reset your password for you."
+    },
+    {
+      question: "What are the fees for international transfers?",
+      answer: "International transfer fees depend on the destination country and the transfer amount. You can see a full fee breakdown before you confirm any transfer. We pride ourselves on transparent and competitive pricing."
+    },
+    {
+      question: "How do I report a lost or stolen card?",
+      answer: "If your card is lost or stolen, you can freeze it immediately from the 'Cards' section of your dashboard to prevent unauthorized transactions. You should also report it to us by creating a high-priority support ticket or calling our emergency hotline."
+    }
+  ];
 
 const Support = () => {
   const { data: tickets, isLoading } = useSupportTickets();
@@ -86,7 +115,7 @@ const Support = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -101,30 +130,47 @@ const Support = () => {
             New Ticket
           </Button>
         </motion.div>
-
-        {/* Quick Help Cards */}
+        
+        {/* Contact Options */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid sm:grid-cols-2 gap-4"
         >
-          {[
-            { title: 'FAQ', description: 'Find answers to common questions', icon: HelpCircle },
-            { title: 'Live Chat', description: 'Chat with our support team', icon: MessageSquare },
-            { title: 'Call Us', description: '1-800-NRB-BANK', icon: HelpCircle },
-            { title: 'Email', description: 'support@nrbank.com', icon: MessageSquare },
-          ].map((item, index) => (
-            <div 
-              key={index}
-              className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer"
-            >
-              <item.icon className="w-6 h-6 text-primary mb-3" />
-              <h3 className="font-semibold text-foreground mb-1">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
-            </div>
-          ))}
+          <a href="mailto:support@nationalregionb.com" className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <Mail className="w-6 h-6 text-primary mb-3" />
+            <h3 className="font-semibold text-foreground mb-1">Email Support</h3>
+            <p className="text-sm text-muted-foreground">support@nationalregionb.com</p>
+          </a>
+          <div className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <HelpCircle className="w-6 h-6 text-primary mb-3" />
+            <h3 className="font-semibold text-foreground mb-1">FAQ</h3>
+            <p className="text-sm text-muted-foreground">Find answers to common questions</p>
+          </div>
         </motion.div>
+
+
+        {/* FAQ Section */}
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="p-6 rounded-2xl bg-card border border-border"
+        >
+            <h2 className="text-lg font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+            <Accordion type="single" collapsible className="w-full">
+                {faqData.map((item, index) => (
+                    <AccordionItem value={`item-${index}`} key={index}>
+                        <AccordionTrigger>{item.question}</AccordionTrigger>
+                        <AccordionContent>
+                            {item.answer}
+                        </AccordionContent>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+        </motion.div>
+
 
         {/* New Ticket Form */}
         {showForm && (
@@ -191,7 +237,7 @@ const Support = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.3 }}
         >
           <h2 className="text-lg font-semibold text-foreground mb-4">Your Tickets</h2>
           {isLoading ? (

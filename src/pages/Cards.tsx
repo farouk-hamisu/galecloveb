@@ -1,10 +1,26 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { useCards, useAccounts, useCreateCard, useToggleCardFreeze } from '@/hooks/useBankingData';
+import { useCards, useAccounts, useCreateCard, useToggleCardFreeze, useUpdateCardLimit } from '@/hooks/useBankingData';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { CreditCard, Plus, Snowflake, Play, Settings, Loader2 } from 'lucide-react';
+import { CreditCard, Plus, Snowflake, Play, Settings, Loader2, MoreHorizontal, Eye, ArrowRight, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 
 const Cards = () => {
   const { t } = useTranslation();
@@ -12,7 +28,16 @@ const Cards = () => {
   const { data: accounts } = useAccounts();
   const createCard = useCreateCard();
   const toggleFreeze = useToggleCardFreeze();
+  const updateLimit = useUpdateCardLimit();
   const { toast } = useToast();
+
+  const [limitDialogOpen, setLimitDialogOpen] = useState(false);
+  const [pinDialogOpen, setPinDialogOpen] = useState(false);
+  const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [createCardDialogOpen, setCreateCardDialogOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<any>(null);
+  const [newLimit, setNewLimit] = useState('');
+  const [newCardPin, setNewCardPin] = useState('');
 
   const currencySymbol = t('currency.symbol');
 
@@ -29,13 +54,24 @@ const Cards = () => {
       });
       return;
     }
+    
+    if (!/^\d{4}$/.test(newCardPin)) {
+      toast({
+        title: 'Invalid PIN',
+        description: 'PIN must be a 4-digit number.',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     try {
-      await createCard.mutateAsync({ accountId: accounts[0].id });
+      await createCard.mutateAsync({ accountId: accounts[0].id, pin: newCardPin });
       toast({
         title: t('cards_page.toasts.create_success_title'),
         description: t('cards_page.toasts.create_success_desc'),
       });
+      setCreateCardDialogOpen(false);
+      setNewCardPin('');
     } catch (error) {
       toast({
         title: t('cards_page.toasts.create_error_title'),
@@ -63,6 +99,22 @@ const Cards = () => {
     }
   };
 
+  const handleUpdateLimit = async () => {
+    const limit = parseFloat(newLimit);
+    if (!selectedCard || isNaN(limit) || limit < 0) {
+      toast({ title: "Invalid limit", variant: "destructive" });
+      return;
+    }
+    try {
+      await updateLimit.mutateAsync({ cardId: selectedCard.id, limit });
+      toast({ title: "Spending limit updated" });
+      setLimitDialogOpen(false);
+      setNewLimit('');
+    } catch (error) {
+      toast({ title: "Failed to update limit", variant: "destructive"});
+    }
+  };
+
   const formatCardNumber = (number: string) => {
     return number.replace(/(.{4})/g, '$1 ').trim();
   };
@@ -79,23 +131,37 @@ const Cards = () => {
             <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('cards_page.title')}</h1>
             <p className="text-muted-foreground">{t('cards_page.subtitle')}</p>
           </div>
-          <Button 
-            variant="hero" 
-            onClick={handleCreateCard}
-            disabled={createCard.isPending}
-          >
-            {createCard.isPending ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                {t('cards_page.creating')}
-              </>
-            ) : (
-              <>
+          <Dialog open={createCardDialogOpen} onOpenChange={setCreateCardDialogOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                variant="hero" 
+                disabled={createCard.isPending}
+              >
                 <Plus className="w-4 h-4 mr-2" />
                 {t('cards_page.create_new_card')}
-              </>
-            )}
-          </Button>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Card</DialogTitle>
+                <DialogDescription>
+                  Set a 4-digit PIN for your new card.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <Input 
+                  type="password"
+                  placeholder="4-digit PIN"
+                  value={newCardPin}
+                  onChange={(e) => setNewCardPin(e.target.value)}
+                  maxLength={4}
+                />
+              </div>
+              <Button onClick={handleCreateCard} disabled={createCard.isPending}>
+                {createCard.isPending ? 'Creating...' : 'Create Card'}
+              </Button>
+            </DialogContent>
+          </Dialog>
         </motion.div>
 
         {/* Cards Grid */}
@@ -185,9 +251,27 @@ const Cards = () => {
                         </>
                       )}
                     </Button>
-                    <Button variant="outline">
-                      <Settings className="w-4 h-4" />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="icon">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onSelect={() => { setSelectedCard(card); setLimitDialogOpen(true); }}>
+                          <Settings className="w-4 h-4 mr-2" />
+                          Set Spending Limit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => { setSelectedCard(card); setPinDialogOpen(true); }}>
+                          <Eye className="w-4 h-4 mr-2" />
+                          View PIN
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => { setSelectedCard(card); setCancelDialogOpen(true); }} className="text-red-500">
+                          <XCircle className="w-4 h-4 mr-2" />
+                          Cancel Card
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
 
                   {/* Card Details */}
@@ -207,25 +291,73 @@ const Cards = () => {
               <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">{t('cards_page.no_cards')}</h3>
               <p className="text-muted-foreground mb-4">{t('cards_page.no_cards_subtitle')}</p>
-              <Button variant="hero" onClick={handleCreateCard} disabled={createCard.isPending}>
-                {createCard.isPending ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    {t('cards_page.creating')}
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-4 h-4 mr-2" />
-                    {t('cards_page.create_first_card')}
-                  </>
-                )}
+              <Button variant="hero" onClick={() => setCreateCardDialogOpen(true)} disabled={createCard.isPending}>
+                <Plus className="w-4 h-4 mr-2" />
+                {t('cards_page.create_first_card')}
               </Button>
             </div>
           )}
         </motion.div>
       </div>
+      
+      {/* Dialogs for card settings */}
+      <Dialog open={limitDialogOpen} onOpenChange={setLimitDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Set Spending Limit</DialogTitle>
+            <DialogDescription>
+              Current Limit: {selectedCard && formatCurrency(Number(selectedCard.spending_limit))}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Input 
+              type="number"
+              placeholder="New limit"
+              value={newLimit}
+              onChange={(e) => setNewLimit(e.target.value)}
+            />
+          </div>
+          <Button onClick={handleUpdateLimit} disabled={updateLimit.isPending}>
+            {updateLimit.isPending ? 'Updating...' : 'Update Limit'}
+          </Button>
+        </DialogContent>
+      </Dialog>
+      
+      <Dialog open={pinDialogOpen} onOpenChange={setPinDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Your Card PIN</DialogTitle>
+          </DialogHeader>
+          <div className="text-center text-4xl font-bold tracking-widest py-8">
+            {selectedCard?.pin}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure?</DialogTitle>
+            <DialogDescription>
+              This action will permanently cancel your card. This cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 pt-4">
+            <Button variant="outline" onClick={() => setCancelDialogOpen(false)}>No, keep it</Button>
+            <Button variant="destructive" onClick={() => {
+              // Placeholder for cancel logic
+              toast({ title: "Card cancelled (placeholder)"});
+              setCancelDialogOpen(false);
+            }}>
+              Yes, Cancel Card
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
     </DashboardLayout>
   );
 };
 
 export default Cards;
+
