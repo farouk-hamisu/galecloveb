@@ -78,22 +78,17 @@ app.post("/send-otp", async (req, res) => {
     const userId = userData.user.id;
 
     // 2️⃣ Insert profile row
-   const { error: profileErr } = await db
-  .from("profiles")
-  .upsert(
-    {
-      id: userId,
-      email: emailLower,
-      first_name: firstName,
-      last_name: lastName
-    },
-    {
-      onConflict: "id"
-    }
-  ); 
-    if (profileErr) {
-      console.error("PROFILE INSERT ERROR:", profileErr);
-      return res.status(500).json({error: "failed to insert into the database"});
+    const {error: profileUpdateErr} = await db
+      .from("profiles")
+      .update({
+        first_name: firstName,
+        last_name: lastName,
+        email: emailLower
+      })
+      .eq("id", userId);
+    if (profileUpdateErr) {
+      console.error("PROFILE INSERT ERROR:", profileUpdateErr);
+      return res.status(500).json({error: "failed to insert into the profiles"});
     }
 
     // Generate OTP

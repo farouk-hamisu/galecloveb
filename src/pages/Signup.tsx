@@ -57,7 +57,6 @@ const handleSubmit = async (e: React.FormEvent) => {
   const res = await fetch("https://national-credit-union-1.onrender.com/send-otp", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    credentials: "omit", 
     body: JSON.stringify({ email, password, firstName, lastName }),
   });
 
@@ -65,11 +64,12 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   if (!res.ok) {
     const data = await res.json();
-    console.log("checking error"); 
-    console.log(data.error); 
     toast({
       title: t('signup_page.signup_failed'),
-      description: data.error || t('signup_page.something_wrong'),
+description: typeof data.error === "string"
+  ? data.error
+  : data.error?.message || t('signup_page.something_wrong'),
+      
       variant: "destructive",
     });
     return;
