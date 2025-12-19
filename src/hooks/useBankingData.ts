@@ -1,6 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
+import {supabase} from '@/integrations/supabase/client';
+import {useAuth} from '@/contexts/AuthContext';
 
 export interface Profile {
   id: string;
@@ -106,18 +106,20 @@ export interface SavingsVault {
 }
 
 export const useProfile = () => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['profile', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('profiles')
         .select('*')
         .eq('id', user.id)
         .maybeSingle();
-      
+      console.log("checking user data");
+      console.log(data);
+
       if (error) throw error;
       return data as Profile | null;
     },
@@ -128,13 +130,13 @@ export const useProfile = () => {
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
     mutationFn: async (profile: Omit<Profile, 'id' | 'email' | 'created_at' | 'updated_at' | 'kyc_status'>) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('profiles')
         .update(profile)
         .eq('id', user.id)
@@ -145,24 +147,24 @@ export const useUpdateProfile = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profile'] });
+      queryClient.invalidateQueries({queryKey: ['profile']});
     },
   });
 };
 
 export const useAccounts = () => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['accounts', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('accounts')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: true });
-      
+        .order('created_at', {ascending: true});
+
       if (error) throw error;
       return data as Account[];
     },
@@ -171,17 +173,17 @@ export const useAccounts = () => {
 };
 
 export const useSavingsVaults = () => {
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useQuery({
     queryKey: ['savings_vaults', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('savings_vaults')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: true });
+        .order('created_at', {ascending: true});
 
       if (error) throw error;
       return data as SavingsVault[];
@@ -192,13 +194,13 @@ export const useSavingsVaults = () => {
 
 export const useCreateSavingsVault = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
     mutationFn: async (vault: Omit<SavingsVault, 'id' | 'user_id' | 'created_at' | 'updated_at' | 'current_balance'>) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('savings_vaults')
         .insert({
           ...vault,
@@ -211,20 +213,20 @@ export const useCreateSavingsVault = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
+      queryClient.invalidateQueries({queryKey: ['savings_vaults']});
     },
   });
 };
 
 export const useDepositToVault = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
-    mutationFn: async ({ vaultId, amount, fromAccountId }: { vaultId: string; amount: number; fromAccountId: string }) => {
+    mutationFn: async ({vaultId, amount, fromAccountId}: {vaultId: string; amount: number; fromAccountId: string}) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase.rpc('deposit_to_vault', {
+      const {data, error} = await supabase.rpc('deposit_to_vault', {
         p_vault_id: vaultId,
         p_amount: amount,
         p_from_account_id: fromAccountId,
@@ -235,22 +237,22 @@ export const useDepositToVault = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
-      queryClient.invalidateQueries({ queryKey: ['accounts'] });
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({queryKey: ['savings_vaults']});
+      queryClient.invalidateQueries({queryKey: ['accounts']});
+      queryClient.invalidateQueries({queryKey: ['transactions']});
     },
   });
 };
 
 export const useWithdrawFromVault = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useMutation({
-    mutationFn: async ({ vaultId, amount, toAccountId }: { vaultId: string; amount: number; toAccountId: string }) => {
+    mutationFn: async ({vaultId, amount, toAccountId}: {vaultId: string; amount: number; toAccountId: string}) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      const { data, error } = await supabase.rpc('withdraw_from_vault', {
+      const {data, error} = await supabase.rpc('withdraw_from_vault', {
         p_vault_id: vaultId,
         p_amount: amount,
         p_to_account_id: toAccountId,
@@ -261,9 +263,9 @@ export const useWithdrawFromVault = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['savings_vaults'] });
-      queryClient.invalidateQueries({ queryKey: ['accounts'] });
-      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({queryKey: ['savings_vaults']});
+      queryClient.invalidateQueries({queryKey: ['accounts']});
+      queryClient.invalidateQueries({queryKey: ['transactions']});
     },
   });
 };
@@ -271,24 +273,24 @@ export const useWithdrawFromVault = () => {
 
 
 export const useTransactions = (accountId?: string) => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['transactions', user?.id, accountId],
     queryFn: async () => {
       if (!user?.id) return [];
-      
+
       let query = supabase
         .from('transactions')
         .select('*')
-        .order('created_at', { ascending: false });
-      
+        .order('created_at', {ascending: false});
+
       if (accountId) {
         query = query.eq('account_id', accountId);
       }
-      
-      const { data, error } = await query;
-      
+
+      const {data, error} = await query;
+
       if (error) throw error;
       return data as Transaction[];
     },
@@ -297,18 +299,18 @@ export const useTransactions = (accountId?: string) => {
 };
 
 export const useBeneficiaries = () => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['beneficiaries', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('beneficiaries')
         .select('*')
         .eq('user_id', user.id)
-        .order('name', { ascending: true });
-      
+        .order('name', {ascending: true});
+
       if (error) throw error;
       return data as Beneficiary[];
     },
@@ -317,18 +319,18 @@ export const useBeneficiaries = () => {
 };
 
 export const useCards = () => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['cards', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('cards')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-      
+        .order('created_at', {ascending: false});
+
       if (error) throw error;
       return data as Card[];
     },
@@ -337,18 +339,18 @@ export const useCards = () => {
 };
 
 export const useSupportTickets = () => {
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useQuery({
     queryKey: ['support_tickets', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('support_tickets')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-      
+        .order('created_at', {ascending: false});
+
       if (error) throw error;
       return data as SupportTicket[];
     },
@@ -357,18 +359,18 @@ export const useSupportTickets = () => {
 };
 
 export const useNotifications = () => {
-  const { user } = useAuth();
+  const {user} = useAuth();
 
   return useQuery({
     queryKey: ['notifications', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
-      const { data, error } = await supabase
+      const {data, error} = await supabase
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-      
+        .order('created_at', {ascending: false});
+
       if (error) throw error;
       return data as Notification[];
     },
@@ -378,18 +380,18 @@ export const useNotifications = () => {
 
 export const useCreateCard = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useMutation({
-    mutationFn: async ({ accountId, pin }: { accountId: string; pin: string }) => {
+    mutationFn: async ({accountId, pin}: {accountId: string; pin: string}) => {
       if (!user?.id) throw new Error('Not authenticated');
-      
+
       const cardNumber = `4${Math.random().toString().slice(2, 17).padEnd(15, '0')}`;
       const cvv = Math.floor(100 + Math.random() * 900).toString();
       const expiryYear = new Date().getFullYear() + 4;
       const expiryMonth = String(Math.floor(1 + Math.random() * 12)).padStart(2, '0');
-      
-      const { data, error } = await supabase
+
+      const {data, error} = await supabase
         .from('cards')
         .insert({
           user_id: user.id,
@@ -403,30 +405,30 @@ export const useCreateCard = () => {
         })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cards'] });
+      queryClient.invalidateQueries({queryKey: ['cards']});
     },
   });
 };
 
 export const useToggleCardFreeze = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async ({ cardId, isFrozen }: { cardId: string; isFrozen: boolean }) => {
-      const { error } = await supabase
+    mutationFn: async ({cardId, isFrozen}: {cardId: string; isFrozen: boolean}) => {
+      const {error} = await supabase
         .from('cards')
-        .update({ is_frozen: isFrozen })
+        .update({is_frozen: isFrozen})
         .eq('id', cardId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cards'] });
+      queryClient.invalidateQueries({queryKey: ['cards']});
     },
   });
 };
@@ -434,31 +436,31 @@ export const useToggleCardFreeze = () => {
 
 export const useUpdateCardLimit = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: async ({ cardId, limit }: { cardId: string; limit: number }) => {
-      const { error } = await supabase
+    mutationFn: async ({cardId, limit}: {cardId: string; limit: number}) => {
+      const {error} = await supabase
         .from('cards')
-        .update({ spending_limit: limit })
+        .update({spending_limit: limit})
         .eq('id', cardId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cards'] });
+      queryClient.invalidateQueries({queryKey: ['cards']});
     },
   });
 };
 
 export const useCreateBeneficiary = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useMutation({
     mutationFn: async (beneficiary: Omit<Beneficiary, 'id' | 'user_id' | 'created_at'>) => {
       if (!user?.id) throw new Error('Not authenticated');
-      
-      const { data, error } = await supabase
+
+      const {data, error} = await supabase
         .from('beneficiaries')
         .insert({
           ...beneficiary,
@@ -466,25 +468,25 @@ export const useCreateBeneficiary = () => {
         })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['beneficiaries'] });
+      queryClient.invalidateQueries({queryKey: ['beneficiaries']});
     },
   });
 };
 
 export const useCreateSupportTicket = () => {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
-  
+  const {user} = useAuth();
+
   return useMutation({
-    mutationFn: async (ticket: { subject: string; message: string; priority?: string }) => {
+    mutationFn: async (ticket: {subject: string; message: string; priority?: string}) => {
       if (!user?.id) throw new Error('Not authenticated');
-      
-      const { data, error } = await supabase
+
+      const {data, error} = await supabase
         .from('support_tickets')
         .insert({
           ...ticket,
@@ -492,12 +494,12 @@ export const useCreateSupportTicket = () => {
         })
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['support_tickets'] });
+      queryClient.invalidateQueries({queryKey: ['support_tickets']});
     },
   });
 };
@@ -507,15 +509,15 @@ export const useMarkNotificationAsRead = () => {
 
   return useMutation({
     mutationFn: async (notificationId: string) => {
-      const { error } = await supabase
+      const {error} = await supabase
         .from('notifications')
-        .update({ is_read: true })
+        .update({is_read: true})
         .eq('id', notificationId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      queryClient.invalidateQueries({queryKey: ['notifications']});
     },
   });
 };

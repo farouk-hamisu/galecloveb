@@ -91,6 +91,8 @@ const handleSession = async (session: Session | null) => {
     return () => {
       subscription.unsubscribe();
     };
+    console.log("checking for user data"); 
+    console.log(user); 
   }, []);
 
   const signUp = async (
