@@ -77,17 +77,20 @@ app.post("/send-otp", async (req, res) => {
 
     const userId = userData.user.id;
 
-    const {error: updateError} = await db.auth.admin.updateUserById(
-      userId,
-      {user_metadata: {first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}`}}
-    );
+    // 2️⃣ Insert profile row
+    const {error: profileError} = await db
+      .from("profiles")
+      .insert({
+        id: userId,
+        email: emailLower,
+        first_name: firstName,
+        last_name: lastName
+      });
 
-    if (updateError) {
-      console.error("UPDATE USER METADATA ERROR:", updateError);
-      // NOTE: In a real-world scenario, you might want to delete the created user if metadata update fails.
-      return res.status(500).json({error: 'Failed to update user metadata'});
+    if (profileError) {
+      console.error("PROFILE INSERT ERROR:", profileError);
+      return res.status(500).json({error: "Failed to create profile entry"});
     }
-
 
     // Generate OTP
     const otp = genOtp();
