@@ -157,5 +157,1061 @@
   "currency": {
     "symbol": "€",
     "code": "EUR"
+  },
+  "signup_page": {
+    "create_account": "Crea tu cuenta",
+    "start_journey": "Comienza tu viaje bancario con NRBank",
+    "first_name": "Nombre",
+    "john": "John",
+    "last_name": "Apellido",
+    "doe": "Doe",
+    "email": "Correo electrónico",
+    "enter_email": "Ingresa tu correo electrónico",
+    "password": "Contraseña",
+    "create_password": "Crea una contraseña",
+    "password_length_info": "Debe tener al menos 8 caracteres",
+    "agree_to": "Acepto los",
+    "terms": "Términos de Servicio",
+    "and": "y",
+    "privacy": "Política de Privacidad",
+    "creating_account": "Creando cuenta...",
+    "create_account_btn": "Crear Cuenta",
+    "already_have_account": "¿Ya tienes una cuenta?",
+    "sign_in": "Iniciar sesión",
+    "signup_failed": "Error en el registro",
+    "something_wrong": "Algo salió mal",
+    "verification_sent": "Código de verificación enviado",
+    "verification_sent_desc": "Se ha enviado un código de 6 dígitos a tu correo electrónico",
+    "first_name_required": "El nombre es obligatorio",
+    "last_name_required": "El apellido es obligatorio",
+    "invalid_email_error": "Por favor, introduce una dirección de correo electrónico válida",
+    "password_length_error": "La contraseña debe tener al menos 8 caracteres",
+    "agree_terms_error": "Debes aceptar los términos"
+  },
+  "protected_page": {
+    "protected_route": "Ruta Protegida",
+    "go_home": "Ir a Inicio"
+  },
+  "about_page": {
+    "badge": "Sobre Nosotros",
+    "title": "Banca Reimaginada para el Mundo Moderno",
+    "subtitle": "NationalRegionBank fue fundado con una misión simple: hacer que la banca sea accesible, transparente y empoderadora para todos. Creemos que los servicios financieros deben trabajar para ti, no en tu contra.",
+    "story_title": "Nuestra Historia",
+    "story_p1": "Fundado en 2020, NRBank surgió de una visión para transformar cómo las personas interactúan con su dinero. Nuestros fundadores, veteranos de la banca tradicional, vieron de primera mano las frustraciones que enfrentaban los clientes con comisiones ocultas, mal servicio y sistemas obsoletos.",
+    "story_p2": "Hoy, atendemos a más de 100,000 clientes en más de 10 países, procesando más de $500 millones en transacciones cada mes. Nuestro compromiso con la transparencia, la seguridad y la innovación impulsa todo lo que hacemos.",
+    "happy_customers": "Clientes Felices",
+    "countries": "Países",
+    "monthly_volume": "Volumen Mensual",
+    "support": "Soporte",
+    "values_title": "Nuestros Valores",
+    "values_subtitle": "Los principios que guían todo lo que hacemos en NationalRegionBank.",
+    "security_first_title": "Seguridad Primero",
+    "security_first_desc": "Tu seguridad es nuestra máxima prioridad. Utilizamos encriptación de grado bancario y autenticación multifactor.",
+    "customer_focused_title": "Enfocados en el Cliente",
+    "customer_focused_desc": "Ponemos a nuestros clientes en el centro de todo lo que hacemos, brindando soporte 24/7.",
+    "global_reach_title": "Alcance Global",
+    "global_reach_desc": "Operando en más de 10 países, hacemos que la banca internacional sea fluida y asequible.",
+    "award_winning_title": "Galardonado",
+    "award_winning_desc": "Reconocidos a nivel mundial por nuestro enfoque innovador para las soluciones bancarias modernas."
+  },
+  "pricing_page": {
+    "title": "Amado por Clientes de Todo el Mundo",
+    "subtitle": "No te fíes solo de nuestra palabra. Esto es lo que nuestros clientes tienen que decir sobre su experiencia con NationalRegionBank."
+  },
+  "faq_page": {
+    "badge": "Centro de Ayuda",
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Encuentra respuestas a preguntas comunes sobre NRBank. ¿No encuentras lo que buscas? Contacta a nuestro equipo de soporte 24/7.",
+    "categories": [
+      {
+        "category": "Cuenta y Primeros Pasos",
+        "questions": [
+          {
+            "q": "¿Cómo abro una cuenta en NRBank?",
+            "a": "¡Abrir una cuenta es simple! Haz clic en 'Abrir Cuenta' o 'Registrarse' y sigue el proceso guiado. Necesitarás proporcionar información personal básica, verificar tu identidad (KYC), y estarás listo para operar en minutos."
+          },
+          {
+            "q": "¿Qué documentos necesito para la verificación?",
+            "a": "Requerimos una identificación válida emitida por el gobierno (pasaporte, licencia de conducir o tarjeta de identidad nacional) y un comprobante de domicilio (factura de servicios públicos, extracto bancario o carta oficial con fecha de los últimos 3 meses)."
+          },
+          {
+            "q": "¿Hay un depósito mínimo para abrir una cuenta?",
+            "a": "No se requiere depósito mínimo para nuestro plan Básico. Los planes Premium y Business pueden tener requisitos específicos según las características que necesites."
+          }
+        ]
+      },
+      {
+        "category": "Transferencias y Pagos",
+        "questions": [
+          {
+            "q": "¿Cuánto tardan las transferencias internacionales?",
+            "a": "Las transferencias internacionales suelen tardar de 1 a 3 días hábiles dependiendo del país de destino y el horario bancario. Las transferencias SWIFT pueden tardar hasta 5 días hábiles en algunas regiones."
+          },
+          {
+            "q": "¿Hay comisiones por las transferencias?",
+            "a": "Las transferencias internas entre cuentas de NRBank son siempre gratuitas. Las transferencias internacionales tienen comisiones transparentes que se muestran antes de confirmar. Los miembros Premium disfrutan de comisiones de cambio del 0%."
+          },
+          {
+            "q": "¿Qué monedas admiten?",
+            "a": "Admitimos más de 50 monedas para transferencias y nuestra billetera inteligente, incluyendo USD, EUR, GBP, JPY, CAD, AUD y muchas más."
+          }
+        ]
+      },
+      {
+        "category": "Tarjetas y Seguridad",
+        "questions": [
+          {
+            "q": "¿Cómo funcionan las tarjetas virtuales?",
+            "a": "Las tarjetas virtuales son tarjetas digitales que funcionan como las físicas pero solo existen en tu aplicación. Son perfectas para compras en línea, suscripciones y mayor seguridad. Puedes crearlas, congelarlas o eliminarlas al instante."
+          },
+          {
+            "q": "¿Qué pasa si pierdo mi tarjeta?",
+            "a": "Puedes congelar tu tarjeta al instante desde la aplicación para evitar un uso no autorizado. Repórtalo a través de la aplicación o contacta a nuestro soporte 24/7, y emitiremos un reemplazo de inmediato."
+          },
+          {
+            "q": "¿Cómo está protegido mi dinero?",
+            "a": "Utilizamos encriptación de 256 bits de grado bancario, autenticación de dos factores, inicio de sesión biométrico y monitoreo de fraudes en tiempo real. Tus fondos se mantienen en cuentas segregadas con socios bancarios autorizados."
+          }
+        ]
+      },
+      {
+        "category": "Ahorros e Inversiones",
+        "questions": [
+          {
+            "q": "¿Cómo funcionan las bóvedas de ahorro?",
+            "a": "Las bóvedas de ahorro te permiten apartar dinero para metas específicas. Crea una bóveda, establece tu monto objetivo y fecha límite, y gana tasas de interés competitivas mientras ahorras. Puedes crear múltiples bóvedas para diferentes metas."
+          },
+          {
+            "q": "¿Qué tasas de interés ofrecen?",
+            "a": "Ofrecemos hasta un 2% de APY en cuentas de ahorro, lo cual es significativamente más alto que los bancos tradicionales. Las tasas pueden variar según tu tipo de cuenta y las condiciones del mercado."
+          },
+          {
+            "q": "¿Puedo retirar de mis ahorros en cualquier momento?",
+            "a": "¡Sí! A diferencia de los depósitos a plazo fijo, nuestras bóvedas de ahorro ofrecen liquidez total. Puedes retirar tus fondos en cualquier momento sin penalizaciones."
+          }
+        ]
+      },
+      {
+        "category": "Soporte y Contacto",
+        "questions": [
+          {
+            "q": "¿Cómo puedo contactar al soporte al cliente?",
+            "a": "Nuestro equipo de soporte está disponible 24/7 a través de múltiples canales: chat en la aplicación, soporte por correo electrónico, soporte telefónico (miembros Premium) y nuestro centro de ayuda con guías detalladas."
+          },
+          {
+            "q": "¿Cuál es su tiempo de respuesta?",
+            "a": "Nuestro objetivo es responder a todas las consultas en un plazo de 2 horas. Los miembros Premium y Business reciben soporte prioritario con tiempos de respuesta típicos de menos de 30 minutos."
+          },
+          {
+            "q": "¿Tienen una aplicación móvil?",
+            "a": "¡Sí! Nuestra aplicación móvil está disponible para dispositivos iOS y Android. Descárgala desde la App Store o Google Play Store para administrar tus finanzas sobre la marcha."
+          }
+        ]
+      }
+    ]
+  },
+  "login_page": {
+    "welcome_back": "Bienvenido de nuevo",
+    "sign_in_account": "Inicia sesión en tu cuenta de NRBank",
+    "email": "Correo electrónico",
+    "enter_email": "Ingresa tu correo electrónico",
+    "password": "Contraseña",
+    "enter_password": "Ingresa tu contraseña",
+    "signing_in": "Iniciando sesión...",
+    "sign_in": "Iniciar Sesión",
+    "no_account": "¿No tienes una cuenta?",
+    "sign_up": "Regístrate",
+    "sign_in_failed": "Error al iniciar sesión",
+    "invalid_credentials": "Correo electrónico o contraseña no válidos. Por favor, inténtalo de nuevo.",
+    "welcome_toast": "¡Bienvenido de nuevo!",
+    "login_success_toast": "Has iniciado sesión con éxito.",
+    "invalid_email_error": "Por favor, introduce una dirección de correo electrónico válida",
+    "password_length_error": "La contraseña debe tener al menos 6 caracteres"
+  },
+  "customer_testimonials": {
+    "badge": "Testimonios",
+    "title": "Lo que dicen nuestros clientes",
+    "subtitle": "Miles de clientes en todo el mundo confían en nosotros. Esto es lo que tienen que decir sobre su experiencia con NationalRegionBank."
+  },
+  "contact_page": {
+    "badge": "Ponte en Contacto",
+    "title": "Estamos Aquí para Ayudar",
+    "subtitle": "¿Tienes preguntas? Nos encantaría saber de ti. Envíanos un mensaje y te responderemos lo antes posible.",
+    "email_us": "Envíanos un Email",
+    "general_inquiries": "Para consultas generales",
+    "call_us": "Llámanos",
+    "support_24_7": "Soporte al Cliente 24/7",
+    "visit_us": "Visítanos",
+    "headquarters": "Sede Central",
+    "business_hours": "Horario de Atención",
+    "support_available": "Soporte Disponible",
+    "online_support_24_7": "Soporte en Línea 24/7",
+    "send_message_title": "Envíanos un Mensaje",
+    "send_message_subtitle": "Completa el formulario a continuación y nuestro equipo se pondrá en contacto contigo en 24 horas.",
+    "full_name": "Nombre Completo",
+    "email_address": "Dirección de Correo Electrónico",
+    "subject": "Asunto",
+    "how_can_we_help": "¿Cómo podemos ayudarte?",
+    "message": "Mensaje",
+    "tell_us_more": "Cuéntanos más sobre tu consulta...",
+    "sending": "Enviando...",
+    "send_message": "Enviar Mensaje",
+    "live_chat_title": "Chat en Vivo",
+    "live_chat_subtitle": "¿Necesitas asistencia inmediata? Nuestro equipo de soporte está disponible 24/7 a través del chat en vivo.",
+    "start_live_chat": "Iniciar Chat en Vivo",
+    "business_inquiries_title": "Consultas Comerciales",
+    "business_inquiries_subtitle": "Para asociaciones, soluciones empresariales o cuentas comerciales, por favor contacta a nuestro equipo comercial dedicado.",
+    "business_email": "negocios@nrbank.com",
+    "business_phone": "+1 (800) NRB-CORP",
+    "toast_success_title": "¡Mensaje enviado!",
+    "toast_success_description": "Nos pondremos en contacto contigo en 24 horas."
+  },
+  "terms_of_service_page": {
+    "title": "Términos de Servicio",
+    "welcome": "¡Bienvenido a NRBank! Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web de NRBank, ubicado en nrbank.com.",
+    "acceptance": "Al acceder a este sitio web, asumimos que aceptas estos términos y condiciones. No continúes usando NRBank si no estás de acuerdo con todos los términos y condiciones establecidos en esta página.",
+    "cookies_title": "Cookies",
+    "cookies_p1": "Empleamos el uso de cookies. Al acceder a NRBank, aceptaste el uso de cookies de acuerdo con la Política de Privacidad de NRBank.",
+    "cookies_p2": "La mayoría de los sitios web interactivos utilizan cookies para permitirnos recuperar los detalles del usuario en cada visita. Nuestro sitio web utiliza cookies para habilitar la funcionalidad de ciertas áreas y facilitar la visita de las personas a nuestro sitio web. Algunos de nuestros socios afiliados/publicitarios también pueden utilizar cookies.",
+    "license_title": "Licencia",
+    "license_p1": "A menos que se indique lo contrario, NRBank y/o sus licenciantes poseen los derechos de propiedad intelectual de todo el material de NRBank. Todos los derechos de propiedad intelectual están reservados. Puedes acceder a este material desde NRBank para tu uso personal sujeto a las restricciones establecidas en estos términos y condiciones.",
+    "license_p2": "No debes:",
+    "license_l1": "Republicar material de NRBank",
+    "license_l2": "Vender, alquilar o sublicenciar material de NRBank",
+    "license_l3": "Reproducir, duplicar o copiar material de NRBank",
+    "license_l4": "Redistribuir contenido de NRBank",
+    "iframes_title": "iFrames",
+    "iframes_p1": "Sin aprobación previa y permiso por escrito, no puedes crear marcos alrededor de nuestras páginas web que alteren de alguna manera la presentación visual o la apariencia de nuestro sitio web.",
+    "content_liability_title": "Responsabilidad del Contenido",
+    "content_liability_p1": "No seremos responsables de ningún contenido que aparezca en tu sitio web. Aceptas protegernos y defendernos contra todas las reclamaciones que surjan en tu sitio web. Ningún enlace(s) debe aparecer en ningún sitio web que pueda interpretarse como difamatorio, obsceno o criminal, o que infrinja, viole de otro modo o defienda la infracción u otra violación de los derechos de terceros."
+  },
+  "privacy_policy_page": {
+    "title": "Política de Privacidad",
+    "intro_p1": "En NRBank, accesible desde nrbank.com, una de nuestras principales prioridades es la privacidad de nuestros visitantes. Este documento de Política de Privacidad contiene tipos de información que se recopila y registra por NRBank y cómo la usamos.",
+    "intro_p2": "Si tienes preguntas adicionales o necesitas más información sobre nuestra Política de Privacidad, no dudes en contactarnos.",
+    "log_files_title": "Archivos de Registro",
+    "log_files_p1": "NRBank sigue un procedimiento estándar de uso de archivos de registro. Estos archivos registran a los visitantes cuando visitan sitios web. Todas las empresas de alojamiento hacen esto y forma parte de los análisis de los servicios de alojamiento. La información recopilada por los archivos de registro incluye direcciones de protocolo de Internet (IP), tipo de navegador, proveedor de servicios de Internet (ISP), fecha y hora, páginas de referencia/salida y posiblemente el número de clics. Estos no están vinculados a ninguna información que sea personalmente identificable. El propósito de la información es analizar tendencias, administrar el sitio, rastrear el movimiento de los usuarios en el sitio web y recopilar información demográfica.",
+    "cookies_title": "Cookies y Balizas Web",
+    "cookies_p1": "Como cualquier otro sitio web, NRBank utiliza 'cookies'. Estas cookies se utilizan para almacenar información, incluidas las preferencias de los visitantes, y las páginas del sitio web a las que el visitante accedió o visitó. La información se utiliza para optimizar la experiencia de los usuarios al personalizar el contenido de nuestra página web según el tipo de navegador de los visitantes y/u otra información.",
+    "third_party_title": "Políticas de Privacidad de Terceros",
+    "third_party_p1": "La Política de Privacidad de NRBank no se aplica a otros anunciantes o sitios web. Por lo tanto, te recomendamos que consultes las respectivas Políticas de Privacidad de estos servidores de anuncios de terceros para obtener información más detallada. Puede incluir sus prácticas e instrucciones sobre cómo optar por no participar en ciertas opciones.",
+    "third_party_p2": "Puedes optar por deshabilitar las cookies a través de las opciones de tu navegador individual. Para obtener información más detallada sobre la gestión de cookies con navegadores web específicos, se puede encontrar en los sitios web respectivos de los navegadores."
+  },
+  "forgot_password_page": {
+    "title": "Restablecer tu Contraseña",
+    "subtitle": "Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña.",
+    "all_rights_reserved": "© {year} NationalRegionBank. Todos los derechos reservados.",
+    "forgot_password": "¿Olvidaste tu Contraseña?",
+    "enter_email_instructions": "Ingresa tu dirección de correo electrónico y te enviaremos instrucciones para restablecerla.",
+    "email_address": "Dirección de Correo Electrónico",
+    "sending": "Enviando...",
+    "send_reset_link": "Enviar Enlace de Restablecimiento",
+    "check_your_email": "Revisa tu Correo Electrónico",
+    "reset_link_sent": "Enviamos un enlace de restablecimiento a <strong>{email}</strong>.",
+    "try_again": "Intentar de Nuevo",
+    "back_to_login": "Volver a Iniciar Sesión",
+    "error_title": "Error",
+    "error_description": "Algo salió mal. Por favor, inténtalo de nuevo."
+  },
+  "reset_password_page": {
+    "title": "Restablecer Contraseña",
+    "subtitle": "Ingresa tu nueva contraseña a continuación.",
+    "new_password": "Nueva Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "updating": "Actualizando...",
+    "update_password": "Actualizar Contraseña",
+    "password_updated": "Contraseña Actualizada",
+    "redirecting": "Serás redirigido para iniciar sesión en breve.",
+    "go_to_login": "Ir a Iniciar Sesión",
+    "invalid_link_title": "Enlace Inválido o Caducado",
+    "invalid_link_description": "Por favor, solicita un nuevo enlace para restablecer la contraseña.",
+    "password_mismatch": "Las contraseñas no coinciden",
+    "password_too_short": "Contraseña demasiado corta",
+    "password_too_short_description": "La contraseña debe tener al menos 8 caracteres.",
+    "error_title": "Error",
+    "reset_failed": "Error al restablecer la contraseña"
+  },
+  "not_found_page": {
+    "title": "Página No Encontrada",
+    "subtitle": "Lo sentimos, no pudimos encontrar la página que estás buscando. Puede que haya sido movida o no exista.",
+    "return_to_home": "Volver a Inicio"
+  },
+  "verify_email_page": {
+    "title": "Verifica tu correo electrónico",
+    "subtitle": "Se ha enviado un código de verificación de 6 dígitos a",
+    "verifying": "Verificando...",
+    "confirm_code": "Confirmar Código",
+    "no_code": "¿No recibiste el código?",
+    "resend_in": "Reenviar en {resendTimer}s",
+    "resending": "Reenviando...",
+    "resend": "Reenviar",
+    "verification_failed": "Verificación fallida",
+    "invalid_code": "Código inválido",
+    "email_verified": "Correo electrónico verificado",
+    "welcome": "Bienvenido a NRBank",
+    "code_resent": "Código reenviado",
+    "check_inbox": "Revisa tu bandeja de entrada",
+    "resend_failed": "Error al reenviar",
+    "try_again_later": "Por favor, inténtalo de nuevo más tarde"
+  },
+  "accounts_page": {
+    "title": "Mis Cuentas",
+    "subtitle": "Administra todas tus cuentas bancarias en un solo lugar.",
+    "open_new_account": "Abrir Nueva Cuenta",
+    "dialog_title": "Abrir Nueva Cuenta",
+    "dialog_subtitle": "Elige el tipo de cuenta que te gustaría abrir.",
+    "checking_account": "Cuenta Corriente",
+    "checking_subtitle": "Para transacciones y pagos diarios",
+    "savings_account": "Cuenta de Ahorros",
+    "savings_subtitle": "Gana intereses sobre tus ahorros",
+    "account_created_title": "¡Cuenta Creada!",
+    "account_created_description": "Tu nueva cuenta de {accountType} ha sido abierta exitosamente.",
+    "error_title": "Error",
+    "error_description": "No se pudo crear la cuenta.",
+    "total_balance": "Saldo Total en Todas las Cuentas",
+    "your_accounts": "Tus Cuentas",
+    "active": "Activa",
+    "inactive": "Inactiva",
+    "available_balance": "Saldo Disponible",
+    "no_accounts_title": "Aún no tienes cuentas",
+    "no_accounts_subtitle": "Abre tu primera cuenta para comenzar.",
+    "open_account": "Abrir Cuenta"
+  },
+  "support_page": {
+    "title": "Centro de Soporte",
+    "subtitle": "Obtén ayuda con tu cuenta o envía un ticket de soporte.",
+    "new_ticket": "Nuevo Ticket",
+    "email_support": "Soporte por Correo Electrónico",
+    "faq": "Preguntas Frecuentes",
+    "faq_subtitle": "Encuentra respuestas a preguntas comunes",
+    "faq_title": "Preguntas Frecuentes",
+    "submit_ticket_title": "Enviar un Ticket de Soporte",
+    "subject": "Asunto *",
+    "subject_placeholder": "Breve descripción de tu problema",
+    "priority": "Prioridad",
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "urgent": "Urgente",
+    "message": "Mensaje *",
+    "message_placeholder": "Describe tu problema en detalle...",
+    "cancel": "Cancelar",
+    "submitting": "Enviando...",
+    "submit_ticket": "Enviar Ticket",
+    "your_tickets": "Tus Tickets",
+    "view": "Ver",
+    "no_tickets_title": "No hay tickets de soporte",
+    "no_tickets_subtitle": "Aún no has enviado ningún ticket de soporte.",
+    "submit_first_ticket": "Envía tu Primer Ticket",
+    "missing_info_title": "Información faltante",
+    "missing_info_subtitle": "Por favor, completa todos los campos obligatorios.",
+    "ticket_submitted_title": "¡Ticket enviado!",
+    "ticket_submitted_subtitle": "Nuestro equipo de soporte responderá en breve.",
+    "error_title": "Error",
+    "error_subtitle": "No se pudo enviar el ticket. Por favor, inténtalo de nuevo."
+  },
+  "settings_page": {
+    "title": "Configuración",
+    "subtitle": "Administra la configuración y las preferencias de tu cuenta.",
+    "profile_information": "Información del Perfil",
+    "profile_description": "Actualiza tus datos personales e información de contacto",
+    "edit_profile": "Editar Perfil",
+    "edit_profile_title": "Editar Perfil",
+    "edit_profile_description": "Actualiza tus datos personales.",
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "country": "País",
+    "saving": "Guardando...",
+    "save_changes": "Guardar Cambios",
+    "profile_updated": "Perfil actualizado exitosamente",
+    "profile_update_failed": "No se pudo actualizar el perfil"
+  },
+  "deposits_page": {
+    "title": "Depositar Fondos",
+    "subtitle": "Agrega dinero a tus cuentas usando varios métodos.",
+    "open_new_account": "Abrir Nueva Cuenta",
+    "dialog_title": "Abrir Nueva Cuenta",
+    "dialog_subtitle": "Elige el tipo de cuenta que te gustaría abrir.",
+    "checking_account": "Cuenta Corriente",
+    "checking_subtitle": "Para transacciones diarias",
+    "savings_account": "Cuenta de Ahorros",
+    "savings_subtitle": "Gana 4.5% APY",
+    "your_deposit_info": "Tu Información de Depósito",
+    "your_deposit_info_subtitle": "Usa estos detalles para recibir fondos de otros.",
+    "account_number": "Número de Cuenta",
+    "email_address": "Dirección de Correo Electrónico",
+    "choose_deposit_method": "Elige un Método de Depósito",
+    "crypto": "Criptomoneda",
+    "crypto_subtitle": "BTC, ETH, USDT, SOL",
+    "select_crypto": "Seleccionar Criptomoneda",
+    "crypto_deposit_title": "Depósito de {cryptoName}",
+    "crypto_deposit_subtitle": "{cryptoNetwork}",
+    "deposit_address": "Dirección de Depósito",
+    "important": "Importante:",
+    "important_crypto_text": "Solo envía {cryptoSymbol} a esta dirección en la red {cryptoNetwork}. Los depósitos requieren {confirmations} para ser acreditados.",
+    "credit_to_account": "Acreditar a la Cuenta",
+    "select_account": "Seleccionar cuenta",
+    "crypto_conversion_note": "Una vez que detectemos tu depósito, se convertirá y acreditará automáticamente en tu cuenta.",
+    "back_to_methods": "Volver a los Métodos",
+    "deposit_initiated": "¡Depósito Iniciado!",
+    "deposit_processed": "Tu solicitud de depósito ha sido procesada.",
+    "reference": "Referencia",
+    "status": "Estado",
+    "completed": "Completado",
+    "make_another_deposit": "Hacer Otro Depósito",
+    "missing_info": "Información Faltante",
+    "missing_info_desc": "Por favor, selecciona una cuenta e ingresa un monto.",
+    "invalid_amount": "Monto Inválido",
+    "invalid_amount_desc": "Por favor, ingresa un monto de depósito válido.",
+    "deposit_failed": "El Depósito Falló"
+  },
+  "admin_login_page": {
+    "title": "Inicio de Sesión de Administrador",
+    "subtitle": "Inicia sesión en tu cuenta de administrador de NRBank",
+    "email": "Correo electrónico",
+    "enter_email": "Ingresa tu correo electrónico",
+    "password": "Contraseña",
+    "enter_password": "Ingresa tu contraseña",
+    "signing_in": "Iniciando sesión...",
+    "sign_in": "Iniciar Sesión",
+    "sign_in_failed": "Error al iniciar sesión",
+    "invalid_credentials": "Correo electrónico o contraseña no válidos. Por favor, inténtalo de nuevo.",
+    "welcome_toast": "¡Bienvenido de nuevo, Administrador!",
+    "login_success_toast": "Has iniciado sesión con éxito.",
+    "invalid_email_error": "Por favor, introduce una dirección de correo electrónico válida",
+    "password_length_error": "La contraseña debe tener al menos 6 caracteres"
+  },
+  "admin_dashboard_page": {
+    "title": "Panel de Administrador",
+    "subtitle": "Resumen de todas las operaciones bancarias",
+    "total_users": "Usuarios Totales",
+    "total_accounts": "Cuentas Totales",
+    "active_accounts": "{activeAccounts} activas",
+    "total_balance": "Saldo Total",
+    "total_transactions": "Transacciones Totales",
+    "total_cards": "Tarjetas Totales",
+    "frozen_cards": "{frozenCards} congeladas",
+    "inactive_accounts": "Cuentas Inactivas",
+    "recent_transactions": "Transacciones Recientes",
+    "loading": "Cargando...",
+    "no_transactions": "Aún no hay transacciones"
+  },
+  "admin_users_page": {
+    "title": "Gestión de Usuarios",
+    "subtitle": "Administrar todos los usuarios registrados",
+    "all_users": "Todos los Usuarios",
+    "search_users": "Buscar usuarios...",
+    "loading_users": "Cargando usuarios...",
+    "user": "Usuario",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "kyc_status": "Estado KYC",
+    "joined": "Se unió",
+    "actions": "Acciones",
+    "edit_user": "Editar Usuario",
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "pending": "Pendiente",
+    "verified": "Verificado",
+    "rejected": "Rechazado",
+    "save_changes": "Guardar Cambios",
+    "delete_user_confirm": "¿Estás seguro de que quieres eliminar este usuario? Esta acción no se puede deshacer.",
+    "user_updated": "Usuario actualizado con éxito",
+    "user_update_failed": "Error al actualizar el usuario",
+    "user_deleted": "Usuario eliminado con éxito",
+    "user_delete_failed": "Error al eliminar el usuario"
+  },
+  "admin_accounts_page": {
+    "title": "Gestión de Cuentas",
+    "subtitle": "Administrar cuentas de usuario y saldos",
+    "all_accounts": "Todas las Cuentas",
+    "search_accounts": "Buscar cuentas...",
+    "loading_accounts": "Cargando cuentas...",
+    "account": "Cuenta",
+    "user": "Usuario",
+    "type": "Tipo",
+    "balance": "Saldo",
+    "currency": "Moneda",
+    "status": "Estado",
+    "actions": "Acciones",
+    "active": "Activa",
+    "suspended": "Suspendida",
+    "edit_balance": "Editar Saldo de Cuenta",
+    "account_number": "Número de Cuenta",
+    "new_balance": "Nuevo Saldo",
+    "update_balance": "Actualizar Saldo",
+    "balance_updated": "Saldo actualizado con éxito",
+    "balance_update_failed": "Error al actualizar el saldo",
+    "account_suspended": "Cuenta suspendida con éxito",
+    "account_activated": "Cuenta activada con éxito",
+    "status_update_failed": "Error al actualizar el estado de la cuenta"
+  },
+  "admin_notifications_page": {
+    "title": "Gestión de Notificaciones",
+    "subtitle": "Enviar notificaciones a todos los usuarios",
+    "all_notifications": "Todas las Notificaciones",
+    "search_notifications": "Buscar notificaciones...",
+    "loading_notifications": "Cargando notificaciones...",
+    "create_notification": "Crear Notificación",
+    "message": "Mensaje",
+    "message_placeholder": "Escribe tu mensaje aquí...",
+    "send_notification": "Enviar Notificación",
+    "sending": "Enviando...",
+    "delete_notification_confirm": "¿Estás seguro de que quieres eliminar esta notificación?",
+    "notification_sent": "Notificación enviada con éxito",
+    "notification_send_failed": "Error al enviar la notificación",
+    "notification_deleted": "Notificación eliminada con éxito",
+    "notification_delete_failed": "Error al eliminar la notificación"
+  },
+  "admin_cards_page": {
+    "title": "Gestión de Tarjetas",
+    "subtitle": "Administrar todas las tarjetas de los usuarios",
+    "all_cards": "Todas las Tarjetas",
+    "search_cards": "Buscar tarjetas...",
+    "loading_cards": "Cargando tarjetas...",
+    "card": "Tarjeta",
+    "type": "Tipo",
+    "owner": "Propietario",
+    "expiry": "Vencimiento",
+    "limit": "Límite",
+    "status": "Estado",
+    "actions": "Acciones",
+    "frozen": "Congelada",
+    "inactive": "Inactiva",
+    "active": "Activa",
+    "edit_card": "Editar Tarjeta",
+    "card_number": "Número de Tarjeta",
+    "spending_limit": "Límite de Gasto",
+    "save_changes": "Guardar Cambios",
+    "unfreeze": "Descongelar",
+    "freeze": "Congelar",
+    "delete_card_confirm": "¿Estás seguro de que quieres eliminar esta tarjeta?",
+    "card_updated": "Tarjeta actualizada con éxito",
+    "card_update_failed": "Error al actualizar la tarjeta",
+    "card_frozen": "Tarjeta congelada con éxito",
+    "card_unfrozen": "Tarjeta descongelada con éxito",
+    "card_delete": "Tarjeta eliminada con éxito",
+    "card_delete_failed": "Error al eliminar la tarjeta"
+  },
+  "admin_transactions_page": {
+    "title": "Gestión de Transacciones",
+    "subtitle": "Ver y gestionar todas las transacciones",
+    "all_transactions": "Todas las Transacciones",
+    "search_transactions": "Buscar transacciones...",
+    "loading_transactions": "Cargando transacciones...",
+    "create_transaction": "Crear Transacción",
+    "account": "Cuenta",
+    "select_account": "Seleccionar cuenta...",
+    "amount": "Monto",
+    "type": "Tipo",
+    "credit": "Crédito",
+    "debit": "Débito",
+    "transfer": "Transferencia",
+    "deposit": "Depósito",
+    "withdrawal": "Retiro",
+    "status": "Estado",
+    "completed": "Completada",
+    "pending": "Pendiente",
+    "failed": "Fallida",
+    "description": "Descripción",
+    "recipient_name": "Nombre del Destinatario",
+    "recipient_account": "Cuenta del Destinatario",
+    "reference": "Referencia",
+    "date": "Fecha",
+    "actions": "Acciones",
+    "edit_transaction": "Editar Transacción",
+    "save_changes": "Guardar Cambios",
+    "delete_transaction_confirm": "¿Estás seguro de que quieres eliminar esta transacción?",
+    "transaction_created": "Transacción creada con éxito",
+    "transaction_create_failed": "Error al crear la transacción",
+    "transaction_updated": "Transacción actualizada con éxito",
+    "transaction_update_failed": "Error al actualizar la transacción",
+    "transaction_deleted": "Transacción eliminada con éxito",
+    "transaction_delete_failed": "Error al eliminar la transacción"
+  }, 
+"dashboard_page": {
+  "welcome": "¡Bienvenido de nuevo, {{name}}!",
+  "subtitle": "Aquí tienes un resumen de lo que ocurre en tus cuentas",
+  
+  "quick_actions": {
+    "send": "Enviar dinero",
+    "deposit": "Depositar fondos",
+    "cards": "Mis tarjetas",
+    "savings": "Ahorros"
+  },
+
+  "stats": {
+    "total_balance": "Saldo total",
+    "balance_change": "Comparado con el mes pasado",
+    "income": "Ingresos",
+    "expenses": "Gastos"
+  },
+
+  "accounts": {
+    "title": "Mis cuentas",
+    "view_all": "Ver todas",
+    "account_type": "Cuenta {{type}}",
+    "no_accounts": "No se encontraron cuentas"
+  },
+
+  "transactions": {
+    "title": "Transacciones recientes",
+    "view_all": "Ver todas",
+    "no_transactions": "No se encontraron transacciones"
+  },
+
+  "cards": {
+    "title": "Mis tarjetas",
+    "manage": "Gestionar tarjetas",
+    "frozen": "Congelada",
+    "card_type": "Tarjeta {{type}}",
+    "expires": "Vence",
+    "limit": "Límite",
+    "create_card": "Crear una nueva tarjeta"
   }
+},
+"transactions_page": {
+  "title": "Transacciones",
+  "subtitle": "Consulta y gestiona tu actividad reciente",
+
+  "export_pdf": "Exportar PDF",
+  "export_csv": "Exportar CSV",
+
+  "search_placeholder": "Buscar por descripción o número de referencia",
+
+  "filters": {
+    "all_types": "Todos los tipos",
+    "deposits": "Depósitos",
+    "withdrawals": "Retiros",
+    "transfer_in": "Transferencias entrantes",
+    "transfer_out": "Transferencias salientes",
+    "card_payments": "Pagos con tarjeta",
+    "date_range": "Rango de fechas"
+  },
+
+  "table": {
+    "type": "Tipo",
+    "description": "Descripción",
+    "reference": "Referencia",
+    "date": "Fecha",
+    "status": "Estado",
+    "amount": "Monto"
+  },
+
+  "status_completed": "Completada",
+  "status_pending": "Pendiente",
+  "status_failed": "Fallida",
+  "status_cancelled": "Cancelada",
+
+  "no_transactions": "No se encontraron transacciones",
+  "adjust_filters": "Intenta ajustar los filtros o el término de búsqueda.",
+  "history_appears_here": "Tu historial de transacciones aparecerá aquí."
+}, 
+"transfer_page": {
+  "title": "Transferir Fondos",
+  "subtitle": "Envía dinero de forma rápida y segura",
+
+  "internal_transfer": "Transferencia Interna",
+  "internal_subtitle": "Envía dinero a otro usuario dentro del banco",
+
+  "international_transfer": "Transferencia Internacional",
+  "international_subtitle": "Envía dinero a beneficiarios en el extranjero",
+
+  "from_account": "Desde la Cuenta",
+  "select_account": "Selecciona una cuenta",
+
+  "send_to": "Enviar a",
+  "account_number": "Número de Cuenta",
+  "email_address": "Correo Electrónico",
+
+  "beneficiary": "Beneficiario",
+  "add_new": "Agregar Nuevo",
+  "select_beneficiary": "Selecciona un beneficiario",
+
+  "amount": "Monto",
+  "description": "Descripción",
+  "payment_for": "Pago por...",
+
+  "note": "Nota:",
+  "international_note": "Las transferencias internacionales pueden tardar más tiempo en procesarse y pueden incluir tarifas adicionales.",
+
+  "cancel": "Cancelar",
+  "processing": "Procesando...",
+  "send_transfer": "Enviar Transferencia",
+
+  "success_title": "Transferencia Exitosa",
+  "success_subtitle": "Tu transferencia se completó correctamente.",
+  "recipient": "Destinatario",
+  "reference": "Referencia",
+  "status": "Estado",
+  "completed": "Completada",
+  "new_transfer": "Nueva Transferencia",
+  "view_transactions": "Ver Transacciones",
+
+  "toasts": {
+    "missing_info_title": "Falta Información",
+    "missing_info_desc": "Por favor completa todos los campos requeridos.",
+    "missing_recipient_desc": "Por favor ingresa un destinatario válido.",
+    "missing_beneficiary_desc": "Por favor selecciona un beneficiario.",
+    "invalid_amount_title": "Monto Inválido",
+    "invalid_amount_desc": "Ingresa un monto de transferencia válido.",
+    "pin_send_failed_title": "Error al Enviar el PIN",
+    "invalid_pin_desc": "El PIN ingresado es incorrecto.",
+    "pin_verify_failed_title": "Error al Verificar el PIN"
+  },
+
+  "pin_dialog": {
+    "title": "Ingresa el PIN de Transferencia",
+    "description": "Se envió un PIN de verificación de 6 dígitos a tu correo electrónico. Ingrésalo para continuar.",
+    "cancel": "Cancelar",
+    "verifying": "Verificando...",
+    "verify": "Verificar"
+  }
+}, 
+"beneficiaries_page": {
+  "title": "Beneficiarios",
+  "subtitle": "Gestiona las personas y cuentas a las que puedes enviar dinero",
+
+  "add_beneficiary": "Agregar Beneficiario",
+  "add_new_beneficiary": "Agregar Nuevo Beneficiario",
+
+  "full_name": "Nombre Completo",
+  "full_name_placeholder": "Nombre completo del beneficiario",
+
+  "bank_name": "Nombre del Banco",
+  "bank_name_placeholder": "Ingresa el nombre del banco",
+
+  "account_number": "Número de Cuenta",
+  "account_number_placeholder": "Ingresa el número de cuenta",
+
+  "country": "País",
+  "country_placeholder": "País del banco",
+
+  "swift_code": "Código SWIFT",
+  "swift_code_placeholder": "Código SWIFT opcional",
+
+  "iban": "IBAN",
+  "iban_placeholder": "IBAN opcional",
+
+  "cancel": "Cancelar",
+  "adding": "Agregando...",
+
+  "account_label": "Cuenta terminada en {{lastFour}}",
+
+  "no_beneficiaries": "No se encontraron beneficiarios",
+  "no_beneficiaries_subtitle": "Agrega un beneficiario para comenzar a realizar transferencias.",
+  "add_first_beneficiary": "Agregar Primer Beneficiario",
+
+  "toasts": {
+    "missing_info_title": "Falta Información",
+    "missing_info_desc": "Por favor completa todos los campos requeridos.",
+    "success_title": "Beneficiario Agregado",
+    "success_desc": "Se agregó correctamente a {{name}} como beneficiario.",
+    "error_title": "Error",
+    "error_desc": "No se pudo agregar el beneficiario. Inténtalo de nuevo."
+  }
+}, 
+"cards_page": {
+  "title": "Tus Tarjetas",
+  "subtitle": "Administra tus tarjetas físicas y virtuales",
+  "create_new_card": "Crear Nueva Tarjeta",
+  "frozen": "Congelada",
+  "card_type": "Tarjeta {{type}}",
+  "expires": "Expira",
+  "cvv": "CVV",
+  "freeze": "Congelar",
+  "unfreeze": "Descongelar",
+  "spending_limit": "Límite de Gasto",
+  "no_cards": "Aún no tienes tarjetas",
+  "no_cards_subtitle": "Todavía no has creado ninguna tarjeta. Crea una para comenzar.",
+  "create_first_card": "Crear Tu Primera Tarjeta",
+
+  "toasts": {
+    "no_accounts_title": "No hay cuentas disponibles",
+    "no_accounts_desc": "Necesitas al menos una cuenta antes de crear una tarjeta.",
+    "create_success_title": "Tarjeta creada con éxito",
+    "create_success_desc": "Tu nueva tarjeta ha sido creada.",
+    "create_error_title": "Error al crear tarjeta",
+    "create_error_desc": "Ocurrió un error al crear la tarjeta.",
+    "freeze_title": "Tarjeta congelada",
+    "freeze_desc": "Tu tarjeta ha sido desactivada temporalmente.",
+    "unfreeze_title": "Tarjeta descongelada",
+    "unfreeze_desc": "Tu tarjeta está ahora activa.",
+    "status_error_title": "Error al actualizar",
+    "status_error_desc": "No se pudo actualizar el estado de la tarjeta."
+  },
+
+  "dialogs": {
+    "create_title": "Crear Nueva Tarjeta",
+    "create_desc": "Configura un PIN de 4 dígitos para tu nueva tarjeta.",
+    "pin_placeholder": "PIN de 4 dígitos",
+    "create_button": "Crear Tarjeta",
+    "creating_button": "Creando...",
+
+    "limit_title": "Establecer Límite de Gasto",
+    "limit_current": "Límite Actual",
+    "limit_placeholder": "Nuevo límite",
+    "limit_button": "Actualizar Límite",
+    "limit_updating": "Actualizando...",
+
+    "show_pin_title": "Tu PIN de Tarjeta",
+
+    "cancel_title": "¿Estás seguro?",
+    "cancel_desc": "Esta acción cancelará tu tarjeta permanentemente. No se puede deshacer.",
+    "cancel_keep": "No, conservar",
+    "cancel_confirm": "Sí, cancelar tarjeta"
+  }
+}, 
+"savings_page": {
+  "title": "Ahorros",
+  "subtitle": "Administra tus bóvedas de ahorro y metas financieras",
+  "create_new_vault": "Crear Nueva Bóveda",
+  "create_new_goal": "Crear Nueva Meta",
+  "total_savings": "Ahorros Totales",
+  "apy_info": "Tus ahorros generan un APY competitivo",
+  "goals_title": "Tus Metas de Ahorro",
+  "of": "de",
+  "complete": "% completado",
+
+  "dialogs": {
+    "vault_name": "Nombre de la Bóveda",
+    "target_amount": "Monto Objetivo",
+    "lock_vault": "¿Bloquear esta bóveda?",
+    "maturity_date": "Fecha de Vencimiento",
+    "cancel": "Cancelar",
+    "create_vault": "Crear Bóveda",
+    "creating": "Creando..."
+  },
+
+  "actions": {
+    "deposit": "Depositar",
+    "withdraw": "Retirar",
+    "amount": "Monto",
+    "from_account": "Desde Cuenta",
+    "to_account": "Hacia Cuenta",
+    "select_account": "Seleccionar cuenta"
+  },
+
+  "placeholders": {
+    "vault_name": "ej., Fondo de Emergencia",
+    "target_amount": "ej., 10000",
+    "amount": "0.00"
+  },
+
+  "errors": {
+    "required_fields": "El nombre y el objetivo son obligatorios",
+    "deposit_required": "Selecciona una bóveda, un monto y una cuenta de origen.",
+    "withdraw_required": "Selecciona una bóveda, un monto y una cuenta de destino."
+  },
+
+  "toasts": {
+    "vault_created": "Bóveda de ahorros creada con éxito",
+    "vault_failed": "Error al crear la bóveda",
+    "deposit_success": "Depósito exitoso",
+    "deposit_failed": "Error al depositar",
+    "withdraw_success": "Retiro exitoso",
+    "withdraw_failed": "Error al retirar"
+  }
+}, 
+"statements_page": {
+  "title": "Estados de Cuenta",
+  "subtitle": "Consulta y descarga tus estados mensuales y recibos",
+
+  "export_csv": "Exportar CSV",
+  "select_account": "Seleccionar Cuenta",
+  "all_accounts": "Todas las Cuentas",
+  "custom_date_range": "Rango de Fechas Personalizado",
+
+  "monthly_statements": "Estados Mensuales",
+  "transactions_total": "{{count}} transacciones • Total {{amount}}",
+  "download_pdf": "Descargar PDF",
+
+  "no_statements": "No hay estados disponibles",
+
+  "recent_receipts": "Recibos Recientes",
+  "ref": "Ref:",
+  "no_receipts": "No hay recibos disponibles",
+
+  "toasts": {
+    "unable_to_generate_title": "No se Puede Generar el Estado",
+    "unable_to_generate_desc": "No pudimos generar el estado. Inténtalo más tarde.",
+
+    "download_success_title": "Estado Listo",
+    "download_success_desc": "Tu estado de {{period}} ha sido descargado.",
+
+    "receipt_success_title": "Recibo Listo",
+    "receipt_success_desc": "Tu recibo de transacción ha sido descargado.",
+
+    "no_transactions_title": "Sin Transacciones",
+    "no_transactions_desc": "No hay transacciones disponibles para exportar.",
+
+    "export_complete_title": "Exportación Completa",
+    "export_complete_desc": "Tu archivo CSV se ha descargado correctamente."
+  }
+}, 
+"support_page": {
+  "title": "Soporte",
+  "subtitle": "Obtén ayuda, encuentra respuestas o contacta a nuestro equipo",
+
+  "new_ticket": "Nuevo Ticket",
+
+  "email_support": "Soporte por Correo",
+  "faq": "Preguntas Frecuentes",
+  "faq_subtitle": "Encuentra respuestas a las preguntas comunes",
+
+  "faq_title": "Preguntas Frecuentes",
+  "faq_q1": "¿Cuánto tiempo tarda en llegar una respuesta de soporte?",
+  "faq_a1": "Nuestro equipo normalmente responde dentro de 24 horas, dependiendo del volumen de tickets.",
+
+  "faq_q2": "¿Cómo restablezco mi contraseña?",
+  "faq_a2": "Puedes restablecer tu contraseña en la página de inicio de sesión seleccionando 'Olvidé mi contraseña'.",
+
+  "faq_q3": "¿Puedo actualizar mi información de cuenta?",
+  "faq_a3": "Sí, puedes actualizar tu información personal en la página de configuración de la cuenta.",
+
+  "faq_q4": "¿Mi información está segura?",
+  "faq_a4": "Todos tus datos están encriptados y almacenados de manera segura con protocolos de la industria.",
+
+  "faq_q5": "¿Cómo contacto al soporte?",
+  "faq_a5": "Puedes enviar un ticket de soporte o enviarnos un correo en cualquier momento.",
+
+  "submit_ticket_title": "Enviar Ticket de Soporte",
+
+  "subject": "Asunto",
+  "subject_placeholder": "Resumen breve de tu problema",
+
+  "priority": "Prioridad",
+  "low": "Baja",
+  "medium": "Media",
+  "high": "Alta",
+  "urgent": "Urgente",
+
+  "message": "Mensaje",
+  "message_placeholder": "Describe tu problema en detalle...",
+
+  "cancel": "Cancelar",
+  "submit_ticket": "Enviar Ticket",
+  "submitting": "Enviando...",
+
+  "your_tickets": "Tus Tickets",
+
+  "view": "Ver",
+
+  "no_tickets_title": "No Hay Tickets de Soporte",
+  "no_tickets_subtitle": "Aún no has enviado ningún ticket de soporte.",
+
+  "submit_first_ticket": "Enviar Primer Ticket",
+
+  "missing_info_title": "Falta Información",
+  "missing_info_subtitle": "Por favor completa todos los campos requeridos.",
+
+  "ticket_submitted_title": "Ticket Enviado",
+  "ticket_submitted_subtitle": "Tu solicitud de soporte ha sido recibida.",
+
+  "error_title": "Error",
+  "error_subtitle": "Algo salió mal. Inténtalo de nuevo más tarde."
+}, 
+"settings_page": {
+  "title": "Configuración",
+  "subtitle": "Administra la configuración y preferencias de tu cuenta.",
+
+  "sections": {
+    "profile_info": {
+      "title": "Información del Perfil",
+      "description": "Actualiza tus datos personales y tu información de contacto",
+      "action": "Editar Perfil"
+    }
+  },
+
+  "dialog": {
+    "title": "Editar Perfil",
+    "description": "Actualiza tus datos personales."
+  },
+
+  "form": {
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "phone": "Teléfono",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "country": "País",
+    "saving": "Guardando...",
+    "save_changes": "Guardar Cambios"
+  },
+
+  "toast": {
+    "success": "Perfil actualizado exitosamente",
+    "error": "Error al actualizar el perfil"
+  }
+}, 
+"dashboard_nav": {
+  "dashboard": "Panel",
+  "accounts": "Cuentas",
+  "transactions": "Transacciones",
+  "transfer": "Transferencias",
+  "deposits": "Depósitos",
+  "beneficiaries": "Beneficiarios",
+  "cards": "Tarjetas",
+  "savings": "Ahorros",
+  "statements": "Extractos",
+  "support": "Soporte",
+  "settings": "Configuración"
+},
+"dashboard_misc": {
+  "personal_account": "Cuenta Personal",
+  "sign_out": "Cerrar Sesión",
+  "search_transactions": "Buscar transacciones...",
+  "notifications": "Notificaciones",
+  "unread_count": "{{count}} sin leer",
+  "no_notifications": "No hay notificaciones nuevas."
+}, 
+"nav": {
+  "home": "Inicio",
+  "about": "Acerca de",
+  "testimonials": "Testimonios",
+  "faq": "Preguntas",
+  "contact": "Contacto",
+  "login": "Iniciar Sesión",
+  "signUp": "Registrarse"
+}, 
+"customer_testimonials": {
+  "badge": "Lo que dicen nuestros clientes",
+  "title": "Confiado por miles en todo el mundo",
+  "subtitle": "Historias reales de usuarios reales de NRBank",
+
+  "items": {
+    "sarah": {
+      "name": "Sarah T.",
+      "role": "Diseñadora Freelance",
+      "text": "NRBank ha revolucionado cómo administro mis finanzas. La aplicación es intuitiva y el soporte 24/7 es una salvación. ¡Sin tarifas ocultas realmente significa sin tarifas ocultas!"
+    },
+    "michael": {
+      "name": "Michael B.",
+      "role": "Propietario de Pequeña Empresa",
+      "text": "Cambiar a NRBank para mi negocio fue la mejor decisión. Las transferencias internacionales son fluidas y las tarjetas virtuales brindan una capa extra de seguridad para mis compras en línea."
+    },
+    "jessica": {
+      "name": "Jessica L.",
+      "role": "Estudiante",
+      "text": "Como estudiante, necesito un banco simple y accesible. El plan básico de NRBank es perfecto para mí. Me encanta la función de bóvedas de ahorro, que me ayuda a presupuestar mis metas."
+    },
+    "david": {
+      "name": "David R.",
+      "role": "Emprendedor Tecnológico",
+      "text": "Las integraciones API que ofrece NRBank han sido un cambio total para mi negocio. Ahora puedo automatizar mis flujos financieros y enfocarme en hacer crecer mi empresa."
+    },
+    "emily": {
+      "name": "Emily S.",
+      "role": "Viajera del Mundo",
+      "text": "La billetera multicurrency es imprescindible para quienes viajan con frecuencia. Puedo mantener y cambiar divisas sin tarifas FX, lo cual me ahorra mucho dinero."
+    }
+  }
+}
+
+
+
+  
 }

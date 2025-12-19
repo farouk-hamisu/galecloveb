@@ -5,9 +5,9 @@ import { FeaturesSection } from '@/components/sections/FeaturesSection';
 import { WhyUsSection } from '@/components/sections/WhyUsSection';
 import { HowItWorksSection } from '@/components/sections/HowItWorksSection';
 import { StatsSection } from '@/components/sections/StatsSection';
-import { PricingSection } from '@/components/sections/PricingSection';
+import { CustomerTestimonialsSection } from '@/components/sections/CustomerTestimonialsSection';
 import { CTASection } from '@/components/sections/CTASection';
-
+import BrevoConversations from "@/components/BrevoConversations";
 const Index = () => {
   return (
     <div className="min-h-screen">
@@ -18,8 +18,9 @@ const Index = () => {
         <WhyUsSection />
         <HowItWorksSection />
         <StatsSection />
-        <PricingSection />
+        <CustomerTestimonialsSection />
         <CTASection />
+        <BrevoConversations />
       </main>
       <Footer />
     </div>

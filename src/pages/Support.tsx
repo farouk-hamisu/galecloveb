@@ -11,31 +11,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
-const faqData = [
-    {
-      question: "How do I open a new account?",
-      answer: "You can open a new account directly from your dashboard. Click the 'Open New Account' button and choose between a checking or savings account. Follow the on-screen instructions to complete the process."
-    },
-    {
-      question: "What are the requirements for a loan?",
-      answer: "Loan requirements vary depending on the type of loan. Generally, we look at your credit score, income, and debt-to-income ratio. For specific details, please navigate to the 'Loans' section or contact our support team."
-    },
-    {
-      question: "How can I reset my password?",
-      answer: "If you've forgotten your password, click the 'Forgot Password' link on the login page. You'll receive an email with instructions to reset your password. For security reasons, our support team cannot reset your password for you."
-    },
-    {
-      question: "What are the fees for international transfers?",
-      answer: "International transfer fees depend on the destination country and the transfer amount. You can see a full fee breakdown before you confirm any transfer. We pride ourselves on transparent and competitive pricing."
-    },
-    {
-      question: "How do I report a lost or stolen card?",
-      answer: "If your card is lost or stolen, you can freeze it immediately from the 'Cards' section of your dashboard to prevent unauthorized transactions. You should also report it to us by creating a high-priority support ticket or calling our emergency hotline."
-    }
-  ];
+import { useTranslation } from 'react-i18next';
 
 const Support = () => {
+  const { t } = useTranslation();
   const { data: tickets, isLoading } = useSupportTickets();
   const createTicket = useCreateSupportTicket();
   const { toast } = useToast();
@@ -45,13 +24,36 @@ const Support = () => {
   const [message, setMessage] = useState('');
   const [priority, setPriority] = useState('medium');
 
+  const faqData = [
+    {
+      question: t('support_page.faq_q1'),
+      answer: t('support_page.faq_a1')
+    },
+    {
+      question: t('support_page.faq_q2'),
+      answer: t('support_page.faq_a2')
+    },
+    {
+      question: t('support_page.faq_q3'),
+      answer: t('support_page.faq_a3')
+    },
+    {
+      question: t('support_page.faq_q4'),
+      answer: t('support_page.faq_a4')
+    },
+    {
+      question: t('support_page.faq_q5'),
+      answer: t('support_page.faq_a5')
+    }
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!subject || !message) {
       toast({
-        title: 'Missing information',
-        description: 'Please fill in all required fields.',
+        title: t('support_page.missing_info_title'),
+        description: t('support_page.missing_info_subtitle'),
         variant: 'destructive',
       });
       return;
@@ -60,8 +62,8 @@ const Support = () => {
     try {
       await createTicket.mutateAsync({ subject, message, priority });
       toast({
-        title: 'Ticket submitted!',
-        description: 'Our support team will respond shortly.',
+        title: t('support_page.ticket_submitted_title'),
+        description: t('support_page.ticket_submitted_subtitle'),
       });
       setShowForm(false);
       setSubject('');
@@ -69,8 +71,8 @@ const Support = () => {
       setPriority('medium');
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Failed to submit ticket. Please try again.',
+        title: t('support_page.error_title'),
+        description: t('support_page.error_subtitle'),
         variant: 'destructive',
       });
     }
@@ -122,12 +124,12 @@ const Support = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Support Center</h1>
-            <p className="text-muted-foreground">Get help with your account or submit a support ticket.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('support_page.title')}</h1>
+            <p className="text-muted-foreground">{t('support_page.subtitle')}</p>
           </div>
           <Button variant="hero" onClick={() => setShowForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
-            New Ticket
+            {t('support_page.new_ticket')}
           </Button>
         </motion.div>
         
@@ -140,13 +142,13 @@ const Support = () => {
         >
           <a href="mailto:support@nationalregionb.com" className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
             <Mail className="w-6 h-6 text-primary mb-3" />
-            <h3 className="font-semibold text-foreground mb-1">Email Support</h3>
+            <h3 className="font-semibold text-foreground mb-1">{t('support_page.email_support')}</h3>
             <p className="text-sm text-muted-foreground">support@nationalregionb.com</p>
           </a>
           <div className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
             <HelpCircle className="w-6 h-6 text-primary mb-3" />
-            <h3 className="font-semibold text-foreground mb-1">FAQ</h3>
-            <p className="text-sm text-muted-foreground">Find answers to common questions</p>
+            <h3 className="font-semibold text-foreground mb-1">{t('support_page.faq')}</h3>
+            <p className="text-sm text-muted-foreground">{t('support_page.faq_subtitle')}</p>
           </div>
         </motion.div>
 
@@ -158,7 +160,7 @@ const Support = () => {
             transition={{ delay: 0.2 }}
             className="p-6 rounded-2xl bg-card border border-border"
         >
-            <h2 className="text-lg font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4">{t('support_page.faq_title')}</h2>
             <Accordion type="single" collapsible className="w-full">
                 {faqData.map((item, index) => (
                     <AccordionItem value={`item-${index}`} key={index}>
@@ -179,53 +181,53 @@ const Support = () => {
             animate={{ opacity: 1, y: 0 }}
             className="p-6 rounded-2xl bg-card border border-border"
           >
-            <h2 className="text-lg font-semibold text-foreground mb-6">Submit a Support Ticket</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-6">{t('support_page.submit_ticket_title')}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Subject *</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('support_page.subject')}</label>
                   <input
                     type="text"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Brief description of your issue"
+                    placeholder={t('support_page.subject_placeholder')}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Priority</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('support_page.priority')}</label>
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value)}
                     className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                    <option value="urgent">Urgent</option>
+                    <option value="low">{t('support_page.low')}</option>
+                    <option value="medium">{t('support_page.medium')}</option>
+                    <option value="high">{t('support_page.high')}</option>
+                    <option value="urgent">{t('support_page.urgent')}</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Message *</label>
+                <label className="block text-sm font-medium text-foreground mb-2">{t('support_page.message')}</label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Describe your issue in detail..."
+                  placeholder={t('support_page.message_placeholder')}
                   rows={5}
                   className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
                 />
               </div>
               <div className="flex justify-end gap-4">
-                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>{t('support_page.cancel')}</Button>
                 <Button type="submit" variant="hero" disabled={createTicket.isPending}>
                   {createTicket.isPending ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Submitting...
+                      {t('support_page.submitting')}
                     </>
                   ) : (
-                    'Submit Ticket'
+                    t('support_page.submit_ticket')
                   )}
                 </Button>
               </div>
@@ -239,7 +241,7 @@ const Support = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Your Tickets</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('support_page.your_tickets')}</h2>
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
@@ -275,7 +277,7 @@ const Support = () => {
                         </div>
                       </div>
                     </div>
-                    <Button variant="ghost" size="sm">View</Button>
+                    <Button variant="ghost" size="sm">{t('support_page.view')}</Button>
                   </div>
                 </motion.div>
               ))}
@@ -283,11 +285,11 @@ const Support = () => {
           ) : (
             <div className="text-center py-12 rounded-xl bg-card border border-border">
               <HelpCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No support tickets</h3>
-              <p className="text-muted-foreground mb-4">You haven't submitted any support tickets yet.</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t('support_page.no_tickets_title')}</h3>
+              <p className="text-muted-foreground mb-4">{t('support_page.no_tickets_subtitle')}</p>
               <Button variant="hero" onClick={() => setShowForm(true)}>
                 <Plus className="w-4 h-4 mr-2" />
-                Submit Your First Ticket
+                {t('support_page.submit_first_ticket')}
               </Button>
             </div>
           )}

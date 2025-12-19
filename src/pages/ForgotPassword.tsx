@@ -6,8 +6,10 @@ import { Label } from '@/components/ui/label';
 import { ArrowLeft, Mail, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -33,11 +35,11 @@ const ForgotPassword = () => {
       setIsSuccess(true);
     } catch (error) {
       toast({
-        title: 'Error',
+        title: t('forgot_password_page.error_title'),
         description:
           error instanceof Error
             ? error.message
-            : 'Something went wrong. Please try again.',
+            : t('forgot_password_page.error_description'),
         variant: 'destructive',
       });
     } finally {
@@ -58,15 +60,15 @@ const ForgotPassword = () => {
 
         <div>
           <h1 className="text-4xl lg:text-5xl font-bold text-hero-foreground mb-6">
-            Reset Your Password
+            {t('forgot_password_page.title')}
           </h1>
           <p className="text-hero-foreground/70 text-lg max-w-md">
-            Enter your email and we’ll send you instructions to reset your password.
+            {t('forgot_password_page.subtitle')}
           </p>
         </div>
 
         <p className="text-hero-foreground/50 text-sm">
-          © {new Date().getFullYear()} NationalRegionBank. All rights reserved.
+          {t('forgot_password_page.all_rights_reserved', { year: new Date().getFullYear() })}
         </p>
       </div>
 
@@ -91,15 +93,15 @@ const ForgotPassword = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Mail className="w-8 h-8 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-2">Forgot Password?</h2>
+                  <h2 className="text-2xl font-bold mb-2">{t('forgot_password_page.forgot_password')}</h2>
                   <p className="text-muted-foreground">
-                    Enter your email address and we’ll send you reset instructions.
+                    {t('forgot_password_page.enter_email_instructions')}
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="email">{t('forgot_password_page.email_address')}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -111,7 +113,7 @@ const ForgotPassword = () => {
                   </div>
 
                   <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                    {isLoading ? 'Sending...' : 'Send Reset Link'}
+                    {isLoading ? t('forgot_password_page.sending') : t('forgot_password_page.send_reset_link')}
                   </Button>
                 </form>
               </>
@@ -120,13 +122,11 @@ const ForgotPassword = () => {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
-                <h2 className="text-2xl font-bold mb-2">Check Your Email</h2>
-                <p className="text-muted-foreground mb-6">
-                  We sent a reset link to <strong>{email}</strong>.
-                </p>
+                <h2 className="text-2xl font-bold mb-2">{t('forgot_password_page.check_your_email')}</h2>
+                <p className="text-muted-foreground mb-6" dangerouslySetInnerHTML={{ __html: t('forgot_password_page.reset_link_sent', { email }) }} />
 
                 <Button variant="outline" onClick={() => setIsSuccess(false)}>
-                  Try Again
+                  {t('forgot_password_page.try_again')}
                 </Button>
               </div>
             )}
@@ -137,7 +137,7 @@ const ForgotPassword = () => {
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Back to Login
+                {t('forgot_password_page.back_to_login')}
               </Link>
             </div>
           </div>
@@ -148,4 +148,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-

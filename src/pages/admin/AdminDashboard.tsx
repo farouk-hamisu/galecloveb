@@ -7,8 +7,10 @@ import {
   useAdminCards 
 } from '@/hooks/useAdminData';
 import { Users, Wallet, ArrowLeftRight, CreditCard, TrendingUp, AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const AdminDashboard = () => {
+  const { t } = useTranslation();
   const { data: profiles, isLoading: profilesLoading } = useAdminProfiles();
   const { data: accounts, isLoading: accountsLoading } = useAdminAccounts();
   const { data: transactions, isLoading: transactionsLoading } = useAdminTransactions();
@@ -28,8 +30,8 @@ const AdminDashboard = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Overview of all banking operations</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('admin_dashboard_page.title')}</h1>
+          <p className="text-muted-foreground">{t('admin_dashboard_page.subtitle')}</p>
         </div>
 
         {/* Stats Grid */}
@@ -38,7 +40,7 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Users</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.total_users')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {profilesLoading ? '...' : totalUsers}
                   </p>
@@ -54,11 +56,11 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Accounts</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.total_accounts')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {accountsLoading ? '...' : totalAccounts}
                   </p>
-                  <p className="text-xs text-muted-foreground">{activeAccounts} active</p>
+                  <p className="text-xs text-muted-foreground">{t('admin_dashboard_page.active_accounts', { activeAccounts })}</p>
                 </div>
                 <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center">
                   <Wallet className="w-6 h-6 text-green-500" />
@@ -71,7 +73,7 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Balance</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.total_balance')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {accountsLoading ? '...' : `$${totalBalance.toLocaleString()}`}
                   </p>
@@ -87,7 +89,7 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Transactions</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.total_transactions')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {transactionsLoading ? '...' : totalTransactions}
                   </p>
@@ -106,12 +108,12 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Cards</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.total_cards')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {cardsLoading ? '...' : totalCards}
                   </p>
                   {frozenCards > 0 && (
-                    <p className="text-xs text-destructive">{frozenCards} frozen</p>
+                    <p className="text-xs text-destructive">{t('admin_dashboard_page.frozen_cards', { frozenCards })}</p>
                   )}
                 </div>
                 <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center">
@@ -125,7 +127,7 @@ const AdminDashboard = () => {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Inactive Accounts</p>
+                  <p className="text-sm text-muted-foreground">{t('admin_dashboard_page.inactive_accounts')}</p>
                   <p className="text-2xl font-bold text-foreground">
                     {accountsLoading ? '...' : totalAccounts - activeAccounts}
                   </p>
@@ -141,13 +143,13 @@ const AdminDashboard = () => {
         {/* Recent Transactions */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
+            <CardTitle>{t('admin_dashboard_page.recent_transactions')}</CardTitle>
           </CardHeader>
           <CardContent>
             {transactionsLoading ? (
-              <p className="text-muted-foreground">Loading...</p>
+              <p className="text-muted-foreground">{t('admin_dashboard_page.loading')}</p>
             ) : recentTransactions.length === 0 ? (
-              <p className="text-muted-foreground">No transactions yet</p>
+              <p className="text-muted-foreground">{t('admin_dashboard_page.no_transactions')}</p>
             ) : (
               <div className="space-y-3">
                 {recentTransactions.map((tx) => (

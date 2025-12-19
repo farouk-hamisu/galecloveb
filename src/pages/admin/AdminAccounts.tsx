@@ -29,8 +29,10 @@ import {
 } from '@/hooks/useAdminData';
 import { Search, Edit, Power, Wallet } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const AdminAccounts = () => {
+  const { t } = useTranslation();
   const { data: accounts, isLoading } = useAdminAccounts();
   const { data: profiles } = useAdminProfiles();
   const updateBalance = useUpdateAccountBalance();
@@ -58,11 +60,11 @@ const AdminAccounts = () => {
         id: editingAccount.id,
         balance: parseFloat(newBalance),
       });
-      toast.success('Balance updated successfully');
+      toast.success(t('admin_accounts_page.balance_updated'));
       setEditingAccount(null);
       setNewBalance('');
     } catch (error) {
-      toast.error('Failed to update balance');
+      toast.error(t('admin_accounts_page.balance_update_failed'));
     }
   };
 
@@ -72,9 +74,9 @@ const AdminAccounts = () => {
         id: account.id,
         is_active: !account.is_active,
       });
-      toast.success(`Account ${account.is_active ? 'suspended' : 'activated'} successfully`);
+      toast.success(account.is_active ? t('admin_accounts_page.account_suspended') : t('admin_accounts_page.account_activated'));
     } catch (error) {
-      toast.error('Failed to update account status');
+      toast.error(t('admin_accounts_page.status_update_failed'));
     }
   };
 
@@ -82,18 +84,18 @@ const AdminAccounts = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Account Management</h1>
-          <p className="text-muted-foreground">Manage user accounts and balances</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('admin_accounts_page.title')}</h1>
+          <p className="text-muted-foreground">{t('admin_accounts_page.subtitle')}</p>
         </div>
 
         <Card>
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>All Accounts ({accounts?.length || 0})</CardTitle>
+              <CardTitle>{t('admin_accounts_page.all_accounts')} ({accounts?.length || 0})</CardTitle>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search accounts..."
+                  placeholder={t('admin_accounts_page.search_accounts')}
                   className="pl-10 w-full sm:w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -103,19 +105,19 @@ const AdminAccounts = () => {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground">Loading accounts...</p>
+              <p className="text-muted-foreground">{t('admin_accounts_page.loading_accounts')}</p>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Account</TableHead>
-                      <TableHead>User</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Balance</TableHead>
-                      <TableHead>Currency</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t('admin_accounts_page.account')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.user')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.type')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.balance')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.currency')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.status')}</TableHead>
+                      <TableHead>{t('admin_accounts_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -137,7 +139,7 @@ const AdminAccounts = () => {
                         <TableCell>{account.currency}</TableCell>
                         <TableCell>
                           <Badge variant={account.is_active ? 'default' : 'destructive'}>
-                            {account.is_active ? 'Active' : 'Suspended'}
+                            {account.is_active ? t('admin_accounts_page.active') : t('admin_accounts_page.suspended')}
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -157,15 +159,15 @@ const AdminAccounts = () => {
                               </DialogTrigger>
                               <DialogContent>
                                 <DialogHeader>
-                                  <DialogTitle>Edit Account Balance</DialogTitle>
+                                  <DialogTitle>{t('admin_accounts_page.edit_balance')}</DialogTitle>
                                 </DialogHeader>
                                 <div className="space-y-4 pt-4">
                                   <div className="space-y-2">
-                                    <Label>Account Number</Label>
+                                    <Label>{t('admin_accounts_page.account_number')}</Label>
                                     <Input value={editingAccount?.account_number || ''} disabled />
                                   </div>
                                   <div className="space-y-2">
-                                    <Label>New Balance</Label>
+                                    <Label>{t('admin_accounts_page.new_balance')}</Label>
                                     <Input
                                       type="number"
                                       value={newBalance}
@@ -173,7 +175,7 @@ const AdminAccounts = () => {
                                     />
                                   </div>
                                   <Button className="w-full" onClick={handleUpdateBalance}>
-                                    Update Balance
+                                    {t('admin_accounts_page.update_balance')}
                                   </Button>
                                 </div>
                               </DialogContent>

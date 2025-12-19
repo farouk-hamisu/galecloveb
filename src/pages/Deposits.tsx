@@ -121,8 +121,8 @@ const Deposits = () => {
   const handleDeposit = async () => {
     if (!selectedAccount || !depositAmount) {
       toast({
-        title: 'Missing Information',
-        description: 'Please select an account and enter an amount.',
+        title: t('deposits_page.missing_info'),
+        description: t('deposits_page.missing_info_desc'),
         variant: 'destructive',
       });
       return;
@@ -131,8 +131,8 @@ const Deposits = () => {
     const amount = parseFloat(depositAmount);
     if (isNaN(amount) || amount <= 0) {
       toast({
-        title: 'Invalid Amount',
-        description: 'Please enter a valid deposit amount.',
+        title: t('deposits_page.invalid_amount'),
+        description: t('deposits_page.invalid_amount_desc'),
         variant: 'destructive',
       });
       return;
@@ -153,7 +153,7 @@ const Deposits = () => {
       setDepositMethod(null);
     } catch (error: unknown) {
       toast({
-        title: 'Deposit Failed',
+        title: t('deposits_page.deposit_failed'),
         description: (error as Error).message,
         variant: 'destructive',
       });
@@ -196,8 +196,8 @@ const Deposits = () => {
               <CheckCircle2 className="w-14 h-14 text-white" />
             </motion.div>
 
-            <h1 className="text-3xl font-bold text-foreground mb-2">Deposit Initiated!</h1>
-            <p className="text-muted-foreground mb-8">Your deposit request has been processed.</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">{t('deposits_page.deposit_initiated')}</h1>
+            <p className="text-muted-foreground mb-8">{t('deposits_page.deposit_processed')}</p>
 
             <div className="bg-card border border-border rounded-2xl p-6 mb-6">
               <div className="text-4xl font-bold text-foreground mb-4">
@@ -205,18 +205,18 @@ const Deposits = () => {
               </div>
               <div className="space-y-3 text-left">
                 <div className="flex justify-between py-2 border-b border-border">
-                  <span className="text-muted-foreground">Reference</span>
+                  <span className="text-muted-foreground">{t('deposits_page.reference')}</span>
                   <span className="font-mono text-sm text-foreground">{successDetails.reference}</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-muted-foreground">Status</span>
-                  <span className="text-green-500 font-medium">Completed</span>
+                  <span className="text-muted-foreground">{t('deposits_page.status')}</span>
+                  <span className="text-green-500 font-medium">{t('deposits_page.completed')}</span>
                 </div>
               </div>
             </div>
 
             <Button variant="hero" onClick={() => setShowSuccess(false)}>
-              Make Another Deposit
+              {t('deposits_page.make_another_deposit')}
             </Button>
           </motion.div>
         </div>
@@ -234,22 +234,22 @@ const Deposits = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Deposit Funds</h1>
-            <p className="text-muted-foreground">Add money to your accounts using various methods.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('deposits_page.title')}</h1>
+            <p className="text-muted-foreground">{t('deposits_page.subtitle')}</p>
           </div>
           
           <Dialog open={newAccountDialogOpen} onOpenChange={setNewAccountDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="hero">
                 <Plus className="w-4 h-4 mr-2" />
-                Open New Account
+                {t('deposits_page.open_new_account')}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Open New Account</DialogTitle>
+                <DialogTitle>{t('deposits_page.dialog_title')}</DialogTitle>
                 <DialogDescription>
-                  Choose the type of account you'd like to open.
+                  {t('deposits_page.dialog_subtitle')}
                 </DialogDescription>
               </DialogHeader>
               
@@ -263,8 +263,8 @@ const Deposits = () => {
                     <CreditCard className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">Checking Account</h3>
-                    <p className="text-sm text-muted-foreground">For everyday transactions</p>
+                    <h3 className="font-semibold text-foreground">{t('deposits_page.checking_account')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('deposits_page.checking_subtitle')}</p>
                   </div>
                 </button>
 
@@ -277,8 +277,8 @@ const Deposits = () => {
                     <PiggyBank className="w-6 h-6 text-green-500" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">Savings Account</h3>
-                    <p className="text-sm text-muted-foreground">Earn 4.5% APY</p>
+                    <h3 className="font-semibold text-foreground">{t('deposits_page.savings_account')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('deposits_page.savings_subtitle')}</p>
                   </div>
                 </button>
               </div>
@@ -293,12 +293,12 @@ const Deposits = () => {
           transition={{ delay: 0.1 }}
           className="p-6 rounded-2xl bg-card border border-border"
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Your Deposit Information</h2>
-          <p className="text-muted-foreground mb-6">Use these details to receive funds from others.</p>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('deposits_page.your_deposit_info')}</h2>
+          <p className="text-muted-foreground mb-6">{t('deposits_page.your_deposit_info_subtitle')}</p>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Account Number
+                {t('deposits_page.account_number')}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -320,7 +320,7 @@ const Deposits = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Email Address
+                {t('deposits_page.email_address')}
               </label>
               <div className="flex items-center gap-2">
                 <input
@@ -350,7 +350,7 @@ const Deposits = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Choose a Deposit Method</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('deposits_page.choose_deposit_method')}</h2>
           
           <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* Cryptocurrency */}
@@ -365,8 +365,8 @@ const Deposits = () => {
               <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mb-4">
                 <Bitcoin className="w-6 h-6 text-orange-500" />
               </div>
-              <h3 className="font-semibold text-foreground mb-1">Cryptocurrency</h3>
-              <p className="text-sm text-muted-foreground">BTC, ETH, USDT, SOL</p>
+              <h3 className="font-semibold text-foreground mb-1">{t('deposits_page.crypto')}</h3>
+              <p className="text-sm text-muted-foreground">{t('deposits_page.crypto_subtitle')}</p>
             </button>
           </div>
         </motion.div>
@@ -379,7 +379,7 @@ const Deposits = () => {
             className="space-y-6"
           >
             <div className="p-6 rounded-2xl bg-card border border-border">
-              <h3 className="text-lg font-semibold text-foreground mb-6">Select Cryptocurrency</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-6">{t('deposits_page.select_crypto')}</h3>
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {(Object.keys(cryptoWallets) as Array<keyof typeof cryptoWallets>).map((crypto) => (
@@ -414,10 +414,10 @@ const Deposits = () => {
                   <CryptoIcon type={selectedCrypto} />
                   <div>
                     <h3 className="text-lg font-semibold text-foreground">
-                      {cryptoWallets[selectedCrypto].name} Deposit
+                      {t('deposits_page.crypto_deposit_title', { cryptoName: cryptoWallets[selectedCrypto].name })}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      {cryptoWallets[selectedCrypto].network}
+                      {t('deposits_page.crypto_deposit_subtitle', { cryptoNetwork: cryptoWallets[selectedCrypto].network })}
                     </p>
                   </div>
                 </div>
@@ -425,7 +425,7 @@ const Deposits = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Deposit Address
+                      {t('deposits_page.deposit_address')}
                     </label>
                     <div className="flex items-center gap-2">
                       <input
@@ -451,21 +451,20 @@ const Deposits = () => {
 
                   <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
                     <p className="text-sm text-amber-600 dark:text-amber-400">
-                      <strong>Important:</strong> Only send {cryptoWallets[selectedCrypto].symbol} to this address on the {cryptoWallets[selectedCrypto].network}. 
-                      Deposits require {cryptoWallets[selectedCrypto].confirmations} to be credited.
+                      <strong>{t('deposits_page.important')}</strong> {t('deposits_page.important_crypto_text', { cryptoSymbol: cryptoWallets[selectedCrypto].symbol, cryptoNetwork: cryptoWallets[selectedCrypto].network, confirmations: cryptoWallets[selectedCrypto].confirmations })}
                     </p>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Credit to Account
+                      {t('deposits_page.credit_to_account')}
                     </label>
                     <select
                       value={selectedAccount}
                       onChange={(e) => setSelectedAccount(e.target.value)}
                       className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground"
                     >
-                      <option value="">Select account</option>
+                      <option value="">{t('deposits_page.select_account')}</option>
                       {allAccounts.map((acc) => (
                         <option key={acc.id} value={acc.id}>
                           {acc.account_type.charAt(0).toUpperCase() + acc.account_type.slice(1)} - ****{acc.account_number.slice(-4)}
@@ -475,14 +474,14 @@ const Deposits = () => {
                   </div>
 
                   <p className="text-sm text-muted-foreground text-center">
-                    Once we detect your deposit, it will be automatically converted and credited to your account.
+                    {t('deposits_page.crypto_conversion_note')}
                   </p>
                 </div>
               </motion.div>
             )}
 
             <Button variant="outline" onClick={() => { setDepositMethod(null); setSelectedCrypto(null); }}>
-              Back to Methods
+              {t('deposits_page.back_to_methods')}
             </Button>
           </motion.div>
         )}

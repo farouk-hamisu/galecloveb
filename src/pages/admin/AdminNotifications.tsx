@@ -30,8 +30,10 @@ import {
 } from '@/hooks/useAdminData';
 import { Search, Trash2, Bell, Send, Users } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const AdminNotifications = () => {
+  const { t } = useTranslation();
   const { data: notifications, isLoading } = useAdminNotifications();
   const { data: profiles } = useAdminProfiles();
   const sendNotification = useSendNotification();
@@ -62,7 +64,7 @@ const AdminNotifications = () => {
 
   const handleSendSingle = async () => {
     if (!notifForm.user_id || !notifForm.title || !notifForm.message) {
-      toast.error('Please fill all fields');
+      toast.error(t('admin_notifications_page.fill_all_fields'));
       return;
     }
     
@@ -73,17 +75,17 @@ const AdminNotifications = () => {
         message: notifForm.message,
         type: notifForm.type,
       });
-      toast.success('Notification sent successfully');
+      toast.success(t('admin_notifications_page.notification_sent'));
       setShowSingle(false);
       resetForm();
     } catch (error) {
-      toast.error('Failed to send notification');
+      toast.error(t('admin_notifications_page.notification_send_failed'));
     }
   };
 
   const handleSendBulk = async () => {
     if (selectedUsers.length === 0 || !notifForm.title || !notifForm.message) {
-      toast.error('Please select users and fill all fields');
+      toast.error(t('admin_notifications_page.select_users_and_fill_fields'));
       return;
     }
     
@@ -94,23 +96,23 @@ const AdminNotifications = () => {
         message: notifForm.message,
         type: notifForm.type,
       });
-      toast.success(`Notification sent to ${selectedUsers.length} users`);
+      toast.success(t('admin_notifications_page.notification_sent', { count: selectedUsers.length }));
       setShowBulk(false);
       setSelectedUsers([]);
       resetForm();
     } catch (error) {
-      toast.error('Failed to send notifications');
+      toast.error(t('admin_notifications_page.notification_send_failed'));
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this notification?')) return;
+    if (!confirm(t('admin_notifications_page.delete_notification_confirm'))) return;
     
     try {
       await deleteNotification.mutateAsync(id);
-      toast.success('Notification deleted successfully');
+      toast.success(t('admin_notifications_page.notification_deleted'));
     } catch (error) {
-      toast.error('Failed to delete notification');
+      toast.error(t('admin_notifications_page.notification_delete_failed'));
     }
   };
 
@@ -144,30 +146,30 @@ const AdminNotifications = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Notifications</h1>
-            <p className="text-muted-foreground">Send and manage user notifications</p>
+            <h1 className="text-2xl font-bold text-foreground">{t('admin_notifications_page.title')}</h1>
+            <p className="text-muted-foreground">{t('admin_notifications_page.subtitle')}</p>
           </div>
           <div className="flex gap-2">
             <Dialog open={showSingle} onOpenChange={setShowSingle}>
               <DialogTrigger asChild>
                 <Button variant="outline" onClick={() => { resetForm(); setShowSingle(true); }}>
                   <Send className="w-4 h-4 mr-2" />
-                  Send to User
+                  {t('admin_notifications_page.send_to_user')}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Send Notification</DialogTitle>
+                  <DialogTitle>{t('admin_notifications_page.send_notification')}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
                   <div className="space-y-2">
-                    <Label>Select User</Label>
+                    <Label>{t('admin_notifications_page.select_user')}</Label>
                     <select
                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
                       value={notifForm.user_id}
                       onChange={(e) => setNotifForm({ ...notifForm, user_id: e.target.value })}
                     >
-                      <option value="">Select user...</option>
+                      <option value="">{t('admin_notifications_page.select_user')}</option>
                       {profiles?.map((profile) => (
                         <option key={profile.id} value={profile.id}>
                           {profile.email}
@@ -176,27 +178,27 @@ const AdminNotifications = () => {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Type</Label>
+                    <Label>{t('admin_notifications_page.type')}</Label>
                     <select
                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
                       value={notifForm.type}
                       onChange={(e) => setNotifForm({ ...notifForm, type: e.target.value })}
                     >
-                      <option value="info">Info</option>
-                      <option value="success">Success</option>
-                      <option value="warning">Warning</option>
-                      <option value="error">Error</option>
+                      <option value="info">{t('admin_notifications_page.info')}</option>
+                      <option value="success">{t('admin_notifications_page.success')}</option>
+                      <option value="warning">{t('admin_notifications_page.warning')}</option>
+                      <option value="error">{t('admin_notifications_page.error')}</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Title</Label>
+                    <Label>{t('admin_notifications_page.title_label')}</Label>
                     <Input
                       value={notifForm.title}
                       onChange={(e) => setNotifForm({ ...notifForm, title: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Message</Label>
+                    <Label>{t('admin_notifications_page.message_label')}</Label>
                     <Textarea
                       value={notifForm.message}
                       onChange={(e) => setNotifForm({ ...notifForm, message: e.target.value })}
@@ -204,7 +206,7 @@ const AdminNotifications = () => {
                     />
                   </div>
                   <Button className="w-full" onClick={handleSendSingle}>
-                    Send Notification
+                    {t('admin_notifications_page.send_notification')}
                   </Button>
                 </div>
               </DialogContent>
@@ -214,19 +216,19 @@ const AdminNotifications = () => {
               <DialogTrigger asChild>
                 <Button onClick={() => { resetForm(); setSelectedUsers([]); setShowBulk(true); }}>
                   <Users className="w-4 h-4 mr-2" />
-                  Bulk Send
+                  {t('admin_notifications_page.bulk_send')}
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-lg">
                 <DialogHeader>
-                  <DialogTitle>Send Bulk Notification</DialogTitle>
+                  <DialogTitle>{t('admin_notifications_page.send_bulk_notification')}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <Label>Select Users ({selectedUsers.length} selected)</Label>
+                      <Label>{t('admin_notifications_page.select_users', { count: selectedUsers.length })}</Label>
                       <Button variant="ghost" size="sm" onClick={selectAllUsers}>
-                        {selectedUsers.length === profiles?.length ? 'Deselect All' : 'Select All'}
+                        {selectedUsers.length === profiles?.length ? t('admin_notifications_page.deselect_all') : t('admin_notifications_page.select_all')}
                       </Button>
                     </div>
                     <div className="max-h-40 overflow-y-auto border rounded-md p-2 space-y-1">
@@ -243,27 +245,27 @@ const AdminNotifications = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label>Type</Label>
+                    <Label>{t('admin_notifications_page.type')}</Label>
                     <select
                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
                       value={notifForm.type}
                       onChange={(e) => setNotifForm({ ...notifForm, type: e.target.value })}
                     >
-                      <option value="info">Info</option>
-                      <option value="success">Success</option>
-                      <option value="warning">Warning</option>
-                      <option value="error">Error</option>
+                      <option value="info">{t('admin_notifications_page.info')}</option>
+                      <option value="success">{t('admin_notifications_page.success')}</option>
+                      <option value="warning">{t('admin_notifications_page.warning')}</option>
+                      <option value="error">{t('admin_notifications_page.error')}</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Title</Label>
+                    <Label>{t('admin_notifications_page.title_label')}</Label>
                     <Input
                       value={notifForm.title}
                       onChange={(e) => setNotifForm({ ...notifForm, title: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Message</Label>
+                    <Label>{t('admin_notifications_page.message_label')}</Label>
                     <Textarea
                       value={notifForm.message}
                       onChange={(e) => setNotifForm({ ...notifForm, message: e.target.value })}
@@ -271,7 +273,7 @@ const AdminNotifications = () => {
                     />
                   </div>
                   <Button className="w-full" onClick={handleSendBulk}>
-                    Send to {selectedUsers.length} Users
+                    {t('admin_notifications_page.send_to_users', { count: selectedUsers.length })}
                   </Button>
                 </div>
               </DialogContent>
@@ -282,11 +284,11 @@ const AdminNotifications = () => {
         <Card>
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>Sent Notifications ({notifications?.length || 0})</CardTitle>
+              <CardTitle>{t('admin_notifications_page.sent_notifications')} ({notifications?.length || 0})</CardTitle>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search notifications..."
+                  placeholder={t('admin_notifications_page.search_notifications')}
                   className="pl-10 w-full sm:w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -296,19 +298,19 @@ const AdminNotifications = () => {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground">Loading notifications...</p>
+              <p className="text-muted-foreground">{t('admin_notifications_page.loading_notifications')}</p>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Title</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Recipient</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Read</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t('admin_notifications_page.title_label')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.message_label')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.recipient')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.type')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.read')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.date')}</TableHead>
+                      <TableHead>{t('admin_notifications_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -335,7 +337,7 @@ const AdminNotifications = () => {
                         </TableCell>
                         <TableCell>
                           <Badge variant={notif.is_read ? 'default' : 'secondary'}>
-                            {notif.is_read ? 'Read' : 'Unread'}
+                            {notif.is_read ? t('admin_notifications_page.read') : t('admin_notifications_page.unread')}
                           </Badge>
                         </TableCell>
                         <TableCell>

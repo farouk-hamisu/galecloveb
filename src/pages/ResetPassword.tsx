@@ -6,10 +6,12 @@ import { Label } from '@/components/ui/label';
 import { Lock, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = "https://national-credit-union-1.onrender.com"; 
 
 const ResetPassword = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -27,20 +29,20 @@ const ResetPassword = () => {
   useEffect(() => {
     if (!email || !token) {
       toast({
-        title: 'Invalid or Expired Link',
-        description: 'Please request a new password reset link.',
+        title: t('reset_password_page.invalid_link_title'),
+        description: t('reset_password_page.invalid_link_description'),
         variant: 'destructive',
       });
       navigate('/forgot-password');
     }
-  }, [email, token, navigate, toast]);
+  }, [email, token, navigate, toast, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       toast({
-        title: 'Passwords do not match',
+        title: t('reset_password_page.password_mismatch'),
         variant: 'destructive',
       });
       return;
@@ -48,8 +50,8 @@ const ResetPassword = () => {
 
     if (password.length < 8) {
       toast({
-        title: 'Password too short',
-        description: 'Password must be at least 8 characters long.',
+        title: t('reset_password_page.password_too_short'),
+        description: t('reset_password_page.password_too_short_description'),
         variant: 'destructive',
       });
       return;
@@ -71,7 +73,7 @@ const ResetPassword = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Password reset failed');
+        throw new Error(data.error || t('reset_password_page.reset_failed'));
       }
 
       setIsSuccess(true);
@@ -81,7 +83,7 @@ const ResetPassword = () => {
       }, 3000);
     } catch (err: any) {
       toast({
-        title: 'Error',
+        title: t('reset_password_page.error_title'),
         description: err.message,
         variant: 'destructive',
       });
@@ -104,15 +106,15 @@ const ResetPassword = () => {
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lock className="w-8 h-8 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold">Reset Password</h2>
+                <h2 className="text-2xl font-bold">{t('reset_password_page.title')}</h2>
                 <p className="text-muted-foreground">
-                  Enter your new password below.
+                  {t('reset_password_page.subtitle')}
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label>New Password</Label>
+                  <Label>{t('reset_password_page.new_password')}</Label>
                   <div className="relative">
                     <Input
                       type={showPassword ? 'text' : 'password'}
@@ -131,7 +133,7 @@ const ResetPassword = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Confirm Password</Label>
+                  <Label>{t('reset_password_page.confirm_password')}</Label>
                   <Input
                     type="password"
                     value={confirmPassword}
@@ -141,7 +143,7 @@ const ResetPassword = () => {
                 </div>
 
                 <Button className="w-full" disabled={isLoading}>
-                  {isLoading ? 'Updating...' : 'Update Password'}
+                  {isLoading ? t('reset_password_page.updating') : t('reset_password_page.update_password')}
                 </Button>
               </form>
             </>
@@ -150,12 +152,12 @@ const ResetPassword = () => {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Password Updated</h2>
+              <h2 className="text-2xl font-bold mb-2">{t('reset_password_page.password_updated')}</h2>
               <p className="text-muted-foreground mb-6">
-                You’ll be redirected to login shortly.
+                {t('reset_password_page.redirecting')}
               </p>
               <Link to="/login">
-                <Button>Go to Login</Button>
+                <Button>{t('reset_password_page.go_to_login')}</Button>
               </Link>
             </div>
           )}
@@ -165,4 +167,3 @@ const ResetPassword = () => {
   );
 };
 export default ResetPassword;
-

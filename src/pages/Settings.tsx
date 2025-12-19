@@ -2,7 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useProfile, useUpdateProfile } from '@/hooks/useBankingData';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { User, Lock, Bell, Shield, Globe, Palette } from 'lucide-react';
+import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,13 +10,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const Settings = () => {
+  const { t } = useTranslation();
   const { data: profile } = useProfile();
   const { user } = useAuth();
   const updateProfile = useUpdateProfile();
@@ -53,19 +54,19 @@ const Settings = () => {
   const handleUpdateProfile = async () => {
     try {
       await updateProfile.mutateAsync(formData);
-      toast({ title: 'Profile updated successfully' });
+      toast({ title: t('settings_page.toast.success') });
       setProfileDialogOpen(false);
     } catch (error) {
-      toast({ title: 'Failed to update profile', variant: 'destructive' });
+      toast({ title: t('settings_page.toast.error'), variant: 'destructive' });
     }
   };
 
   const settingsSections = [
     {
       icon: User,
-      title: 'Profile Information',
-      description: 'Update your personal details and contact information',
-      action: 'Edit Profile',
+      title: t('settings_page.sections.profile_info.title'),
+      description: t('settings_page.sections.profile_info.description'),
+      action: t('settings_page.sections.profile_info.action'),
       onClick: () => setProfileDialogOpen(true),
     },
   ];
@@ -77,8 +78,12 @@ const Settings = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">Settings</h1>
-          <p className="text-muted-foreground">Manage your account settings and preferences.</p>
+          <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
+            {t('settings_page.title')}
+          </h1>
+          <p className="text-muted-foreground">
+            {t('settings_page.subtitle')}
+          </p>
         </motion.div>
 
         {/* Settings Sections */}
@@ -101,9 +106,19 @@ const Settings = () => {
                   <section.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-1">{section.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{section.description}</p>
-                  <Button variant="outline" size="sm" onClick={section.onClick}>{section.action}</Button>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    {section.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {section.description}
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={section.onClick}
+                  >
+                    {section.action}
+                  </Button>
                 </div>
               </div>
             </motion.div>
@@ -114,23 +129,67 @@ const Settings = () => {
       <Dialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Edit Profile</DialogTitle>
-            <DialogDescription>Update your personal details.</DialogDescription>
+            <DialogTitle>
+              {t('settings_page.dialog.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('settings_page.dialog.description')}
+            </DialogDescription>
           </DialogHeader>
+
           <div className="space-y-4 py-4">
             <div className="grid grid-cols-2 gap-4">
-              <Input id="first_name" placeholder="First Name" value={formData.first_name} onChange={handleInputChange} />
-              <Input id="last_name" placeholder="Last Name" value={formData.last_name} onChange={handleInputChange} />
+              <Input
+                id="first_name"
+                placeholder={t('settings_page.form.first_name')}
+                value={formData.first_name}
+                onChange={handleInputChange}
+              />
+              <Input
+                id="last_name"
+                placeholder={t('settings_page.form.last_name')}
+                value={formData.last_name}
+                onChange={handleInputChange}
+              />
             </div>
-            <Input id="phone" placeholder="Phone" value={formData.phone} onChange={handleInputChange} />
-            <Input id="address" placeholder="Address" value={formData.address} onChange={handleInputChange} />
+
+            <Input
+              id="phone"
+              placeholder={t('settings_page.form.phone')}
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+
+            <Input
+              id="address"
+              placeholder={t('settings_page.form.address')}
+              value={formData.address}
+              onChange={handleInputChange}
+            />
+
             <div className="grid grid-cols-2 gap-4">
-              <Input id="city" placeholder="City" value={formData.city} onChange={handleInputChange} />
-              <Input id="country" placeholder="Country" value={formData.country} onChange={handleInputChange} />
+              <Input
+                id="city"
+                placeholder={t('settings_page.form.city')}
+                value={formData.city}
+                onChange={handleInputChange}
+              />
+              <Input
+                id="country"
+                placeholder={t('settings_page.form.country')}
+                value={formData.country}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
-          <Button onClick={handleUpdateProfile} disabled={updateProfile.isPending}>
-            {updateProfile.isPending ? 'Saving...' : 'Save Changes'}
+
+          <Button
+            onClick={handleUpdateProfile}
+            disabled={updateProfile.isPending}
+          >
+            {updateProfile.isPending
+              ? t('settings_page.form.saving')
+              : t('settings_page.form.save_changes')}
           </Button>
         </DialogContent>
       </Dialog>
@@ -139,3 +198,4 @@ const Settings = () => {
 };
 
 export default Settings;
+

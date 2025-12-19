@@ -7,16 +7,10 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
-
-const signupSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  agreeTerms: z.literal(true, { errorMap: () => ({ message: 'You must agree to the terms' }) }),
-});
+import { useTranslation } from 'react-i18next';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { signIn, user, loading: authLoading } = useAuth();
   const { toast } = useToast();
@@ -29,6 +23,14 @@ const Signup = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const signupSchema = z.object({
+    firstName: z.string().min(1, t('signup_page.first_name_required')),
+    lastName: z.string().min(1, t('signup_page.last_name_required')),
+    email: z.string().email(t('signup_page.invalid_email_error')),
+    password: z.string().min(8, t('signup_page.password_length_error')),
+    agreeTerms: z.literal(true, { errorMap: () => ({ message: t('signup_page.agree_terms_error') }) }),
+  });
 
   useEffect(() => {
     if (user && !authLoading) {
@@ -63,16 +65,16 @@ const handleSubmit = async (e: React.FormEvent) => {
   if (!res.ok) {
     const data = await res.json();
     toast({
-      title: "Signup failed",
-      description: data.error || "Something went wrong",
+      title: t('signup_page.signup_failed'),
+      description: data.error || t('signup_page.something_wrong'),
       variant: "destructive",
     });
     return;
   }
 
   toast({
-    title: "Verification code sent",
-    description: "A 6-digit code has been sent to your email",
+    title: t('signup_page.verification_sent'),
+    description: t('signup_page.verification_sent_desc'),
   });
 
   navigate("/verify-email", {
@@ -106,33 +108,33 @@ const handleSubmit = async (e: React.FormEvent) => {
                     <span className="text-primary-foreground font-bold text-xl">N</span>
                   </div>
                 </Link>
-                <h1 className="text-2xl font-bold text-foreground mb-2">Create your account</h1>
-                <p className="text-muted-foreground">Start your banking journey with NRBank</p>
+                <h1 className="text-2xl font-bold text-foreground mb-2">{t('signup_page.create_account')}</h1>
+                <p className="text-muted-foreground">{t('signup_page.start_journey')}</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">First Name</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">{t('signup_page.first_name')}</label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <input
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="John"
+                        placeholder={t('signup_page.john')}
                         className="w-full h-12 pl-12 pr-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       />
                     </div>
                     {errors.firstName && <p className="text-sm text-destructive mt-1">{errors.firstName}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Last Name</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">{t('signup_page.last_name')}</label>
                     <input
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Doe"
+                      placeholder={t('signup_page.doe')}
                       className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     {errors.lastName && <p className="text-sm text-destructive mt-1">{errors.lastName}</p>}
@@ -140,14 +142,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Email</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('signup_page.email')}</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
+                      placeholder={t('signup_page.enter_email')}
                       className="w-full h-12 pl-12 pr-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                   </div>
@@ -155,14 +157,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Password</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t('signup_page.password')}</label>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Create a password"
+                      placeholder={t('signup_page.create_password')}
                       className="w-full h-12 pl-12 pr-12 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     <button
@@ -173,7 +175,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">Must be at least 8 characters</p>
+                  <p className="text-xs text-muted-foreground mt-2">{t('signup_page.password_length_info')}</p>
                   {errors.password && <p className="text-sm text-destructive mt-1">{errors.password}</p>}
                 </div>
 
@@ -185,10 +187,10 @@ const handleSubmit = async (e: React.FormEvent) => {
                     className="w-4 h-4 mt-0.5 rounded border-border text-primary focus:ring-primary" 
                   />
                   <span className="text-sm text-muted-foreground">
-                    I agree to the{' '}
-                    <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
-                    {' '}and{' '}
-                    <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+                    {t('signup_page.agree_to')}{' '}
+                    <Link to="/terms" className="text-primary hover:underline">{t('signup_page.terms')}</Link>
+                    {' '}{t('signup_page.and')}{' '}
+                    <Link to="/privacy" className="text-primary hover:underline">{t('signup_page.privacy')}</Link>
                   </span>
                 </label>
                 {errors.agreeTerms && <p className="text-sm text-destructive">{errors.agreeTerms}</p>}
@@ -197,19 +199,19 @@ const handleSubmit = async (e: React.FormEvent) => {
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Creating account...
+                      {t('signup_page.creating_account')}
                     </>
                   ) : (
-                    'Create Account'
+                    t('signup_page.create_account_btn')
                   )}
                 </Button>
               </form>
 
               <div className="mt-8 text-center">
                 <p className="text-muted-foreground">
-                  Already have an account?{' '}
+                  {t('signup_page.already_have_account')}{' '}
                   <Link to="/login" className="text-primary font-semibold hover:underline">
-                    Sign in
+                    {t('signup_page.sign_in')}
                   </Link>
                 </p>
               </div>

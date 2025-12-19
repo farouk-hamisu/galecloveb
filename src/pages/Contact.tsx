@@ -8,8 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 const Contact = () => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,8 +29,8 @@ const Contact = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     toast({
-      title: 'Message sent!',
-      description: 'We\'ll get back to you within 24 hours.',
+      title: t('contact_page.toast_success_title'),
+      description: t('contact_page.toast_success_description'),
     });
 
     setFormData({ name: '', email: '', subject: '', message: '' });
@@ -38,30 +40,30 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email Us',
-      description: 'For general inquiries',
+      title: t('contact_page.email_us'),
+      description: t('contact_page.general_inquiries'),
       value: 'support@nrbank.com',
       action: 'mailto:support@nrbank.com',
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      description: '24/7 Customer Support',
+      title: t('contact_page.call_us'),
+      description: t('contact_page.support_24_7'),
       value: '+1 (800) NRB-BANK',
       action: 'tel:+18006282265',
     },
     {
       icon: MapPin,
-      title: 'Visit Us',
-      description: 'Headquarters',
+      title: t('contact_page.visit_us'),
+      description: t('contact_page.headquarters'),
       value: '123 Financial District, New York, NY 10005',
       action: '#',
     },
     {
       icon: Clock,
-      title: 'Business Hours',
-      description: 'Support Available',
-      value: '24/7 Online Support',
+      title: t('contact_page.business_hours'),
+      description: t('contact_page.support_available'),
+      value: t('contact_page.online_support_24_7'),
       action: '#',
     },
   ];
@@ -80,13 +82,13 @@ const Contact = () => {
             >
               <div className="section-badge mb-6 bg-white/10 text-hero-foreground mx-auto w-fit">
                 <span className="w-2 h-2 bg-primary rounded-full" />
-                Get in Touch
+                {t('contact_page.badge')}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-hero-foreground mb-6">
-                We're Here to Help
+                {t('contact_page.title')}
               </h1>
               <p className="text-hero-foreground/70 text-lg md:text-xl leading-relaxed">
-                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                {t('contact_page.subtitle')}
               </p>
             </motion.div>
           </div>
@@ -127,15 +129,15 @@ const Contact = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-3xl font-bold text-foreground mb-4">Send Us a Message</h2>
+                <h2 className="text-3xl font-bold text-foreground mb-4">{t('contact_page.send_message_title')}</h2>
                 <p className="text-muted-foreground mb-8">
-                  Fill out the form below and our team will get back to you within 24 hours.
+                  {t('contact_page.send_message_subtitle')}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="name">{t('contact_page.full_name')}</Label>
                       <Input
                         id="name"
                         placeholder="John Doe"
@@ -145,7 +147,7 @@ const Contact = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
+                      <Label htmlFor="email">{t('contact_page.email_address')}</Label>
                       <Input
                         id="email"
                         type="email"
@@ -158,10 +160,10 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
+                    <Label htmlFor="subject">{t('contact_page.subject')}</Label>
                     <Input
                       id="subject"
-                      placeholder="How can we help?"
+                      placeholder={t('contact_page.how_can_we_help')}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       required
@@ -169,10 +171,10 @@ const Contact = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">{t('contact_page.message')}</Label>
                     <Textarea
                       id="message"
-                      placeholder="Tell us more about your inquiry..."
+                      placeholder={t('contact_page.tell_us_more')}
                       rows={6}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -182,11 +184,11 @@ const Contact = () => {
 
                   <Button type="submit" size="lg" disabled={isSubmitting}>
                     {isSubmitting ? (
-                      'Sending...'
+                      t('contact_page.sending')
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
-                        Send Message
+                        {t('contact_page.send_message')}
                       </>
                     )}
                   </Button>
@@ -205,27 +207,27 @@ const Contact = () => {
                     <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                       <MessageCircle className="w-5 h-5" />
                     </div>
-                    <h3 className="font-semibold text-foreground">Live Chat</h3>
+                    <h3 className="font-semibold text-foreground">{t('contact_page.live_chat_title')}</h3>
                   </div>
                   <p className="text-muted-foreground mb-4">
-                    Need immediate assistance? Our support team is available 24/7 through live chat.
+                    {t('contact_page.live_chat_subtitle')}
                   </p>
-                  <Button variant="outline">Start Live Chat</Button>
+                  <Button variant="outline">{t('contact_page.start_live_chat')}</Button>
                 </div>
 
                 <div className="bg-hero text-hero-foreground rounded-2xl p-8">
-                  <h3 className="text-xl font-bold mb-4">Business Inquiries</h3>
+                  <h3 className="text-xl font-bold mb-4">{t('contact_page.business_inquiries_title')}</h3>
                   <p className="text-hero-foreground/70 mb-6">
-                    For partnerships, enterprise solutions, or business accounts, please contact our dedicated business team.
+                    {t('contact_page.business_inquiries_subtitle')}
                   </p>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-hero-foreground/80">
                       <Mail className="w-5 h-5" />
-                      <span>business@nrbank.com</span>
+                      <span>{t('contact_page.business_email')}</span>
                     </div>
                     <div className="flex items-center gap-3 text-hero-foreground/80">
                       <Phone className="w-5 h-5" />
-                      <span>+1 (800) NRB-CORP</span>
+                      <span>{t('contact_page.business_phone')}</span>
                     </div>
                   </div>
                 </div>

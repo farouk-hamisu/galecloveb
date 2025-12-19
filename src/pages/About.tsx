@@ -3,28 +3,30 @@ import { Footer } from '@/components/layout/Footer';
 import { CTASection } from '@/components/sections/CTASection';
 import { motion } from 'framer-motion';
 import { Shield, Users, Globe, Award } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const About = () => {
+  const { t } = useTranslation();
   const values = [
     {
       icon: Shield,
-      title: 'Security First',
-      description: 'Your security is our top priority. We use bank-grade encryption and multi-factor authentication.',
+      title: t('about_page.security_first_title'),
+      description: t('about_page.security_first_desc'),
     },
     {
       icon: Users,
-      title: 'Customer Focused',
-      description: 'We put our customers at the heart of everything we do, providing 24/7 support.',
+      title: t('about_page.customer_focused_title'),
+      description: t('about_page.customer_focused_desc'),
     },
     {
       icon: Globe,
-      title: 'Global Reach',
-      description: 'Operating in 10+ countries, we make international banking seamless and affordable.',
+      title: t('about_page.global_reach_title'),
+      description: t('about_page.global_reach_desc'),
     },
     {
       icon: Award,
-      title: 'Award Winning',
-      description: 'Recognized globally for our innovative approach to modern banking solutions.',
+      title: t('about_page.award_winning_title'),
+      description: t('about_page.award_winning_desc'),
     },
   ];
 
@@ -42,15 +44,13 @@ const About = () => {
             >
               <div className="section-badge mb-6 bg-white/10 text-hero-foreground">
                 <span className="w-2 h-2 bg-primary rounded-full" />
-                About Us
+                {t('about_page.badge')}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-hero-foreground mb-6">
-                Banking Reimagined for the Modern World
+                {t('about_page.title')}
               </h1>
               <p className="text-hero-foreground/70 text-lg md:text-xl leading-relaxed">
-                NationalRegionBank was founded with a simple mission: to make banking accessible,
-                transparent, and empowering for everyone. We believe financial services should work
-                for you, not against you.
+                {t('about_page.subtitle')}
               </p>
             </motion.div>
           </div>
@@ -65,17 +65,13 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <h2 className="section-title text-foreground mb-6">Our Story</h2>
+                <h2 className="section-title text-foreground mb-6">{t('about_page.story_title')}</h2>
                 <div className="space-y-4 text-muted-foreground text-lg">
                   <p>
-                    Founded in 2020, NRBank emerged from a vision to transform how people interact
-                    with their money. Our founders, veterans of traditional banking, saw firsthand
-                    the frustrations customers faced with hidden fees, poor service, and outdated systems.
+                    {t('about_page.story_p1')}
                   </p>
                   <p>
-                    Today, we serve over 100,000 customers across 10+ countries, processing more than
-                    $500 million in transactions every month. Our commitment to transparency, security,
-                    and innovation drives everything we do.
+                    {t('about_page.story_p2')}
                   </p>
                 </div>
               </motion.div>
@@ -88,19 +84,19 @@ const About = () => {
               >
                 <div className="stat-card text-center">
                   <div className="text-4xl font-bold text-primary mb-2">100K+</div>
-                  <div className="text-muted-foreground">Happy Customers</div>
+                  <div className="text-muted-foreground">{t('about_page.happy_customers')}</div>
                 </div>
                 <div className="stat-card text-center">
                   <div className="text-4xl font-bold text-primary mb-2">10+</div>
-                  <div className="text-muted-foreground">Countries</div>
+                  <div className="text-muted-foreground">{t('about_page.countries')}</div>
                 </div>
                 <div className="stat-card text-center">
                   <div className="text-4xl font-bold text-primary mb-2">$500M+</div>
-                  <div className="text-muted-foreground">Monthly Volume</div>
+                  <div className="text-muted-foreground">{t('about_page.monthly_volume')}</div>
                 </div>
                 <div className="stat-card text-center">
                   <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-                  <div className="text-muted-foreground">Support</div>
+                  <div className="text-muted-foreground">{t('about_page.support')}</div>
                 </div>
               </motion.div>
             </div>
@@ -111,9 +107,9 @@ const About = () => {
         <section className="py-20 lg:py-28 bg-light-gray">
           <div className="container mx-auto px-4 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="section-title text-foreground mb-4">Our Values</h2>
+              <h2 className="section-title text-foreground mb-4">{t('about_page.values_title')}</h2>
               <p className="text-muted-foreground text-lg">
-                The principles that guide everything we do at NationalRegionBank.
+                {t('about_page.values_subtitle')}
               </p>
             </div>
 

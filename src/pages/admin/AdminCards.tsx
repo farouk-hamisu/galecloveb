@@ -29,8 +29,10 @@ import {
 } from '@/hooks/useAdminData';
 import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const AdminCards = () => {
+  const { t } = useTranslation();
   const { data: cards, isLoading } = useAdminCards();
   const { data: profiles } = useAdminProfiles();
   const updateCard = useUpdateCard();
@@ -79,10 +81,10 @@ const AdminCards = () => {
           is_frozen: cardForm.is_frozen,
         },
       });
-      toast.success('Card updated successfully');
+      toast.success(t('admin_cards_page.card_updated'));
       setEditingCard(null);
     } catch (error) {
-      toast.error('Failed to update card');
+      toast.error(t('admin_cards_page.card_update_failed'));
     }
   };
 
@@ -92,20 +94,20 @@ const AdminCards = () => {
         id: card.id,
         updates: { is_frozen: !card.is_frozen },
       });
-      toast.success(`Card ${card.is_frozen ? 'unfrozen' : 'frozen'} successfully`);
+      toast.success(card.is_frozen ? t('admin_cards_page.card_unfrozen') : t('admin_cards_page.card_frozen'));
     } catch (error) {
-      toast.error('Failed to update card');
+      toast.error(t('admin_cards_page.card_update_failed'));
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this card?')) return;
+    if (!confirm(t('admin_cards_page.delete_card_confirm'))) return;
     
     try {
       await deleteCard.mutateAsync(id);
-      toast.success('Card deleted successfully');
+      toast.success(t('admin_cards_page.card_deleted'));
     } catch (error) {
-      toast.error('Failed to delete card');
+      toast.error(t('admin_cards_page.card_delete_failed'));
     }
   };
 
@@ -113,18 +115,18 @@ const AdminCards = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Cards Management</h1>
-          <p className="text-muted-foreground">Manage all user cards</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('admin_cards_page.title')}</h1>
+          <p className="text-muted-foreground">{t('admin_cards_page.subtitle')}</p>
         </div>
 
         <Card>
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>All Cards ({cards?.length || 0})</CardTitle>
+              <CardTitle>{t('admin_cards_page.all_cards')} ({cards?.length || 0})</CardTitle>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search cards..."
+                  placeholder={t('admin_cards_page.search_cards')}
                   className="pl-10 w-full sm:w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -134,19 +136,19 @@ const AdminCards = () => {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground">Loading cards...</p>
+              <p className="text-muted-foreground">{t('admin_cards_page.loading_cards')}</p>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Card</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Owner</TableHead>
-                      <TableHead>Expiry</TableHead>
-                      <TableHead>Limit</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t('admin_cards_page.card')}</TableHead>
+                      <TableHead>{t('admin_cards_page.type')}</TableHead>
+                      <TableHead>{t('admin_cards_page.owner')}</TableHead>
+                      <TableHead>{t('admin_cards_page.expiry')}</TableHead>
+                      <TableHead>{t('admin_cards_page.limit')}</TableHead>
+                      <TableHead>{t('admin_cards_page.status')}</TableHead>
+                      <TableHead>{t('admin_cards_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -169,14 +171,14 @@ const AdminCards = () => {
                             {card.is_frozen && (
                               <Badge variant="secondary">
                                 <Snowflake className="w-3 h-3 mr-1" />
-                                Frozen
+                                {t('admin_cards_page.frozen')}
                               </Badge>
                             )}
                             {!card.is_active && (
-                              <Badge variant="destructive">Inactive</Badge>
+                              <Badge variant="destructive">{t('admin_cards_page.inactive')}</Badge>
                             )}
                             {card.is_active && !card.is_frozen && (
-                              <Badge variant="default">Active</Badge>
+                              <Badge variant="default">{t('admin_cards_page.active')}</Badge>
                             )}
                           </div>
                         </TableCell>
@@ -194,15 +196,15 @@ const AdminCards = () => {
                               </DialogTrigger>
                               <DialogContent>
                                 <DialogHeader>
-                                  <DialogTitle>Edit Card</DialogTitle>
+                                  <DialogTitle>{t('admin_cards_page.edit_card')}</DialogTitle>
                                 </DialogHeader>
                                 <div className="space-y-4 pt-4">
                                   <div className="space-y-2">
-                                    <Label>Card Number</Label>
+                                    <Label>{t('admin_cards_page.card_number')}</Label>
                                     <Input value={maskCardNumber(editingCard?.card_number || '')} disabled />
                                   </div>
                                   <div className="space-y-2">
-                                    <Label>Spending Limit</Label>
+                                    <Label>{t('admin_cards_page.spending_limit')}</Label>
                                     <Input
                                       type="number"
                                       value={cardForm.spending_limit}
@@ -216,7 +218,7 @@ const AdminCards = () => {
                                         checked={cardForm.is_active}
                                         onChange={(e) => setCardForm({ ...cardForm, is_active: e.target.checked })}
                                       />
-                                      Active
+                                      {t('admin_cards_page.active')}
                                     </label>
                                     <label className="flex items-center gap-2">
                                       <input
@@ -224,11 +226,11 @@ const AdminCards = () => {
                                         checked={cardForm.is_frozen}
                                         onChange={(e) => setCardForm({ ...cardForm, is_frozen: e.target.checked })}
                                       />
-                                      Frozen
+                                      {t('admin_cards_page.frozen')}
                                     </label>
                                   </div>
                                   <Button className="w-full" onClick={handleUpdate}>
-                                    Save Changes
+                                    {t('admin_cards_page.save_changes')}
                                   </Button>
                                 </div>
                               </DialogContent>
@@ -237,7 +239,7 @@ const AdminCards = () => {
                               variant="ghost" 
                               size="icon"
                               onClick={() => handleToggleFreeze(card)}
-                              title={card.is_frozen ? 'Unfreeze' : 'Freeze'}
+                              title={card.is_frozen ? t('admin_cards_page.unfreeze') : t('admin_cards_page.freeze')}
                             >
                               <Snowflake className={`w-4 h-4 ${card.is_frozen ? 'text-blue-500' : 'text-muted-foreground'}`} />
                             </Button>

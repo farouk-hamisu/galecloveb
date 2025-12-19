@@ -55,7 +55,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   };
 
   const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'tr' : 'en');
+    i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
   };
 
   const handleNotificationClick = (notificationId: string) => {

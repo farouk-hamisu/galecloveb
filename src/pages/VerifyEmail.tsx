@@ -7,9 +7,11 @@ import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 const VerifyEmail = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -69,8 +71,8 @@ const handleVerify = async (e: React.FormEvent) => {
 
   if (!res.ok) {
     toast({
-      title: "Verification failed",
-      description: data.error || "Invalid code",
+      title: t('verify_email_page.verification_failed'),
+      description: data.error || t('verify_email_page.invalid_code'),
       variant: "destructive",
     });
     return;
@@ -81,8 +83,8 @@ const handleVerify = async (e: React.FormEvent) => {
   localStorage.setItem("user", JSON.stringify(data.user));
 
   toast({
-    title: "Email verified",
-    description: "Welcome to NRBank",
+    title: t('verify_email_page.email_verified'),
+    description: t('verify_email_page.welcome'),
   });
 
   navigate("/dashboard");
@@ -104,15 +106,15 @@ const handleResend = async () => {
     }
 
     toast({
-      title: "Code resent",
-      description: "Check your email inbox",
+      title: t('verify_email_page.code_resent'),
+      description: t('verify_email_page.check_inbox'),
     });
 
     setResendTimer(RESEND_COOLDOWN);
   } catch (err) {
     toast({
-      title: "Resend failed",
-      description: "Please try again later",
+      title: t('verify_email_page.resend_failed'),
+      description: t('verify_email_page.try_again_later'),
       variant: "destructive",
     });
   } finally {
@@ -137,9 +139,9 @@ const handleResend = async () => {
               <div className="w-12 h-12 bg-primary rounded-xl mx-auto flex items-center justify-center mb-4">
                 <Mail className="text-primary-foreground w-6 h-6" />
               </div>
-              <h1 className="text-2xl font-bold mb-2">Verify your email</h1>
+              <h1 className="text-2xl font-bold mb-2">{t('verify_email_page.title')}</h1>
               <p className="text-muted-foreground text-sm">
-                A 6-digit verification code has been sent to
+                {t('verify_email_page.subtitle')}
               </p>
               <p className="font-medium text-foreground mt-1">{email}</p>
             </div>
@@ -159,15 +161,15 @@ const handleResend = async () => {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Verifying...
+                    {t('verify_email_page.verifying')}
                   </>
                 ) : (
-                  'Confirm Code'
+                  t('verify_email_page.confirm_code')
                 )}
               </Button>
             </form>
 <p className="mt-6 text-center text-sm text-muted-foreground">
-  Didn’t receive the code?{' '}
+  {t('verify_email_page.no_code')}{' '}
   <button
     disabled={resendTimer > 0 || resending}
     onClick={handleResend}
@@ -178,10 +180,10 @@ const handleResend = async () => {
     }`}
   >
     {resendTimer > 0
-      ? `Resend in ${resendTimer}s`
+      ? t('verify_email_page.resend_in', { resendTimer })
       : resending
-      ? 'Resending...'
-      : 'Resend'}
+      ? t('verify_email_page.resending')
+      : t('verify_email_page.resend')}
   </button>
 </p>
             

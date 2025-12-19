@@ -28,6 +28,7 @@ import Statements from "./pages/Statements";
 import Support from "./pages/Support";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminAccounts from "./pages/admin/AdminAccounts";
@@ -36,6 +37,8 @@ import AdminBeneficiaries from "./pages/admin/AdminBeneficiaries";
 import AdminCards from "./pages/admin/AdminCards";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import VerifyEmail from "./pages/VerifyEmail"; 
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -52,11 +55,13 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/testimonials" element={<Pricing />} />
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
@@ -69,8 +74,11 @@ const App = () => (
             <Route path="/statements" element={<ProtectedRoute><Statements /></ProtectedRoute>} />
             <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+            
             {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+            <Route path="/admin/dashboard" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
             <Route path="/admin/users" element={<ProtectedAdminRoute><AdminUsers /></ProtectedAdminRoute>} />
             <Route path="/admin/accounts" element={<ProtectedAdminRoute><AdminAccounts /></ProtectedAdminRoute>} />
             <Route path="/admin/transactions" element={<ProtectedAdminRoute><AdminTransactions /></ProtectedAdminRoute>} />

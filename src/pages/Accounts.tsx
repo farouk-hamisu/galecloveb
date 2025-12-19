@@ -40,14 +40,14 @@ const Accounts = () => {
     try {
       await createAccountMutation.mutateAsync({ accountType });
       toast({
-        title: 'Account Created!',
-        description: `Your new ${accountType} account has been opened successfully.`,
+        title: t('accounts_page.account_created_title'),
+        description: t('accounts_page.account_created_description', { accountType }),
       });
       setDialogOpen(false);
     } catch (error: unknown) {
       toast({
-        title: 'Error',
-        description: (error as Error).message || 'Failed to create account.',
+        title: t('accounts_page.error_title'),
+        description: (error as Error).message || t('accounts_page.error_description'),
         variant: 'destructive',
       });
     }
@@ -62,22 +62,22 @@ const Accounts = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">My Accounts</h1>
-            <p className="text-muted-foreground">Manage all your bank accounts in one place.</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('accounts_page.title')}</h1>
+            <p className="text-muted-foreground">{t('accounts_page.subtitle')}</p>
           </div>
           
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="hero">
                 <Plus className="w-4 h-4 mr-2" />
-                Open New Account
+                {t('accounts_page.open_new_account')}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Open New Account</DialogTitle>
+                <DialogTitle>{t('accounts_page.dialog_title')}</DialogTitle>
                 <DialogDescription>
-                  Choose the type of account you'd like to open.
+                  {t('accounts_page.dialog_subtitle')}
                 </DialogDescription>
               </DialogHeader>
               
@@ -91,9 +91,9 @@ const Accounts = () => {
                     <CreditCard className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">Checking Account</h3>
+                    <h3 className="font-semibold text-foreground">{t('accounts_page.checking_account')}</h3>
                     <p className="text-sm text-muted-foreground">
-                      For everyday transactions and payments
+                      {t('accounts_page.checking_subtitle')}
                     </p>
                   </div>
                   {createAccountMutation.isPending && (
@@ -110,9 +110,9 @@ const Accounts = () => {
                     <PiggyBank className="w-6 h-6 text-green-500" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">Savings Account</h3>
+                    <h3 className="font-semibold text-foreground">{t('accounts_page.savings_account')}</h3>
                     <p className="text-sm text-muted-foreground">
-                      Earn interest on your savings
+                      {t('accounts_page.savings_subtitle')}
                     </p>
                   </div>
                   {createAccountMutation.isPending && (
@@ -133,7 +133,7 @@ const Accounts = () => {
         >
           <div className="flex items-center gap-3 mb-2">
             <TrendingUp className="w-5 h-5" />
-            <span className="text-sm opacity-90">Total Balance Across All Accounts</span>
+            <span className="text-sm opacity-90">{t('accounts_page.total_balance')}</span>
           </div>
           <p className="text-4xl font-bold">{formatCurrency(totalBalance)}</p>
         </motion.div>
@@ -144,7 +144,7 @@ const Accounts = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">Your Accounts</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">{t('accounts_page.your_accounts')}</h2>
           
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -185,19 +185,19 @@ const Accounts = () => {
                           ? 'bg-green-500/10 text-green-500' 
                           : 'bg-muted text-muted-foreground'
                       }`}>
-                        {account.is_active ? 'Active' : 'Inactive'}
+                        {account.is_active ? t('accounts_page.active') : t('accounts_page.inactive')}
                       </span>
                     </div>
 
                     <h3 className="text-lg font-semibold text-foreground capitalize mb-1">
-                      {account.account_type} Account
+                      {t(`accounts_page.${account.account_type}_account`)}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       {account.account_number}
                     </p>
 
                     <div className="pt-4 border-t border-border">
-                      <p className="text-sm text-muted-foreground mb-1">Available Balance</p>
+                      <p className="text-sm text-muted-foreground mb-1">{t('accounts_page.available_balance')}</p>
                       <p className="text-2xl font-bold text-foreground">
                         {formatCurrency(Number(account.balance))}
                       </p>
@@ -209,13 +209,13 @@ const Accounts = () => {
           ) : (
             <div className="text-center py-12 rounded-2xl bg-card border border-border">
               <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No accounts yet</h3>
-              <p className="text-muted-foreground mb-4">Open your first account to get started.</p>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t('accounts_page.no_accounts_title')}</h3>
+              <p className="text-muted-foreground mb-4">{t('accounts_page.no_accounts_subtitle')}</p>
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>
                   <Button variant="hero">
                     <Plus className="w-4 h-4 mr-2" />
-                    Open Account
+                    {t('accounts_page.open_account')}
                   </Button>
                 </DialogTrigger>
               </Dialog>

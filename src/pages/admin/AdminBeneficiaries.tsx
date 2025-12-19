@@ -3,7 +3,6 @@ import { AdminLayout } from '@/components/layout/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -19,8 +18,10 @@ import {
 } from '@/hooks/useAdminData';
 import { Search, Trash2, UserCheck, Star } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 const AdminBeneficiaries = () => {
+  const { t } = useTranslation();
   const { data: beneficiaries, isLoading } = useAdminBeneficiaries();
   const { data: profiles } = useAdminProfiles();
   const deleteBeneficiary = useDeleteBeneficiary();
@@ -39,13 +40,13 @@ const AdminBeneficiaries = () => {
   );
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this beneficiary?')) return;
+    if (!confirm(t('admin_beneficiaries_page.delete_beneficiary_confirm'))) return;
     
     try {
       await deleteBeneficiary.mutateAsync(id);
-      toast.success('Beneficiary deleted successfully');
+      toast.success(t('admin_beneficiaries_page.beneficiary_deleted'));
     } catch (error) {
-      toast.error('Failed to delete beneficiary');
+      toast.error(t('admin_beneficiaries_page.beneficiary_delete_failed'));
     }
   };
 
@@ -53,18 +54,18 @@ const AdminBeneficiaries = () => {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Beneficiaries Management</h1>
-          <p className="text-muted-foreground">View and manage all user beneficiaries</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('admin_beneficiaries_page.title')}</h1>
+          <p className="text-muted-foreground">{t('admin_beneficiaries_page.subtitle')}</p>
         </div>
 
         <Card>
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>All Beneficiaries ({beneficiaries?.length || 0})</CardTitle>
+              <CardTitle>{t('admin_beneficiaries_page.all_beneficiaries')} ({beneficiaries?.length || 0})</CardTitle>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search beneficiaries..."
+                  placeholder={t('admin_beneficiaries_page.search_beneficiaries')}
                   className="pl-10 w-full sm:w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -74,19 +75,19 @@ const AdminBeneficiaries = () => {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-muted-foreground">Loading beneficiaries...</p>
+              <p className="text-muted-foreground">{t('admin_beneficiaries_page.loading_beneficiaries')}</p>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Beneficiary</TableHead>
-                      <TableHead>Bank</TableHead>
-                      <TableHead>Account</TableHead>
-                      <TableHead>Owner</TableHead>
-                      <TableHead>Country</TableHead>
-                      <TableHead>Favorite</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.beneficiary')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.bank')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.account')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.owner')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.country')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.favorite')}</TableHead>
+                      <TableHead>{t('admin_beneficiaries_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

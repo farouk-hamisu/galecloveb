@@ -64,7 +64,7 @@ const AdminTransactions = () => {
 
   const handleCreate = async () => {
     if (!txForm.account_id || !txForm.amount) {
-      toast.error('Please fill required fields');
+      toast.error('Failed to create transaction. Missing required fields.');
       return;
     }
     
@@ -80,11 +80,11 @@ const AdminTransactions = () => {
         reference_number: txForm.reference_number || generateRef(),
         currency: txForm.currency,
       });
-      toast.success('Transaction created successfully');
+      toast.success('Transaction created successfully.');
       setShowCreate(false);
       resetForm();
     } catch (error) {
-      toast.error('Failed to create transaction');
+      toast.error('Failed to create transaction.');
     }
   };
 
@@ -103,11 +103,11 @@ const AdminTransactions = () => {
           recipient_account: txForm.recipient_account || null,
         },
       });
-      toast.success('Transaction updated successfully');
+      toast.success('Transaction updated successfully.');
       setEditingTx(null);
       resetForm();
     } catch (error) {
-      toast.error('Failed to update transaction');
+      toast.error('Failed to update transaction.');
     }
   };
 
@@ -116,9 +116,9 @@ const AdminTransactions = () => {
     
     try {
       await deleteTransaction.mutateAsync(id);
-      toast.success('Transaction deleted successfully');
+      toast.success('Transaction deleted.');
     } catch (error) {
-      toast.error('Failed to delete transaction');
+      toast.error('Failed to delete transaction.');
     }
   };
 
@@ -156,8 +156,8 @@ const AdminTransactions = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Transaction Management</h1>
-            <p className="text-muted-foreground">View and manage all transactions</p>
+            <h1 className="text-2xl font-bold text-foreground">Transactions</h1>
+            <p className="text-muted-foreground">Manage and monitor all user transactions.</p>
           </div>
           <Dialog open={showCreate} onOpenChange={setShowCreate}>
             <DialogTrigger asChild>
@@ -178,7 +178,7 @@ const AdminTransactions = () => {
                     value={txForm.account_id}
                     onChange={(e) => setTxForm({ ...txForm, account_id: e.target.value })}
                   >
-                    <option value="">Select account...</option>
+                    <option value="">Select Account</option>
                     {accounts?.map((acc) => (
                       <option key={acc.id} value={acc.id}>
                         {acc.account_number} - ${acc.balance?.toLocaleString()}
@@ -186,8 +186,9 @@ const AdminTransactions = () => {
                     ))}
                   </select>
                 </div>
+
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
+                  <div>
                     <Label>Amount</Label>
                     <Input
                       type="number"
@@ -195,7 +196,7 @@ const AdminTransactions = () => {
                       onChange={(e) => setTxForm({ ...txForm, amount: e.target.value })}
                     />
                   </div>
-                  <div className="space-y-2">
+                  <div>
                     <Label>Type</Label>
                     <select
                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
@@ -210,7 +211,8 @@ const AdminTransactions = () => {
                     </select>
                   </div>
                 </div>
-                <div className="space-y-2">
+
+                <div>
                   <Label>Status</Label>
                   <select
                     className="w-full h-10 px-3 rounded-md border border-input bg-background"
@@ -222,27 +224,31 @@ const AdminTransactions = () => {
                     <option value="failed">Failed</option>
                   </select>
                 </div>
-                <div className="space-y-2">
+
+                <div>
                   <Label>Description</Label>
                   <Input
                     value={txForm.description}
                     onChange={(e) => setTxForm({ ...txForm, description: e.target.value })}
                   />
                 </div>
-                <div className="space-y-2">
+
+                <div>
                   <Label>Recipient Name</Label>
                   <Input
                     value={txForm.recipient_name}
                     onChange={(e) => setTxForm({ ...txForm, recipient_name: e.target.value })}
                   />
                 </div>
-                <div className="space-y-2">
+
+                <div>
                   <Label>Recipient Account</Label>
                   <Input
                     value={txForm.recipient_account}
                     onChange={(e) => setTxForm({ ...txForm, recipient_account: e.target.value })}
                   />
                 </div>
+
                 <Button className="w-full" onClick={handleCreate}>
                   Create Transaction
                 </Button>
@@ -251,6 +257,7 @@ const AdminTransactions = () => {
           </Dialog>
         </div>
 
+        {/* TABLE SECTION */}
         <Card>
           <CardHeader>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -266,6 +273,7 @@ const AdminTransactions = () => {
               </div>
             </div>
           </CardHeader>
+
           <CardContent>
             {isLoading ? (
               <p className="text-muted-foreground">Loading transactions...</p>
@@ -283,6 +291,7 @@ const AdminTransactions = () => {
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
+
                   <TableBody>
                     {filteredTransactions?.map((tx) => (
                       <TableRow key={tx.id}>
@@ -294,57 +303,83 @@ const AdminTransactions = () => {
                             <span className="font-mono text-xs">{tx.reference_number}</span>
                           </div>
                         </TableCell>
+
                         <TableCell className="capitalize">{tx.type}</TableCell>
+
                         <TableCell className={`font-semibold ${
-                          tx.type === 'credit' || tx.type === 'deposit' ? 'text-green-500' : ''
+                          tx.type === 'credit' || tx.type === 'deposit'
+                            ? 'text-green-500'
+                            : ''
                         }`}>
                           {tx.type === 'credit' || tx.type === 'deposit' ? '+' : '-'}
                           ${Math.abs(tx.amount).toLocaleString()}
                         </TableCell>
+
                         <TableCell>
-                          <Badge variant={
-                            tx.status === 'completed' ? 'default' :
-                            tx.status === 'pending' ? 'secondary' : 'destructive'
-                          }>
+                          <Badge
+                            variant={
+                              tx.status === 'completed'
+                                ? 'default'
+                                : tx.status === 'pending'
+                                ? 'secondary'
+                                : 'destructive'
+                            }
+                          >
                             {tx.status}
                           </Badge>
                         </TableCell>
+
                         <TableCell>{tx.recipient_name || '-'}</TableCell>
+
                         <TableCell>
-                          {tx.created_at ? new Date(tx.created_at).toLocaleDateString() : '-'}
+                          {tx.created_at
+                            ? new Date(tx.created_at).toLocaleDateString()
+                            : '-'}
                         </TableCell>
+
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <Dialog open={editingTx?.id === tx.id} onOpenChange={(open) => !open && setEditingTx(null)}>
+                            {/* EDIT */}
+                            <Dialog
+                              open={editingTx?.id === tx.id}
+                              onOpenChange={(open) => !open && setEditingTx(null)}
+                            >
                               <DialogTrigger asChild>
-                                <Button 
-                                  variant="ghost" 
+                                <Button
+                                  variant="ghost"
                                   size="icon"
                                   onClick={() => handleEdit(tx)}
                                 >
                                   <Edit className="w-4 h-4" />
                                 </Button>
                               </DialogTrigger>
+
                               <DialogContent>
                                 <DialogHeader>
                                   <DialogTitle>Edit Transaction</DialogTitle>
                                 </DialogHeader>
+
                                 <div className="space-y-4 pt-4">
                                   <div className="grid grid-cols-2 gap-4">
-                                    <div className="space-y-2">
+                                    <div>
                                       <Label>Amount</Label>
                                       <Input
                                         type="number"
                                         value={txForm.amount}
-                                        onChange={(e) => setTxForm({ ...txForm, amount: e.target.value })}
+                                        onChange={(e) =>
+                                          setTxForm({ ...txForm, amount: e.target.value })
+                                        }
                                       />
                                     </div>
-                                    <div className="space-y-2">
+
+                                    <div>
                                       <Label>Type</Label>
                                       <select
                                         className="w-full h-10 px-3 rounded-md border border-input bg-background"
                                         value={txForm.type}
-                                        onChange={(e) => setTxForm({ ...txForm, type: e.target.value })}
+                                        onChange={(e) =>
+                                          setTxForm({ ...txForm, type: e.target.value })
+                                        }
                                       >
                                         <option value="credit">Credit</option>
                                         <option value="debit">Debit</option>
@@ -352,33 +387,42 @@ const AdminTransactions = () => {
                                       </select>
                                     </div>
                                   </div>
-                                  <div className="space-y-2">
+
+                                  <div>
                                     <Label>Status</Label>
                                     <select
                                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
                                       value={txForm.status}
-                                      onChange={(e) => setTxForm({ ...txForm, status: e.target.value })}
+                                      onChange={(e) =>
+                                        setTxForm({ ...txForm, status: e.target.value })
+                                      }
                                     >
                                       <option value="completed">Completed</option>
                                       <option value="pending">Pending</option>
                                       <option value="failed">Failed</option>
                                     </select>
                                   </div>
-                                  <div className="space-y-2">
+
+                                  <div>
                                     <Label>Description</Label>
                                     <Input
                                       value={txForm.description}
-                                      onChange={(e) => setTxForm({ ...txForm, description: e.target.value })}
+                                      onChange={(e) =>
+                                        setTxForm({ ...txForm, description: e.target.value })
+                                      }
                                     />
                                   </div>
+
                                   <Button className="w-full" onClick={handleUpdate}>
                                     Save Changes
                                   </Button>
                                 </div>
                               </DialogContent>
                             </Dialog>
-                            <Button 
-                              variant="ghost" 
+
+                            {/* DELETE */}
+                            <Button
+                              variant="ghost"
                               size="icon"
                               className="text-destructive hover:text-destructive"
                               onClick={() => handleDelete(tx.id)}
@@ -399,5 +443,5 @@ const AdminTransactions = () => {
     </AdminLayout>
   );
 };
-
 export default AdminTransactions;
+

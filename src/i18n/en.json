@@ -404,5 +404,1043 @@
       "export_complete_title": "Export complete",
       "export_complete_desc": "Your transactions have been exported to CSV."
     }
+  },
+  "signup_page": {
+    "create_account": "Create your account",
+    "start_journey": "Start your banking journey with NRBank",
+    "first_name": "First Name",
+    "john": "John",
+    "last_name": "Last Name",
+    "doe": "Doe",
+    "email": "Email",
+    "enter_email": "Enter your email",
+    "password": "Password",
+    "create_password": "Create a password",
+    "password_length_info": "Must be at least 8 characters",
+    "agree_to": "I agree to the",
+    "terms": "Terms of Service",
+    "and": "and",
+    "privacy": "Privacy Policy",
+    "creating_account": "Creating account...",
+    "create_account_btn": "Create Account",
+    "already_have_account": "Already have an account?",
+    "sign_in": "Sign in",
+    "signup_failed": "Signup failed",
+    "something_wrong": "Something went wrong",
+    "verification_sent": "Verification code sent",
+    "verification_sent_desc": "A 6-digit code has been sent to your email",
+    "first_name_required": "First name is required",
+    "last_name_required": "Last name is required",
+    "invalid_email_error": "Please enter a valid email address",
+    "password_length_error": "Password must be at least 8 characters",
+    "agree_terms_error": "You must agree to the terms"
+  },
+  "protected_page": {
+    "protected_route": "Protected Route",
+    "go_home": "Go Home"
+  },
+  "about_page": {
+    "badge": "About Us",
+    "title": "Banking Reimagined for the Modern World",
+    "subtitle": "NationalRegionBank was founded with a simple mission: to make banking accessible, transparent, and empowering for everyone. We believe financial services should work for you, not against you.",
+    "story_title": "Our Story",
+    "story_p1": "Founded in 2020, NRBank emerged from a vision to transform how people interact with their money. Our founders, veterans of traditional banking, saw firsthand the frustrations customers faced with hidden fees, poor service, and outdated systems.",
+    "story_p2": "Today, we serve over 100,000 customers across 10+ countries, processing more than $500 million in transactions every month. Our commitment to transparency, security, and innovation drives everything we do.",
+    "happy_customers": "Happy Customers",
+    "countries": "Countries",
+    "monthly_volume": "Monthly Volume",
+    "support": "Support",
+    "values_title": "Our Values",
+    "values_subtitle": "The principles that guide everything we do at NationalRegionBank.",
+    "security_first_title": "Security First",
+    "security_first_desc": "Your security is our top priority. We use bank-grade encryption and multi-factor authentication.",
+    "customer_focused_title": "Customer Focused",
+    "customer_focused_desc": "We put our customers at the heart of everything we do, providing 24/7 support.",
+    "global_reach_title": "Global Reach",
+    "global_reach_desc": "Operating in 10+ countries, we make international banking seamless and affordable.",
+    "award_winning_title": "Award Winning",
+    "award_winning_desc": "Recognized globally for our innovative approach to modern banking solutions."
+  },
+  "pricing_page": {
+    "title": "Loved by Customers Worldwide",
+    "subtitle": "Don't just take our word for it. Here's what our customers have to say about their experience with NationalRegionBank."
+  },
+  "faq_page": {
+    "badge": "Help Center",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about NRBank. Can't find what you're looking for? Contact our 24/7 support team.",
+    "categories": [
+      {
+        "category": "Account & Getting Started",
+        "questions": [
+          {
+            "q": "How do I open an account with NRBank?",
+            "a": "Opening an account is simple! Click on 'Open Account' or 'Sign Up' and follow the guided process. You'll need to provide basic personal information, verify your identity (KYC), and you'll be ready to bank within minutes."
+          },
+          {
+            "q": "What documents do I need for verification?",
+            "a": "We require a valid government-issued ID (passport, driver's license, or national ID card) and proof of address (utility bill, bank statement, or official letter dated within the last 3 months)."
+          },
+          {
+            "q": "Is there a minimum deposit to open an account?",
+            "a": "No minimum deposit is required for our Basic plan. Premium and Business plans may have specific requirements based on the features you need."
+          }
+        ]
+      },
+      {
+        "category": "Transfers & Payments",
+        "questions": [
+          {
+            "q": "How long do international transfers take?",
+            "a": "International transfers typically take 1-3 business days depending on the destination country and banking hours. SWIFT transfers may take up to 5 business days for some regions."
+          },
+          {
+            "q": "Are there any fees for transfers?",
+            "a": "Internal transfers between NRBank accounts are always free. International transfers have transparent fees displayed before you confirm. Premium members enjoy 0% FX fees."
+          },
+          {
+            "q": "What currencies do you support?",
+            "a": "We support over 50 currencies for transfers and our smart wallet, including USD, EUR, GBP, JPY, CAD, AUD, and many more."
+          }
+        ]
+      },
+      {
+        "category": "Cards & Security",
+        "questions": [
+          {
+            "q": "How do virtual cards work?",
+            "a": "Virtual cards are digital cards that work like physical cards but exist only in your app. They're perfect for online shopping, subscriptions, and enhanced security. You can create, freeze, or delete them instantly."
+          },
+          {
+            "q": "What happens if I lose my card?",
+            "a": "You can instantly freeze your card from the app to prevent unauthorized use. Report it through the app or contact our 24/7 support, and we'll issue a replacement immediately."
+          },
+          {
+            "q": "How is my money protected?",
+            "a": "We use bank-grade 256-bit encryption, two-factor authentication, biometric login, and real-time fraud monitoring. Your funds are held in segregated accounts with licensed banking partners."
+          }
+        ]
+      },
+      {
+        "category": "Savings & Investments",
+        "questions": [
+          {
+            "q": "How do savings vaults work?",
+            "a": "Savings vaults let you set aside money for specific goals. Create a vault, set your target amount and deadline, and earn competitive interest rates while you save. You can create multiple vaults for different goals."
+          },
+          {
+            "q": "What interest rates do you offer?",
+            "a": "We offer up to 2% APY on savings accounts, which is significantly higher than traditional banks. Rates may vary based on your account type and market conditions."
+          },
+          {
+            "q": "Can I withdraw from my savings anytime?",
+            "a": "Yes! Unlike fixed deposits, our savings vaults offer full liquidity. You can withdraw your funds at any time without penalties."
+          }
+        ]
+      },
+      {
+        "category": "Support & Contact",
+        "questions": [
+          {
+            "q": "How can I reach customer support?",
+            "a": "Our support team is available 24/7 through multiple channels: in-app chat, email support, phone support (Premium members), and our help center with detailed guides."
+          },
+          {
+            "q": "What is your response time?",
+            "a": "We aim to respond to all queries within 2 hours. Premium and Business members receive priority support with typical response times under 30 minutes."
+          },
+          {
+            "q": "Do you have a mobile app?",
+            "a": "Yes! Our mobile app is available for both iOS and Android devices. Download it from the App Store or Google Play Store to manage your finances on the go."
+          }
+        ]
+      }
+    ]
+  },
+  "login_page": {
+    "welcome_back": "Welcome back",
+    "sign_in_account": "Sign in to your NRBank account",
+    "email": "Email",
+    "enter_email": "Enter your email",
+    "password": "Password",
+    "enter_password": "Enter your password",
+    "signing_in": "Signing in...",
+    "sign_in": "Sign In",
+    "no_account": "Don't have an account?",
+    "sign_up": "Sign up",
+    "sign_in_failed": "Sign in failed",
+    "invalid_credentials": "Invalid email or password. Please try again.",
+    "welcome_toast": "Welcome back!",
+    "login_success_toast": "You have successfully signed in.",
+    "invalid_email_error": "Please enter a valid email address",
+    "password_length_error": "Password must be at least 6 characters"
+  },
+  "customer_testimonials": {
+    "badge": "Testimonials",
+    "title": "What Our Customers Say",
+    "subtitle": "We are trusted by thousands of customers worldwide. Here's what they have to say about their experience with NationalRegionBank."
+  },
+  "contact_page": {
+    "badge": "Get in Touch",
+    "title": "We're Here to Help",
+    "subtitle": "Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+    "email_us": "Email Us",
+    "general_inquiries": "For general inquiries",
+    "call_us": "Call Us",
+    "support_24_7": "24/7 Customer Support",
+    "visit_us": "Visit Us",
+    "headquarters": "Headquarters",
+    "business_hours": "Business Hours",
+    "support_available": "Support Available",
+    "online_support_24_7": "24/7 Online Support",
+    "send_message_title": "Send Us a Message",
+    "send_message_subtitle": "Fill out the form below and our team will get back to you within 24 hours.",
+    "full_name": "Full Name",
+    "email_address": "Email Address",
+    "subject": "Subject",
+    "how_can_we_help": "How can we help?",
+    "message": "Message",
+    "tell_us_more": "Tell us more about your inquiry...",
+    "sending": "Sending...",
+    "send_message": "Send Message",
+    "live_chat_title": "Live Chat",
+    "live_chat_subtitle": "Need immediate assistance? Our support team is available 24/7 through live chat.",
+    "start_live_chat": "Start Live Chat",
+    "business_inquiries_title": "Business Inquiries",
+    "business_inquiries_subtitle": "For partnerships, enterprise solutions, or business accounts, please contact our dedicated business team.",
+    "business_email": "business@nrbank.com",
+    "business_phone": "+1 (800) NRB-CORP",
+    "toast_success_title": "Message sent!",
+    "toast_success_description": "We'll get back to you within 24 hours."
+  },
+  "terms_of_service_page": {
+    "title": "Terms of Service",
+    "welcome": "Welcome to NRBank! These terms and conditions outline the rules and regulations for the use of NRBank's Website, located at nrbank.com.",
+    "acceptance": "By accessing this website we assume you accept these terms and conditions. Do not continue to use NRBank if you do not agree to take all of the terms and conditions stated on this page.",
+    "cookies_title": "Cookies",
+    "cookies_p1": "We employ the use of cookies. By accessing NRBank, you agreed to use cookies in agreement with the NRBank's Privacy Policy.",
+    "cookies_p2": "Most interactive websites use cookies to let us retrieve the user’s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.",
+    "license_title": "License",
+    "license_p1": "Unless otherwise stated, NRBank and/or its licensors own the intellectual property rights for all material on NRBank. All intellectual property rights are reserved. You may access this from NRBank for your own personal use subjected to restrictions set in these terms and conditions.",
+    "license_p2": "You must not:",
+    "license_l1": "Republish material from NRBank",
+    "license_l2": "Sell, rent or sub-license material from NRBank",
+    "license_l3": "Reproduce, duplicate or copy material from NRBank",
+    "license_l4": "Redistribute content from NRBank",
+    "iframes_title": "iFrames",
+    "iframes_p1": "Without prior approval and written permission, you may not create frames around our Webpages that alter in any way the visual presentation or appearance of our Website.",
+    "content_liability_title": "Content Liability",
+    "content_liability_p1": "We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights."
+  },
+  "privacy_policy_page": {
+    "title": "Privacy Policy",
+    "intro_p1": "At NRBank, accessible from nrbank.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by NRBank and how we use it.",
+    "intro_p2": "If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.",
+    "log_files_title": "Log Files",
+    "log_files_p1": "NRBank follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.",
+    "cookies_title": "Cookies and Web Beacons",
+    "cookies_p1": "Like any other website, NRBank uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.",
+    "third_party_title": "Third Party Privacy Policies",
+    "third_party_p1": "NRBank's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.",
+    "third_party_p2": "You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites."
+  },
+  "forgot_password_page": {
+    "title": "Reset Your Password",
+    "subtitle": "Enter your email and we’ll send you instructions to reset your password.",
+    "all_rights_reserved": "© {year} NationalRegionBank. All rights reserved.",
+    "forgot_password": "Forgot Password?",
+    "enter_email_instructions": "Enter your email address and we’ll send you reset instructions.",
+    "email_address": "Email Address",
+    "sending": "Sending...",
+    "send_reset_link": "Send Reset Link",
+    "check_your_email": "Check Your Email",
+    "reset_link_sent": "We sent a reset link to <strong>{email}</strong>.",
+    "try_again": "Try Again",
+    "back_to_login": "Back to Login",
+    "error_title": "Error",
+    "error_description": "Something went wrong. Please try again."
+  },
+  "not_found_page": {
+    "title": "Page Not Found",
+    "subtitle": "Sorry, we couldn't find the page you're looking for. It might have been moved or doesn't exist.",
+    "return_to_home": "Return to Home"
+  },
+  "verify_email_page": {
+    "title": "Verify your email",
+    "subtitle": "A 6-digit verification code has been sent to",
+    "verifying": "Verifying...",
+    "confirm_code": "Confirm Code",
+    "no_code": "Didn’t receive the code?",
+    "resend_in": "Resend in {resendTimer}s",
+    "resending": "Resending...",
+    "resend": "Resend",
+    "verification_failed": "Verification failed",
+    "invalid_code": "Invalid code",
+    "email_verified": "Email verified",
+    "welcome": "Welcome to NRBank",
+    "code_resent": "Code resent",
+    "check_inbox": "Check your email inbox",
+    "resend_failed": "Resend failed",
+    "try_again_later": "Please try again later"
+  },
+  "accounts_page": {
+    "title": "My Accounts",
+    "subtitle": "Manage all your bank accounts in one place.",
+    "open_new_account": "Open New Account",
+    "dialog_title": "Open New Account",
+    "dialog_subtitle": "Choose the type of account you'd like to open.",
+    "checking_account": "Checking Account",
+    "checking_subtitle": "For everyday transactions and payments",
+    "savings_account": "Savings Account",
+    "savings_subtitle": "Earn interest on your savings",
+    "account_created_title": "Account Created!",
+    "account_created_description": "Your new {accountType} account has been opened successfully.",
+    "error_title": "Error",
+    "error_description": "Failed to create account.",
+    "total_balance": "Total Balance Across All Accounts",
+    "your_accounts": "Your Accounts",
+    "active": "Active",
+    "inactive": "Inactive",
+    "available_balance": "Available Balance",
+    "no_accounts_title": "No accounts yet",
+    "no_accounts_subtitle": "Open your first account to get started.",
+    "open_account": "Open Account"
+  },
+  "support_page": {
+    "title": "Support Center",
+    "subtitle": "Get help with your account or submit a support ticket.",
+    "new_ticket": "New Ticket",
+    "email_support": "Email Support",
+    "faq": "FAQ",
+    "faq_subtitle": "Find answers to common questions",
+    "faq_title": "Frequently Asked Questions",
+    "submit_ticket_title": "Submit a Support Ticket",
+    "subject": "Subject *",
+    "subject_placeholder": "Brief description of your issue",
+    "priority": "Priority",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent",
+    "message": "Message *",
+    "message_placeholder": "Describe your issue in detail...",
+    "cancel": "Cancel",
+    "submitting": "Submitting...",
+    "submit_ticket": "Submit Ticket",
+    "your_tickets": "Your Tickets",
+    "view": "View",
+    "no_tickets_title": "No support tickets",
+    "no_tickets_subtitle": "You haven't submitted any support tickets yet.",
+    "submit_first_ticket": "Submit Your First Ticket",
+    "missing_info_title": "Missing information",
+    "missing_info_subtitle": "Please fill in all required fields.",
+    "ticket_submitted_title": "Ticket submitted!",
+    "ticket_submitted_subtitle": "Our support team will respond shortly.",
+    "error_title": "Error",
+    "error_subtitle": "Failed to submit ticket. Please try again."
+  },
+  "settings_page": {
+    "title": "Settings",
+    "subtitle": "Manage your account settings and preferences.",
+    "profile_information": "Profile Information",
+    "profile_description": "Update your personal details and contact information",
+    "edit_profile": "Edit Profile",
+    "edit_profile_title": "Edit Profile",
+    "edit_profile_description": "Update your personal details.",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "saving": "Saving...",
+    "save_changes": "Save Changes",
+    "profile_updated": "Profile updated successfully",
+    "profile_update_failed": "Failed to update profile"
+  },
+  "deposits_page": {
+    "title": "Deposit Funds",
+    "subtitle": "Add money to your accounts using various methods.",
+    "open_new_account": "Open New Account",
+    "dialog_title": "Open New Account",
+    "dialog_subtitle": "Choose the type of account you'd like to open.",
+    "checking_account": "Checking Account",
+    "checking_subtitle": "For everyday transactions",
+    "savings_account": "Savings Account",
+    "savings_subtitle": "Earn 4.5% APY",
+    "your_deposit_info": "Your Deposit Information",
+    "your_deposit_info_subtitle": "Use these details to receive funds from others.",
+    "account_number": "Account Number",
+    "email_address": "Email Address",
+    "choose_deposit_method": "Choose a Deposit Method",
+    "crypto": "Cryptocurrency",
+    "crypto_subtitle": "BTC, ETH, USDT, SOL",
+    "select_crypto": "Select Cryptocurrency",
+    "crypto_deposit_title": "{cryptoName} Deposit",
+    "crypto_deposit_subtitle": "{cryptoNetwork}",
+    "deposit_address": "Deposit Address",
+    "important": "Important:",
+    "important_crypto_text": "Only send {cryptoSymbol} to this address on the {cryptoNetwork}. Deposits require {confirmations} to be credited.",
+    "credit_to_account": "Credit to Account",
+    "select_account": "Select account",
+    "crypto_conversion_note": "Once we detect your deposit, it will be automatically converted and credited to your account.",
+    "back_to_methods": "Back to Methods",
+    "deposit_initiated": "Deposit Initiated!",
+    "deposit_processed": "Your deposit request has been processed.",
+    "reference": "Reference",
+    "status": "Status",
+    "completed": "Completed",
+    "make_another_deposit": "Make Another Deposit",
+    "missing_info": "Missing Information",
+    "missing_info_desc": "Please select an account and enter an amount.",
+    "invalid_amount": "Invalid Amount",
+    "invalid_amount_desc": "Please enter a valid deposit amount.",
+    "deposit_failed": "Deposit Failed"
+  },
+  "admin_dashboard_page": {
+    "title": "Admin Dashboard",
+    "subtitle": "Overview of all banking operations",
+    "total_users": "Total Users",
+    "total_accounts": "Total Accounts",
+    "active_accounts": "{activeAccounts} active",
+    "total_balance": "Total Balance",
+    "total_transactions": "Total Transactions",
+    "total_cards": "Total Cards",
+    "frozen_cards": "{frozenCards} frozen",
+    "inactive_accounts": "Inactive Accounts",
+    "recent_transactions": "Recent Transactions",
+    "loading": "Loading...",
+    "no_transactions": "No transactions yet"
+  },
+  "admin_users_page": {
+    "title": "User Management",
+    "subtitle": "Manage all registered users",
+    "all_users": "All Users",
+    "search_users": "Search users...",
+    "loading_users": "Loading users...",
+    "user": "User",
+    "email": "Email",
+    "phone": "Phone",
+    "kyc_status": "KYC Status",
+    "joined": "Joined",
+    "actions": "Actions",
+    "edit_user": "Edit User",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "pending": "Pending",
+    "verified": "Verified",
+    "rejected": "Rejected",
+    "save_changes": "Save Changes",
+    "delete_user_confirm": "Are you sure you want to delete this user? This action cannot be undone.",
+    "user_updated": "User updated successfully",
+    "user_update_failed": "Failed to update user",
+    "user_deleted": "User deleted successfully",
+    "user_delete_failed": "Failed to delete user"
+  },
+  "admin_accounts_page": {
+    "title": "Account Management",
+    "subtitle": "Manage user accounts and balances",
+    "all_accounts": "All Accounts",
+    "search_accounts": "Search accounts...",
+    "loading_accounts": "Loading accounts...",
+    "account": "Account",
+    "user": "User",
+    "type": "Type",
+    "balance": "Balance",
+    "currency": "Currency",
+    "status": "Status",
+    "actions": "Actions",
+    "active": "Active",
+    "suspended": "Suspended",
+    "edit_balance": "Edit Account Balance",
+    "account_number": "Account Number",
+    "new_balance": "New Balance",
+    "update_balance": "Update Balance",
+    "balance_updated": "Balance updated successfully",
+    "balance_update_failed": "Failed to update balance",
+    "account_suspended": "Account suspended successfully",
+    "account_activated": "Account activated successfully",
+    "status_update_failed": "Failed to update account status"
+  },
+  "admin_beneficiaries_page": {
+    "title": "Beneficiaries Management",
+    "subtitle": "View and manage all user beneficiaries",
+    "all_beneficiaries": "All Beneficiaries",
+    "search_beneficiaries": "Search beneficiaries...",
+    "loading_beneficiaries": "Loading beneficiaries...",
+    "beneficiary": "Beneficiary",
+    "bank": "Bank",
+    "account": "Account",
+    "owner": "Owner",
+    "country": "Country",
+    "favorite": "Favorite",
+    "actions": "Actions",
+    "delete_beneficiary_confirm": "Are you sure you want to delete this beneficiary?",
+    "beneficiary_deleted": "Beneficiary deleted successfully",
+    "beneficiary_delete_failed": "Failed to delete beneficiary"
+  },
+  "admin_notifications_page": {
+    "title": "Notifications",
+    "subtitle": "Send and manage user notifications",
+    "send_to_user": "Send to User",
+    "send_notification": "Send Notification",
+    "select_user": "Select user...",
+    "type": "Type",
+    "info": "Info",
+    "success": "Success",
+    "warning": "Warning",
+    "error": "Error",
+    "title_label": "Title",
+    "message_label": "Message",
+    "bulk_send": "Bulk Send",
+    "send_bulk_notification": "Send Bulk Notification",
+    "select_users": "Select Users ({count} selected)",
+    "deselect_all": "Deselect All",
+    "select_all": "Select All",
+    "send_to_users": "Send to {count} Users",
+    "sent_notifications": "Sent Notifications",
+    "search_notifications": "Search notifications...",
+    "loading_notifications": "Loading notifications...",
+    "recipient": "Recipient",
+    "read": "Read",
+    "unread": "Unread",
+    "date": "Date",
+    "actions": "Actions",
+    "delete_notification_confirm": "Are you sure you want to delete this notification?",
+    "notification_sent": "Notification sent successfully",
+    "notification_send_failed": "Failed to send notification",
+    "notification_deleted": "Notification deleted successfully",
+    "notification_delete_failed": "Failed to delete notification",
+    "fill_all_fields": "Please fill all fields",
+    "select_users_and_fill_fields": "Please select users and fill all fields"
+  },
+  "admin_cards_page": {
+    "title": "Cards Management",
+    "subtitle": "Manage all user cards",
+    "all_cards": "All Cards",
+    "search_cards": "Search cards...",
+    "loading_cards": "Loading cards...",
+    "card": "Card",
+    "type": "Type",
+    "owner": "Owner",
+    "expiry": "Expiry",
+    "limit": "Limit",
+    "status": "Status",
+    "actions": "Actions",
+    "frozen": "Frozen",
+    "inactive": "Inactive",
+    "active": "Active",
+    "edit_card": "Edit Card",
+    "card_number": "Card Number",
+    "spending_limit": "Spending Limit",
+    "save_changes": "Save Changes",
+    "unfreeze": "Unfreeze",
+    "freeze": "Freeze",
+    "delete_card_confirm": "Are you sure you want to delete this card?",
+    "card_updated": "Card updated successfully",
+    "card_update_failed": "Failed to update card",
+    "card_frozen": "Card frozen successfully",
+    "card_unfrozen": "Card unfrozen successfully",
+    "card_delete": "Card deleted successfully",
+    "card_delete_failed": "Failed to delete card"
+  },
+  "admin_beneficiaries_page": {
+    "title": "Beneficiaries Management",
+    "subtitle": "View and manage all user beneficiaries",
+    "all_beneficiaries": "All Beneficiaries",
+    "search_beneficiaries": "Search beneficiaries...",
+    "loading_beneficiaries": "Loading beneficiaries...",
+    "beneficiary": "Beneficiary",
+    "bank": "Bank",
+    "account": "Account",
+    "owner": "Owner",
+    "country": "Country",
+    "favorite": "Favorite",
+    "actions": "Actions",
+    "delete_beneficiary_confirm": "Are you sure you want to delete this beneficiary?",
+    "beneficiary_deleted": "Beneficiary deleted successfully",
+    "beneficiary_delete_failed": "Failed to delete beneficiary"
+  }, 
+"dashboard_page": {
+  "welcome": "Welcome back, {{name}}!",
+  "subtitle": "Here’s what’s happening with your accounts",
+  
+  "quick_actions": {
+    "send": "Send Money",
+    "deposit": "Deposit Funds",
+    "cards": "My Cards",
+    "savings": "Savings"
+  },
+
+  "stats": {
+    "total_balance": "Total Balance",
+    "balance_change": "Compared to last month",
+    "income": "Income",
+    "expenses": "Expenses"
+  },
+
+  "accounts": {
+    "title": "My Accounts",
+    "view_all": "View All",
+    "account_type": "{{type}} Account",
+    "no_accounts": "No accounts found"
+  },
+
+  "transactions": {
+    "title": "Recent Transactions",
+    "view_all": "View All",
+    "no_transactions": "No transactions found"
+  },
+
+  "cards": {
+    "title": "My Cards",
+    "manage": "Manage Cards",
+    "frozen": "Frozen",
+    "card_type": "{{type}} Card",
+    "expires": "Expires",
+    "limit": "Limit",
+    "create_card": "Create a new card"
   }
+}, 
+"transactions_page": {
+  "title": "Transactions",
+  "subtitle": "View and manage your recent account activity",
+
+  "export_pdf": "Export PDF",
+  "export_csv": "Export CSV",
+
+  "search_placeholder": "Search by description or reference number",
+
+  "filters": {
+    "all_types": "All Types",
+    "deposits": "Deposits",
+    "withdrawals": "Withdrawals",
+    "transfer_in": "Incoming Transfers",
+    "transfer_out": "Outgoing Transfers",
+    "card_payments": "Card Payments",
+    "date_range": "Date Range"
+  },
+
+  "table": {
+    "type": "Type",
+    "description": "Description",
+    "reference": "Reference",
+    "date": "Date",
+    "status": "Status",
+    "amount": "Amount"
+  },
+
+  "status_completed": "Completed",
+  "status_pending": "Pending",
+  "status_failed": "Failed",
+  "status_cancelled": "Cancelled",
+
+  "no_transactions": "No transactions found",
+  "adjust_filters": "Try adjusting your filters or search term.",
+  "history_appears_here": "Your transaction history will appear here."
+}, 
+"transfer_page": {
+  "title": "Transfer Funds",
+  "subtitle": "Send money quickly and securely to anyone",
+
+  "internal_transfer": "Internal Transfer",
+  "internal_subtitle": "Send money to another user within the bank",
+
+  "international_transfer": "International Transfer",
+  "international_subtitle": "Send money to beneficiaries abroad",
+
+  "from_account": "From Account",
+  "select_account": "Select an account",
+
+  "send_to": "Send To",
+  "account_number": "Account Number",
+  "email_address": "Email Address",
+
+  "beneficiary": "Beneficiary",
+  "add_new": "Add New",
+  "select_beneficiary": "Select a beneficiary",
+
+  "amount": "Amount",
+  "description": "Description",
+  "payment_for": "Payment for...",
+
+  "note": "Note:",
+  "international_note": "International transfers may take additional processing time and may incur extra fees.",
+
+  "cancel": "Cancel",
+  "processing": "Processing...",
+  "send_transfer": "Send Transfer",
+
+  "success_title": "Transfer Successful",
+  "success_subtitle": "Your transfer was completed successfully.",
+  "recipient": "Recipient",
+  "reference": "Reference",
+  "status": "Status",
+  "completed": "Completed",
+  "new_transfer": "New Transfer",
+  "view_transactions": "View Transactions",
+
+  "toasts": {
+    "missing_info_title": "Missing Information",
+    "missing_info_desc": "Please fill in all required fields.",
+    "missing_recipient_desc": "Please enter a valid recipient account or email.",
+    "missing_beneficiary_desc": "Please select a beneficiary.",
+    "invalid_amount_title": "Invalid Amount",
+    "invalid_amount_desc": "Please enter a valid transfer amount.",
+    "pin_send_failed_title": "PIN Send Failed",
+    "invalid_pin_desc": "The PIN you entered is incorrect.",
+    "pin_verify_failed_title": "PIN Verification Failed"
+  },
+
+  "pin_dialog": {
+    "title": "Enter Transfer PIN",
+    "description": "A 6-digit verification PIN was sent to your email. Enter it below to continue.",
+    "cancel": "Cancel",
+    "verifying": "Verifying...",
+    "verify": "Verify"
+  }, 
+"beneficiaries_page": {
+  "title": "Beneficiaries",
+  "subtitle": "Manage the people and accounts you can send money to",
+
+  "add_beneficiary": "Add Beneficiary",
+  "add_new_beneficiary": "Add New Beneficiary",
+
+  "full_name": "Full Name",
+  "full_name_placeholder": "Beneficiary’s full name",
+
+  "bank_name": "Bank Name",
+  "bank_name_placeholder": "Enter the bank name",
+
+  "account_number": "Account Number",
+  "account_number_placeholder": "Enter account number",
+
+  "country": "Country",
+  "country_placeholder": "Country of the bank",
+
+  "swift_code": "SWIFT Code",
+  "swift_code_placeholder": "Optional SWIFT code",
+
+  "iban": "IBAN",
+  "iban_placeholder": "Optional IBAN",
+
+  "cancel": "Cancel",
+  "adding": "Adding...",
+
+  "account_label": "Account ending in {{lastFour}}",
+
+  "no_beneficiaries": "No beneficiaries found",
+  "no_beneficiaries_subtitle": "Add a beneficiary to start making transfers.",
+  "add_first_beneficiary": "Add Your First Beneficiary",
+
+  "toasts": {
+    "missing_info_title": "Missing Information",
+    "missing_info_desc": "Please fill in all required fields.",
+    "success_title": "Beneficiary Added",
+    "success_desc": "Successfully added {{name}} as a beneficiary.",
+    "error_title": "Error",
+    "error_desc": "Unable to add beneficiary. Please try again."
+  }
+}
+  
+}, 
+"cards_page": {
+  "title": "Your Cards",
+  "subtitle": "Manage your debit and virtual cards",
+  "create_new_card": "Create New Card",
+  "frozen": "Frozen",
+  "card_type": "{{type}} Card",
+  "expires": "Expires",
+  "cvv": "CVV",
+  "freeze": "Freeze",
+  "unfreeze": "Unfreeze",
+  "spending_limit": "Spending Limit",
+  "no_cards": "No cards yet",
+  "no_cards_subtitle": "You haven’t created any cards. Create one to get started.",
+  "create_first_card": "Create Your First Card",
+
+  "toasts": {
+    "no_accounts_title": "No accounts available",
+    "no_accounts_desc": "You need at least one account before creating a card.",
+    "create_success_title": "Card created successfully",
+    "create_success_desc": "Your new card has been created.",
+    "create_error_title": "Failed to create card",
+    "create_error_desc": "An error occurred while creating the card.",
+    "freeze_title": "Card frozen",
+    "freeze_desc": "Your card has been temporarily disabled.",
+    "unfreeze_title": "Card unfrozen",
+    "unfreeze_desc": "Your card is now active.",
+    "status_error_title": "Update failed",
+    "status_error_desc": "Unable to update card status."
+  },
+
+  "dialogs": {
+    "create_title": "Create New Card",
+    "create_desc": "Set a 4-digit PIN for your new card.",
+    "pin_placeholder": "4-digit PIN",
+    "create_button": "Create Card",
+    "creating_button": "Creating...",
+
+    "limit_title": "Set Spending Limit",
+    "limit_current": "Current Limit",
+    "limit_placeholder": "New limit",
+    "limit_button": "Update Limit",
+    "limit_updating": "Updating...",
+
+    "show_pin_title": "Your Card PIN",
+
+    "cancel_title": "Are you sure?",
+    "cancel_desc": "This action will permanently cancel your card. This cannot be undone.",
+    "cancel_keep": "No, keep it",
+    "cancel_confirm": "Yes, cancel card"
+  }
+}, 
+"savings_page": {
+  "title": "Savings",
+  "subtitle": "Manage your savings vaults and financial goals",
+  "create_new_vault": "Create New Vault",
+  "create_new_goal": "Create New Goal",
+  "total_savings": "Total Savings",
+  "apy_info": "Your savings earn competitive APY",
+  "goals_title": "Your Savings Goals",
+  "of": "of",
+  "complete": "% complete",
+
+  "dialogs": {
+    "vault_name": "Vault Name",
+    "target_amount": "Target Amount",
+    "lock_vault": "Lock this vault?",
+    "maturity_date": "Maturity Date",
+    "cancel": "Cancel",
+    "create_vault": "Create Vault",
+    "creating": "Creating..."
+  },
+
+  "actions": {
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "amount": "Amount",
+    "from_account": "From Account",
+    "to_account": "To Account",
+    "select_account": "Select account"
+  },
+
+  "placeholders": {
+    "vault_name": "e.g., Emergency Fund",
+    "target_amount": "e.g., 10000",
+    "amount": "0.00"
+  },
+
+  "errors": {
+    "required_fields": "Name and target are required",
+    "deposit_required": "Please select a vault, amount, and source account.",
+    "withdraw_required": "Please select a vault, amount, and destination account."
+  },
+
+  "toasts": {
+    "vault_created": "Savings vault created successfully",
+    "vault_failed": "Failed to create vault",
+    "deposit_success": "Deposit successful",
+    "deposit_failed": "Deposit failed",
+    "withdraw_success": "Withdrawal successful",
+    "withdraw_failed": "Withdrawal failed"
+  }
+}, 
+"statements_page": {
+  "title": "Statements",
+  "subtitle": "View and download your monthly statements and receipts",
+
+  "export_csv": "Export CSV",
+  "select_account": "Select Account",
+  "all_accounts": "All Accounts",
+  "custom_date_range": "Custom Date Range",
+
+  "monthly_statements": "Monthly Statements",
+  "transactions_total": "{{count}} transactions • Total {{amount}}",
+  "download_pdf": "Download PDF",
+
+  "no_statements": "No statements available",
+
+  "recent_receipts": "Recent Receipts",
+  "ref": "Ref:",
+  "no_receipts": "No receipts available",
+
+  "toasts": {
+    "unable_to_generate_title": "Unable to Generate Statement",
+    "unable_to_generate_desc": "We could not generate the statement. Try again later.",
+
+    "download_success_title": "Statement Ready",
+    "download_success_desc": "Your statement for {{period}} has been downloaded.",
+
+    "receipt_success_title": "Receipt Ready",
+    "receipt_success_desc": "Your transaction receipt has been downloaded.",
+
+    "no_transactions_title": "No Transactions",
+    "no_transactions_desc": "There are no transactions available to export.",
+
+    "export_complete_title": "Export Complete",
+    "export_complete_desc": "Your CSV file has been successfully downloaded."
+  }
+}, 
+"support_page": {
+  "title": "Support",
+  "subtitle": "Get help, find answers, or contact our support team",
+
+  "new_ticket": "New Ticket",
+
+  "email_support": "Email Support",
+  "faq": "FAQ",
+  "faq_subtitle": "Find answers to common questions",
+
+  "faq_title": "Frequently Asked Questions",
+  "faq_q1": "How long does it take to receive a support reply?",
+  "faq_a1": "Our team usually responds within 24 hours, depending on ticket volume.",
+
+  "faq_q2": "How do I reset my password?",
+  "faq_a2": "You can reset your password from the login page by selecting 'Forgot Password'.",
+
+  "faq_q3": "Can I update my account information?",
+  "faq_a3": "Yes, you can update your personal information in the account settings page.",
+
+  "faq_q4": "Is my information secure?",
+  "faq_a4": "All your data is encrypted and stored securely using industry-standard protocols.",
+
+  "faq_q5": "How do I contact support?",
+  "faq_a5": "You can submit a support ticket or email us at any time.",
+
+  "submit_ticket_title": "Submit a Support Ticket",
+
+  "subject": "Subject",
+  "subject_placeholder": "Short summary of your issue",
+
+  "priority": "Priority",
+  "low": "Low",
+  "medium": "Medium",
+  "high": "High",
+  "urgent": "Urgent",
+
+  "message": "Message",
+  "message_placeholder": "Describe your issue in detail...",
+
+  "cancel": "Cancel",
+  "submit_ticket": "Submit Ticket",
+  "submitting": "Submitting...",
+
+  "your_tickets": "Your Tickets",
+
+  "view": "View",
+
+  "no_tickets_title": "No Support Tickets",
+  "no_tickets_subtitle": "You haven't submitted any support tickets yet.",
+
+  "submit_first_ticket": "Submit Your First Ticket",
+
+  "missing_info_title": "Missing Information",
+  "missing_info_subtitle": "Please fill in all required fields.",
+
+  "ticket_submitted_title": "Ticket Submitted",
+  "ticket_submitted_subtitle": "Your support request has been received.",
+
+  "error_title": "Error",
+  "error_subtitle": "Something went wrong. Please try again later."
+}, 
+"settings_page": {
+  "title": "Settings",
+  "subtitle": "Manage your account settings and preferences.",
+
+  "sections": {
+    "profile_info": {
+      "title": "Profile Information",
+      "description": "Update your personal details and contact information",
+      "action": "Edit Profile"
+    }
+  },
+
+  "dialog": {
+    "title": "Edit Profile",
+    "description": "Update your personal details."
+  },
+
+  "form": {
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "saving": "Saving...",
+    "save_changes": "Save Changes"
+  },
+
+  "toast": {
+    "success": "Profile updated successfully",
+    "error": "Failed to update profile"
+  }
+}, 
+
+"dashboard_nav": {
+  "dashboard": "Dashboard",
+  "accounts": "Accounts",
+  "transactions": "Transactions",
+  "transfer": "Transfer",
+  "deposits": "Deposits",
+  "beneficiaries": "Beneficiaries",
+  "cards": "Cards",
+  "savings": "Savings",
+  "statements": "Statements",
+  "support": "Support",
+  "settings": "Settings"
+},
+"dashboard_misc": {
+  "personal_account": "Personal Account",
+  "sign_out": "Sign Out",
+  "search_transactions": "Search transactions...",
+  "notifications": "Notifications",
+  "unread_count": "{{count}} unread",
+  "no_notifications": "No new notifications."
+}, 
+"nav": {
+  "home": "Home",
+  "about": "About",
+  "testimonials": "Testimonials",
+  "faq": "FAQ",
+  "contact": "Contact",
+  "login": "Log In",
+  "signUp": "Sign Up"
+}, 
+"customer_testimonials": {
+  "badge": "What our customers say",
+  "title": "Trusted by thousands worldwide",
+  "subtitle": "Real stories from real NRBank users",
+  
+  "items": {
+    "sarah": {
+      "name": "Sarah T.",
+      "role": "Freelance Designer",
+      "text": "NRBank has revolutionized how I manage my finances. The app is intuitive, and the 24/7 support is a lifesaver. No hidden fees truly means no hidden fees!"
+    },
+    "michael": {
+      "name": "Michael B.",
+      "role": "Small Business Owner",
+      "text": "Switching to NRBank for my business was the best decision. International transfers are seamless, and the virtual cards provide an extra layer of security for my online purchases."
+    },
+    "jessica": {
+      "name": "Jessica L.",
+      "role": "Student",
+      "text": "As a student, I need a bank that is simple and affordable. NRBank’s basic plan is perfect for me. I love the savings vaults feature, which helps me budget for my goals."
+    },
+    "david": {
+      "name": "David R.",
+      "role": "Tech Entrepreneur",
+      "text": "The API integrations offered by NRBank have been a game-changer for my business. I can now automate my financial workflows and focus on growing my company."
+    },
+    "emily": {
+      "name": "Emily S.",
+      "role": "World Traveler",
+      "text": "The multi-currency wallet is a must-have for anyone who travels frequently. I can hold and exchange currencies with zero FX fees, which saves me a lot of money."
+    }
+  }
+}
+
+
 }
