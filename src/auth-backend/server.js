@@ -89,7 +89,7 @@ app.post("/send-otp", async (req, res) => {
 
     if (profileError) {
       console.error("PROFILE INSERT ERROR:", profileError);
-      return res.status(500).json({error: "Failed to create profile entry"});
+      return res.status(500).json({error: profileError});
     }
 
     // Generate OTP
