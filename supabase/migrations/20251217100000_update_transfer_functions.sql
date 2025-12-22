@@ -80,6 +80,8 @@ DECLARE
   v_recipient_name TEXT;
   sender_full_name TEXT;
   formatted_amount TEXT;
+  sender_account_status TEXT; -- Added declaration
+
 BEGIN
   -- 1. Get sender account and validate
   SELECT * INTO sender_account_info
@@ -91,11 +93,20 @@ BEGIN
     RETURN;
   END IF;
 
+  -- Get sender's account status
+  SELECT account_status INTO sender_account_status
+  FROM profiles
+  WHERE id = p_sender_user_id;
+
+  IF sender_account_status = 'frozen' THEN
+    RETURN QUERY SELECT false, 'This account is frozen. Outgoing transfers are disabled.'::TEXT, null::TEXT, null::TEXT, null::TEXT, null::TEXT;
+    RETURN;
+  END IF;
+
   IF sender_account_info.balance < p_amount THEN
     RETURN QUERY SELECT false, 'Insufficient funds'::TEXT, null::TEXT, null::TEXT, null::TEXT, null::TEXT;
     RETURN;
   END IF;
-
   -- 2. Get recipient account
   SELECT * INTO recipient_lookup_info
   FROM lookup_transfer_recipient(p_to_identifier, p_is_email);

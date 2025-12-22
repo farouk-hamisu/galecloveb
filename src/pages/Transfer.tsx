@@ -1,5 +1,5 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { useAccounts, useBeneficiaries } from '@/hooks/useBankingData';
+import { useAccounts, useBeneficiaries, useProfile } from '@/hooks/useBankingData';
 import { useTransfer } from '@/hooks/useTransfer';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,6 +27,7 @@ const Transfer = () => {
   const { user } = useAuth();
   const { data: accounts } = useAccounts();
   const { data: beneficiaries } = useBeneficiaries();
+  const { data: profile } = useProfile();
   const { toast } = useToast();
   const transferMutation = useTransfer();
   
@@ -48,6 +49,7 @@ const Transfer = () => {
   const [showPinDialog, setShowPinDialog] = useState(false);
   const [pin, setPin] = useState('');
   const [isVerifyingPin, setIsVerifyingPin] = useState(false);
+  const [showFrozenAccountModal, setShowFrozenAccountModal] = useState(false);
   
   const currencySymbol = t('currency.symbol');
 
@@ -66,6 +68,11 @@ const Transfer = () => {
   
   const handleTransfer = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (profile?.account_status === 'frozen') {
+      setShowFrozenAccountModal(true);
+      return;
+    }
     
     if (!fromAccount || !amount) {
       toast({
@@ -502,6 +509,23 @@ const Transfer = () => {
               ) : (
                 t('transfer_page.pin_dialog.verify')
               )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showFrozenAccountModal} onOpenChange={setShowFrozenAccountModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('frozen_account_modal.title')}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t('frozen_account_modal.message')}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setShowFrozenAccountModal(false)}>{t('transfer_page.cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => setShowFrozenAccountModal(false)}>
+              {t('frozen_account_modal.button')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

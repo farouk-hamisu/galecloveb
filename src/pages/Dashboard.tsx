@@ -10,7 +10,8 @@ import {
   PiggyBank,
   Send,
   Download,
-  Plus
+  Plus,
+  Ban // Added
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -45,7 +46,7 @@ const Dashboard = () => {
 
   const lastMonthTransactions = transactions?.filter(tx => {
     const txDate = new Date(tx.created_at);
-    return txDate.getMonth() === lastMonth && txDate.getFullYear() === lastMonthYear;
+    return txDate.getMonth() === lastMonth && txDate.getFullYear() === lastYear;
   }) || [];
 
   const getIncome = (txs: any[]) => txs
@@ -90,14 +91,28 @@ const Dashboard = () => {
           <p className="text-muted-foreground">{t('dashboard_page.subtitle')}</p>
         </motion.div>
 
+        {profile?.account_status === 'frozen' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="p-4 bg-red-100 dark:bg-red-900/30 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200 rounded-lg flex items-center gap-3"
+          >
+            <Ban className="w-5 h-5" />
+            <p className="text-sm font-medium">{t('account_frozen_warning')}</p>
+          </motion.div>
+        )}
+
         {/* Quick Actions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.2 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
-          <Link to="/transfer">
+          <Link 
+            to="/transfer" 
+          >
             <div className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                 <Send className="w-5 h-5 text-primary" />

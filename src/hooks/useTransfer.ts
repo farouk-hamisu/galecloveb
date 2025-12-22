@@ -29,9 +29,12 @@ const generateReferenceNumber = () => {
   return `${prefix}${timestamp}${random}`;
 };
 
+import {useToast} from '@/components/ui/use-toast';
+
 export const useTransfer = () => {
   const queryClient = useQueryClient();
   const {user} = useAuth();
+  const {toast} = useToast();
 
   return useMutation({
     mutationFn: async (request: TransferRequest): Promise<TransferResult> => {
@@ -73,77 +76,37 @@ export const useTransfer = () => {
         };
 
       } else {
-        // --- Keep existing international transfer logic ---
-        const {data: senderAccount, error: senderError} = await supabase
-          .from('accounts')
-          .select('*')
-          .eq('id', fromAccountId)
-          .eq('user_id', user.id)
-          .single();
-
-        if (senderError || !senderAccount) {
-          throw new Error('Source account not found');
-        }
-
-        if (Number(senderAccount.balance) < amount) {
-          throw new Error('Insufficient funds');
-        }
-
+        console.log('Processing international transfer');
         if (!beneficiaryId) {
           throw new Error('Please select a beneficiary for international transfer');
         }
 
-        const {data: beneficiary, error: benError} = await supabase
-          .from('beneficiaries')
-          .select('name, email')
-          .eq('id', beneficiaryId)
-          .single();
+        const { data, error } = await supabase.rpc('international_transfer', {
+          p_sender_user_id: user.id,
+          p_from_account_id: fromAccountId,
+          p_beneficiary_id: beneficiaryId,
+          p_amount: amount,
+          p_description: description || ''
+        });
 
-        if (benError || !beneficiary) {
-          throw new Error('Beneficiary not found');
+        if (error) {
+          console.error('RPC Error:', error);
+          throw new Error('An error occurred during the international transfer. Please try again.');
         }
 
-        const recipientName = beneficiary.name;
-        const recipientAccountNumber = beneficiary.account_number;
-        const referenceNumber = generateReferenceNumber();
-        const currency = senderAccount.currency || 'USD';
+        const result = data[0];
 
-        const newSenderBalance = Number(senderAccount.balance) - amount;
-        const {error: debitError} = await supabase
-          .from('accounts')
-          .update({balance: newSenderBalance})
-          .eq('id', fromAccountId);
-
-        if (debitError) {
-          throw new Error('Failed to debit account');
-        }
-
-        const {error: senderTxError} = await supabase
-          .from('transactions')
-          .insert({
-            account_id: fromAccountId,
-            type: 'transfer_out',
-            amount: -amount,
-            currency,
-            description: description || `International transfer to ${recipientName}`,
-            reference_number: referenceNumber,
-            recipient_name: recipientName,
-            recipient_account: recipientAccountNumber,
-            status: 'completed'
-          });
-
-        if (senderTxError) {
-          await supabase.from('accounts').update({balance: senderAccount.balance}).eq('id', fromAccountId);
-          throw new Error('Failed to create transaction record');
+        if (!result.success) {
+          throw new Error(result.message);
         }
 
         return {
           success: true,
-          referenceNumber,
-          recipientName,
-          recipientEmail: beneficiary.email,
+          referenceNumber: result.reference_number,
+          recipientName: result.recipient_name,
+          recipientEmail: result.recipient_email,
           amount,
-          currency
+          currency: result.currency
         };
       }
     },
@@ -193,6 +156,11 @@ export const useTransfer = () => {
     },
     onError: (error) => {
       console.error('Transfer failed:', error);
+      toast({
+        variant: "destructive",
+        title: "Transfer Failed",
+        description: error.message,
+      });
     }
   });
 };
