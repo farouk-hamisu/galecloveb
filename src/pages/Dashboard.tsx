@@ -46,7 +46,7 @@ const Dashboard = () => {
 
   const lastMonthTransactions = transactions?.filter(tx => {
     const txDate = new Date(tx.created_at);
-    return txDate.getMonth() === lastMonth && txDate.getFullYear() === lastYear;
+    return txDate.getMonth() === lastMonth && txDate.getFullYear() === lastMonthYear;
   }) || [];
 
   const getIncome = (txs: any[]) => txs
