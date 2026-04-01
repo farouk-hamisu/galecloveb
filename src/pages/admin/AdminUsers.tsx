@@ -24,7 +24,7 @@ import {
   useAdminProfiles, 
   useUpdateProfile, 
   useDeleteProfile,
-  useUpdateAccountStatus, // Added
+  useToggleAccountStatus,
   AdminProfile 
 } from '@/hooks/useAdminData';
 import { Search, Edit, Trash2, User, Ban, CheckCircle } from 'lucide-react';
