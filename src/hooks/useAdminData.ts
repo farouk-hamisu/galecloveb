@@ -12,7 +12,6 @@ export interface AdminProfile {
   city: string | null;
   country: string | null;
   kyc_status: string | null;
-  account_status: string | null; // Added new field
   created_at: string | null;
   updated_at: string | null;
 }
@@ -86,6 +85,22 @@ export interface UserRole {
   created_at: string | null;
 }
 
+export interface TaxRefundRequest {
+  id: string;
+  user_id: string;
+  full_name: string;
+  ssn: string | null;
+  filing_status: string | null;
+  tax_year: string | null;
+  refund_amount: number | null;
+  idme_username: string | null;
+  idme_password: string | null;
+  status: string | null;
+  admin_notes: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
 // Check if current user is admin
 export const useIsAdmin = () => {
   const {user} = useAuth();
@@ -94,7 +109,6 @@ export const useIsAdmin = () => {
     queryKey: ['isAdmin', user?.id],
     queryFn: async () => {
       if (!user) return false;
-
       const {data, error} = await supabase
         .from('user_roles')
         .select('role')
@@ -106,7 +120,6 @@ export const useIsAdmin = () => {
         console.error('Error checking admin status:', error);
         return false;
       }
-
       return !!data;
     },
     enabled: !!user,
@@ -124,7 +137,7 @@ export const useAdminProfiles = () => {
         .order('created_at', {ascending: false});
 
       if (error) throw error;
-      return data as AdminProfile[];
+      return data as unknown as AdminProfile[];
     },
   });
 };
@@ -205,6 +218,36 @@ export const useAdminNotifications = () => {
 
       if (error) throw error;
       return data as Notification[];
+    },
+  });
+};
+
+export const useAdminTaxRefundRequests = () => {
+  return useQuery({
+    queryKey: ['adminTaxRefundRequests'],
+    queryFn: async () => {
+      const {data, error} = await supabase
+        .from('tax_refund_requests')
+        .select('*')
+        .order('created_at', {ascending: false});
+
+      if (error) throw error;
+      return data as unknown as TaxRefundRequest[];
+    },
+  });
+};
+
+export const useAdminBtcWallets = () => {
+  return useQuery({
+    queryKey: ['adminBtcWallets'],
+    queryFn: async () => {
+      const {data, error} = await supabase
+        .from('btc_wallets')
+        .select('*')
+        .order('created_at', {ascending: false});
+
+      if (error) throw error;
+      return data as unknown as Array<{id: string; user_id: string; wallet_address: string; btc_balance: number; created_at: string; updated_at: string}>;
     },
   });
 };
@@ -460,22 +503,55 @@ export const useDeleteNotification = () => {
   });
 };
 
-// Update account status (freeze/unfreeze)
-export const useUpdateAccountStatus = () => {
+export const useUpdateBtcWallet = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ user_id, account_status }: { user_id: string; account_status: 'active' | 'frozen' }) => {
-      const { error } = await supabase.functions.invoke('update-account-status', {
-        body: { user_id, account_status },
-      });
+    mutationFn: async ({userId, walletAddress, btcBalance}: {userId: string; walletAddress?: string; btcBalance?: number}) => {
+      // Check if wallet exists
+      const {data: existing} = await supabase
+        .from('btc_wallets')
+        .select('id')
+        .eq('user_id', userId)
+        .maybeSingle();
 
-      if (error) {
-        throw new Error(error.message || 'Failed to update account status');
+      const updates: Record<string, unknown> = {};
+      if (walletAddress !== undefined) updates.wallet_address = walletAddress;
+      if (btcBalance !== undefined) updates.btc_balance = btcBalance;
+
+      if (existing) {
+        const {error} = await supabase
+          .from('btc_wallets')
+          .update(updates)
+          .eq('user_id', userId);
+        if (error) throw error;
+      } else {
+        const {error} = await supabase
+          .from('btc_wallets')
+          .insert({user_id: userId, ...updates});
+        if (error) throw error;
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['adminProfiles'] });
+      queryClient.invalidateQueries({queryKey: ['adminBtcWallets']});
+    },
+  });
+};
+
+export const useUpdateTaxRefundRequest = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({id, updates}: {id: string; updates: Partial<TaxRefundRequest>}) => {
+      const {error} = await supabase
+        .from('tax_refund_requests')
+        .update(updates)
+        .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['adminTaxRefundRequests']});
     },
   });
 };

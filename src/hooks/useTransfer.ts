@@ -4,7 +4,7 @@ import {useAuth} from '@/contexts/AuthContext';
 
 interface TransferRequest {
   fromAccountId: string;
-  toIdentifier: string; // Can be account number or email
+  toIdentifier: string;
   amount: number;
   description?: string;
   transferType: 'internal' | 'international';
@@ -21,14 +21,6 @@ interface TransferResult {
   currency: string;
 }
 
-// Generate reference number
-const generateReferenceNumber = () => {
-  const prefix = 'TRF';
-  const timestamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-  return `${prefix}${timestamp}${random}`;
-};
-
 import {useToast} from '@/components/ui/use-toast';
 
 export const useTransfer = () => {
@@ -38,7 +30,6 @@ export const useTransfer = () => {
 
   return useMutation({
     mutationFn: async (request: TransferRequest): Promise<TransferResult> => {
-      console.log('Initiating transfer:', request);
       if (!user?.id) throw new Error('Not authenticated');
 
       const {fromAccountId, toIdentifier, amount, description, transferType, beneficiaryId} = request;
@@ -46,7 +37,7 @@ export const useTransfer = () => {
       if (transferType === 'internal') {
         const isEmail = toIdentifier.includes('@');
 
-        const {data, error} = await supabase.rpc('internal_transfer', {
+        const {data, error} = await (supabase.rpc as any)('internal_transfer', {
           p_sender_user_id: user.id,
           p_from_account_id: fromAccountId,
           p_to_identifier: toIdentifier.trim(),
@@ -76,12 +67,11 @@ export const useTransfer = () => {
         };
 
       } else {
-        console.log('Processing international transfer');
         if (!beneficiaryId) {
           throw new Error('Please select a beneficiary for international transfer');
         }
 
-        const { data, error } = await supabase.rpc('international_transfer', {
+        const { data, error } = await (supabase.rpc as any)('international_transfer', {
           p_sender_user_id: user.id,
           p_from_account_id: fromAccountId,
           p_beneficiary_id: beneficiaryId,
@@ -115,19 +105,16 @@ export const useTransfer = () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
 
-      console.log('Transfer successful, sending notification...');
-      
       let senderName = user?.user_metadata.full_name;
       if (!senderName) {
         const { data: profile } = await supabase.from('profiles').select('first_name, last_name').eq('id', user?.id).single();
         if (profile && profile.first_name && profile.last_name) {
           senderName = `${profile.first_name} ${profile.last_name}`;
         } else {
-          senderName = user?.email; // fallback to email
+          senderName = user?.email;
         }
       }
 
-      // Send transaction notification
       const senderEmail = user?.email;
       const receiverEmail = variables.receiverEmail || data.recipientEmail;
       
@@ -144,18 +131,13 @@ export const useTransfer = () => {
         }),
       })
       .then(response => {
-        if (response.ok) {
-          console.log('Transaction notification sent successfully.');
-        } else {
-          console.error('Failed to send transaction notification.');
-        }
+        if (!response.ok) console.error('Failed to send transaction notification.');
       })
       .catch(error => {
         console.error('Error sending transaction notification:', error);
       });
     },
     onError: (error) => {
-      console.error('Transfer failed:', error);
       toast({
         variant: "destructive",
         title: "Transfer Failed",
@@ -215,7 +197,6 @@ export const useDeposit = () => {
     }) => {
       if (!user?.id) throw new Error('Not authenticated');
 
-      // Get current account balance
       const {data: account, error: accError} = await supabase
         .from('accounts')
         .select('balance, currency, account_number')
@@ -230,7 +211,6 @@ export const useDeposit = () => {
       const referenceNumber = 'DEP' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
       const newBalance = Number(account.balance) + amount;
 
-      // Update balance
       const {error: updateError} = await supabase
         .from('accounts')
         .update({balance: newBalance})
@@ -240,7 +220,6 @@ export const useDeposit = () => {
         throw new Error('Failed to update account balance');
       }
 
-      // Create transaction record
       const {error: txError} = await supabase
         .from('transactions')
         .insert({
@@ -254,7 +233,6 @@ export const useDeposit = () => {
         });
 
       if (txError) {
-        // Rollback
         await supabase
           .from('accounts')
           .update({balance: account.balance})

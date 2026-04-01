@@ -74,51 +74,27 @@ const Settings = () => {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
-            {t('settings_page.title')}
-          </h1>
-          <p className="text-muted-foreground">
-            {t('settings_page.subtitle')}
-          </p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <h1 className="text-xl lg:text-2xl font-bold text-foreground mb-0.5">{t('settings_page.title')}</h1>
+          <p className="text-sm text-muted-foreground">{t('settings_page.subtitle')}</p>
         </motion.div>
 
-        {/* Settings Sections */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           className="grid md:grid-cols-2 gap-4"
         >
           {settingsSections.map((section, index) => (
-            <motion.div
-              key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+            <motion.div key={section.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="p-6 rounded-2xl bg-card border border-border hover:shadow-md transition-shadow"
+              className="p-5 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <section.icon className="w-6 h-6 text-primary" />
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <section.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-foreground mb-1">
-                    {section.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {section.description}
-                  </p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={section.onClick}
-                  >
-                    {section.action}
-                  </Button>
+                  <h3 className="text-sm font-semibold text-foreground mb-0.5">{section.title}</h3>
+                  <p className="text-xs text-muted-foreground mb-3">{section.description}</p>
+                  <Button variant="outline" size="sm" className="text-xs" onClick={section.onClick}>{section.action}</Button>
                 </div>
               </div>
             </motion.div>
@@ -129,67 +105,23 @@ const Settings = () => {
       <Dialog open={profileDialogOpen} onOpenChange={setProfileDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>
-              {t('settings_page.dialog.title')}
-            </DialogTitle>
-            <DialogDescription>
-              {t('settings_page.dialog.description')}
-            </DialogDescription>
+            <DialogTitle>{t('settings_page.dialog.title')}</DialogTitle>
+            <DialogDescription>{t('settings_page.dialog.description')}</DialogDescription>
           </DialogHeader>
-
-          <div className="space-y-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                id="first_name"
-                placeholder={t('settings_page.form.first_name')}
-                value={formData.first_name}
-                onChange={handleInputChange}
-              />
-              <Input
-                id="last_name"
-                placeholder={t('settings_page.form.last_name')}
-                value={formData.last_name}
-                onChange={handleInputChange}
-              />
+          <div className="space-y-3 py-3">
+            <div className="grid grid-cols-2 gap-3">
+              <Input id="first_name" placeholder={t('settings_page.form.first_name')} value={formData.first_name} onChange={handleInputChange} />
+              <Input id="last_name" placeholder={t('settings_page.form.last_name')} value={formData.last_name} onChange={handleInputChange} />
             </div>
-
-            <Input
-              id="phone"
-              placeholder={t('settings_page.form.phone')}
-              value={formData.phone}
-              onChange={handleInputChange}
-            />
-
-            <Input
-              id="address"
-              placeholder={t('settings_page.form.address')}
-              value={formData.address}
-              onChange={handleInputChange}
-            />
-
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                id="city"
-                placeholder={t('settings_page.form.city')}
-                value={formData.city}
-                onChange={handleInputChange}
-              />
-              <Input
-                id="country"
-                placeholder={t('settings_page.form.country')}
-                value={formData.country}
-                onChange={handleInputChange}
-              />
+            <Input id="phone" placeholder={t('settings_page.form.phone')} value={formData.phone} onChange={handleInputChange} />
+            <Input id="address" placeholder={t('settings_page.form.address')} value={formData.address} onChange={handleInputChange} />
+            <div className="grid grid-cols-2 gap-3">
+              <Input id="city" placeholder={t('settings_page.form.city')} value={formData.city} onChange={handleInputChange} />
+              <Input id="country" placeholder={t('settings_page.form.country')} value={formData.country} onChange={handleInputChange} />
             </div>
           </div>
-
-          <Button
-            onClick={handleUpdateProfile}
-            disabled={updateProfile.isPending}
-          >
-            {updateProfile.isPending
-              ? t('settings_page.form.saving')
-              : t('settings_page.form.save_changes')}
+          <Button onClick={handleUpdateProfile} disabled={updateProfile.isPending}>
+            {updateProfile.isPending ? t('settings_page.form.saving') : t('settings_page.form.save_changes')}
           </Button>
         </DialogContent>
       </Dialog>
@@ -198,4 +130,3 @@ const Settings = () => {
 };
 
 export default Settings;
-

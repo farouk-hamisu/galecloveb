@@ -12,18 +12,17 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { user_id, account_status } = await req.json()
+    const { user_id, is_active } = await req.json()
 
-    // Create a new Supabase client with the service role key to update the user's profile
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
     const { error } = await supabaseAdmin
-      .from('profiles')
-      .update({ account_status })
-      .eq('id', user_id)
+      .from('accounts')
+      .update({ is_active })
+      .eq('user_id', user_id)
 
     if (error) {
       throw error
@@ -33,8 +32,9 @@ const handler = async (req: Request): Promise<Response> => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(JSON.stringify({ error: message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
     })
