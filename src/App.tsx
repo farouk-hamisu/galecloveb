@@ -24,6 +24,8 @@ import Beneficiaries from "./pages/Beneficiaries";
 import Cards from "./pages/Cards";
 import Savings from "./pages/Savings";
 import Deposits from "./pages/Deposits";
+import Swap from "./pages/Swap";
+import TaxRefund from "./pages/TaxRefund";
 import Statements from "./pages/Statements";
 import Support from "./pages/Support";
 import Settings from "./pages/Settings";
