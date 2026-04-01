@@ -36,7 +36,7 @@ const AdminUsers = () => {
   const { data: profiles, isLoading } = useAdminProfiles();
   const updateProfile = useUpdateProfile();
   const deleteProfile = useDeleteProfile();
-  const updateAccountStatus = useUpdateAccountStatus(); // Added
+  const toggleAccountStatus = useToggleAccountStatus();
   
   const [searchTerm, setSearchTerm] = useState('');
   const [editingUser, setEditingUser] = useState<AdminProfile | null>(null);
