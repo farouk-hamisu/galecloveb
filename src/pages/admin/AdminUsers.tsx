@@ -82,7 +82,7 @@ const AdminUsers = () => {
 
   const handleFreezeAccount = async (userId: string) => {
     try {
-      await updateAccountStatus.mutateAsync({ user_id: userId, account_status: 'frozen' });
+      await toggleAccountStatus.mutateAsync({ id: userId, is_active: false });
       toast.success(t('admin_users_page.account_frozen_success'));
     } catch (error) {
       toast.error(t('admin_users_page.account_frozen_failed'));
@@ -91,7 +91,7 @@ const AdminUsers = () => {
 
   const handleUnfreezeAccount = async (userId: string) => {
     try {
-      await updateAccountStatus.mutateAsync({ user_id: userId, account_status: 'active' });
+      await toggleAccountStatus.mutateAsync({ id: userId, is_active: true });
       toast.success(t('admin_users_page.account_unfrozen_success'));
     } catch (error) {
       toast.error(t('admin_users_page.account_unfrozen_failed'));
