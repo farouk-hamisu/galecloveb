@@ -245,55 +245,14 @@ const AdminUsers = () => {
                                 </div>
                               </DialogContent>
                             </Dialog>
-                            {profile.account_status === 'active' ? (
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button 
-                                    variant="ghost" 
-                                    size="icon"
-                                    className="text-orange-500 hover:text-orange-500"
-                                  >
-                                    <Ban className="w-4 h-4" />
-                                  </Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                  <DialogHeader>
-                                    <DialogTitle>{t('admin_users_page.confirm_freeze')}</DialogTitle>
-                                  </DialogHeader>
-                                  <p>{t('admin_users_page.freeze_warning')}</p>
-                                  <Button 
-                                    className="w-full bg-orange-500 hover:bg-orange-600" 
-                                    onClick={() => handleFreezeAccount(profile.id)}
-                                  >
-                                    {t('admin_users_page.freeze_account')}
-                                  </Button>
-                                </DialogContent>
-                              </Dialog>
-                            ) : (
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button 
-                                    variant="ghost" 
-                                    size="icon"
-                                    className="text-green-500 hover:text-green-500"
-                                  >
-                                    <CheckCircle className="w-4 h-4" />
-                                  </Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                  <DialogHeader>
-                                    <DialogTitle>{t('admin_users_page.confirm_unfreeze')}</DialogTitle>
-                                  </DialogHeader>
-                                  <p>{t('admin_users_page.unfreeze_warning')}</p>
-                                  <Button 
-                                    className="w-full bg-green-500 hover:bg-green-600" 
-                                    onClick={() => handleUnfreezeAccount(profile.id)}
-                                  >
-                                    {t('admin_users_page.unfreeze_account')}
-                                  </Button>
-                                </DialogContent>
-                              </Dialog>
-                            )}
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => handleDelete(profile.id)}
+                            >
+                              <Ban className="w-4 h-4" />
+                            </Button>
                             <Button 
                               variant="ghost" 
                               size="icon"
