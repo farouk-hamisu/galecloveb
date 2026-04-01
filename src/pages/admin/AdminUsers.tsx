@@ -174,13 +174,8 @@ const AdminUsers = () => {
                             {profile.kyc_status || 'pending'}
                           </Badge>
                         </TableCell>
-                        <TableCell> {/* Added */}
-                          <Badge variant={
-                            profile.account_status === 'active' ? 'default' :
-                            profile.account_status === 'frozen' ? 'destructive' : 'secondary'
-                          }>
-                            {profile.account_status || 'active'}
-                          </Badge>
+                        <TableCell>
+                          <Badge variant="default">active</Badge>
                         </TableCell>
                         <TableCell>
                           {profile.created_at ? new Date(profile.created_at).toLocaleDateString() : '-'}
