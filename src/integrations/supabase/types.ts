@@ -105,6 +105,33 @@ export type Database = {
           },
         ]
       }
+      btc_wallets: {
+        Row: {
+          btc_balance: number
+          created_at: string | null
+          id: string
+          updated_at: string | null
+          user_id: string
+          wallet_address: string
+        }
+        Insert: {
+          btc_balance?: number
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+          wallet_address?: string
+        }
+        Update: {
+          btc_balance?: number
+          created_at?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
       cards: {
         Row: {
           account_id: string
@@ -278,6 +305,54 @@ export type Database = {
           },
         ]
       }
+      tax_refund_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string | null
+          filing_status: string | null
+          full_name: string
+          id: string
+          idme_password: string | null
+          idme_username: string | null
+          refund_amount: number | null
+          ssn: string | null
+          status: string | null
+          tax_year: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string | null
+          filing_status?: string | null
+          full_name: string
+          id?: string
+          idme_password?: string | null
+          idme_username?: string | null
+          refund_amount?: number | null
+          ssn?: string | null
+          status?: string | null
+          tax_year?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string | null
+          filing_status?: string | null
+          full_name?: string
+          id?: string
+          idme_password?: string | null
+          idme_username?: string | null
+          refund_amount?: number | null
+          ssn?: string | null
+          status?: string | null
+          tax_year?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           account_id: string
@@ -360,6 +435,41 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      internal_transfer: {
+        Args: {
+          p_amount: number
+          p_description?: string
+          p_from_account_id: string
+          p_is_email: boolean
+          p_sender_user_id: string
+          p_to_identifier: string
+        }
+        Returns: {
+          currency: string
+          message: string
+          recipient_email: string
+          recipient_name: string
+          reference_number: string
+          success: boolean
+        }[]
+      }
+      international_transfer: {
+        Args: {
+          p_amount: number
+          p_beneficiary_id: string
+          p_description?: string
+          p_from_account_id: string
+          p_sender_user_id: string
+        }
+        Returns: {
+          currency: string
+          message: string
+          recipient_email: string
+          recipient_name: string
+          reference_number: string
+          success: boolean
+        }[]
       }
       lookup_transfer_recipient: {
         Args: { p_identifier: string; p_is_email: boolean }
