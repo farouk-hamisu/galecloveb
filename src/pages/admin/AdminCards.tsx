@@ -88,6 +88,20 @@ const AdminCards = () => {
     }
   };
 
+  const handleApproveCard = async (card: AdminCard) => {
+    try {
+      await updateCard.mutateAsync({ id: card.id, updates: { card_status: 'approved' } });
+      toast.success('Card approved');
+    } catch { toast.error('Failed to approve card'); }
+  };
+
+  const handleRejectCard = async (card: AdminCard) => {
+    try {
+      await updateCard.mutateAsync({ id: card.id, updates: { card_status: 'rejected' } });
+      toast.success('Card rejected');
+    } catch { toast.error('Failed to reject card'); }
+  };
+
   const handleToggleFreeze = async (card: AdminCard) => {
     try {
       await updateCard.mutateAsync({
