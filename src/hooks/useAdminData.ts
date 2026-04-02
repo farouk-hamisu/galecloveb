@@ -65,6 +65,7 @@ export interface AdminCard {
   is_active: boolean | null;
   is_frozen: boolean | null;
   spending_limit: number | null;
+  card_status: string;
   created_at: string | null;
 }
 
