@@ -27,7 +27,7 @@ import {
   useDeleteCard,
   AdminCard,
 } from '@/hooks/useAdminData';
-import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power } from 'lucide-react';
+import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
