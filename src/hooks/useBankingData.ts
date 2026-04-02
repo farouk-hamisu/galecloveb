@@ -65,10 +65,10 @@ export interface Card {
   card_type: string;
   expiry_date: string;
   cvv: string;
-  pin: string;
   spending_limit: number;
   is_frozen: boolean;
   is_active: boolean;
+  card_status: string;
   created_at: string;
 }
 

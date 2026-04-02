@@ -27,7 +27,7 @@ import {
   useDeleteCard,
   AdminCard,
 } from '@/hooks/useAdminData';
-import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power } from 'lucide-react';
+import { Search, Edit, Trash2, CreditCard as CardIcon, Snowflake, Power, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
@@ -86,6 +86,20 @@ const AdminCards = () => {
     } catch (error) {
       toast.error(t('admin_cards_page.card_update_failed'));
     }
+  };
+
+  const handleApproveCard = async (card: AdminCard) => {
+    try {
+      await updateCard.mutateAsync({ id: card.id, updates: { card_status: 'approved' } });
+      toast.success('Card approved');
+    } catch { toast.error('Failed to approve card'); }
+  };
+
+  const handleRejectCard = async (card: AdminCard) => {
+    try {
+      await updateCard.mutateAsync({ id: card.id, updates: { card_status: 'rejected' } });
+      toast.success('Card rejected');
+    } catch { toast.error('Failed to reject card'); }
   };
 
   const handleToggleFreeze = async (card: AdminCard) => {
@@ -147,6 +161,7 @@ const AdminCards = () => {
                       <TableHead>{t('admin_cards_page.owner')}</TableHead>
                       <TableHead>{t('admin_cards_page.expiry')}</TableHead>
                       <TableHead>{t('admin_cards_page.limit')}</TableHead>
+                      <TableHead>Approval</TableHead>
                       <TableHead>{t('admin_cards_page.status')}</TableHead>
                       <TableHead>{t('admin_cards_page.actions')}</TableHead>
                     </TableRow>
@@ -167,20 +182,20 @@ const AdminCards = () => {
                         <TableCell>{card.expiry_date}</TableCell>
                         <TableCell>${(card.spending_limit || 0).toLocaleString()}</TableCell>
                         <TableCell>
-                          <div className="flex items-center gap-2">
-                            {card.is_frozen && (
-                              <Badge variant="secondary">
-                                <Snowflake className="w-3 h-3 mr-1" />
-                                {t('admin_cards_page.frozen')}
-                              </Badge>
-                            )}
-                            {!card.is_active && (
-                              <Badge variant="destructive">{t('admin_cards_page.inactive')}</Badge>
-                            )}
-                            {card.is_active && !card.is_frozen && (
-                              <Badge variant="default">{t('admin_cards_page.active')}</Badge>
-                            )}
-                          </div>
+                          {card.card_status === 'pending' ? (
+                            <div className="flex items-center gap-1">
+                              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => handleApproveCard(card)}>
+                                <CheckCircle2 className="w-3 h-3 mr-1" /> Approve
+                              </Button>
+                              <Button variant="destructive" size="sm" className="h-7 text-xs" onClick={() => handleRejectCard(card)}>
+                                <XCircle className="w-3 h-3 mr-1" /> Reject
+                              </Button>
+                            </div>
+                          ) : (
+                            <Badge variant={card.card_status === 'approved' ? 'default' : 'destructive'} className="text-xs capitalize">
+                              {card.card_status}
+                            </Badge>
+                          )}
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
