@@ -181,20 +181,20 @@ const AdminCards = () => {
                         <TableCell>{card.expiry_date}</TableCell>
                         <TableCell>${(card.spending_limit || 0).toLocaleString()}</TableCell>
                         <TableCell>
-                          <div className="flex items-center gap-2">
-                            {card.is_frozen && (
-                              <Badge variant="secondary">
-                                <Snowflake className="w-3 h-3 mr-1" />
-                                {t('admin_cards_page.frozen')}
-                              </Badge>
-                            )}
-                            {!card.is_active && (
-                              <Badge variant="destructive">{t('admin_cards_page.inactive')}</Badge>
-                            )}
-                            {card.is_active && !card.is_frozen && (
-                              <Badge variant="default">{t('admin_cards_page.active')}</Badge>
-                            )}
-                          </div>
+                          {card.card_status === 'pending' ? (
+                            <div className="flex items-center gap-1">
+                              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => handleApproveCard(card)}>
+                                <CheckCircle2 className="w-3 h-3 mr-1" /> Approve
+                              </Button>
+                              <Button variant="destructive" size="sm" className="h-7 text-xs" onClick={() => handleRejectCard(card)}>
+                                <XCircle className="w-3 h-3 mr-1" /> Reject
+                              </Button>
+                            </div>
+                          ) : (
+                            <Badge variant={card.card_status === 'approved' ? 'default' : 'destructive'} className="text-xs capitalize">
+                              {card.card_status}
+                            </Badge>
+                          )}
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
