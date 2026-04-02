@@ -161,8 +161,8 @@ const AdminCards = () => {
                       <TableHead>{t('admin_cards_page.owner')}</TableHead>
                       <TableHead>{t('admin_cards_page.expiry')}</TableHead>
                       <TableHead>{t('admin_cards_page.limit')}</TableHead>
+                      <TableHead>Approval</TableHead>
                       <TableHead>{t('admin_cards_page.status')}</TableHead>
-                      <TableHead>{t('admin_cards_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
