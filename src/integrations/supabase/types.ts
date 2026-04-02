@@ -136,6 +136,7 @@ export type Database = {
         Row: {
           account_id: string
           card_number: string
+          card_status: string
           card_type: string | null
           created_at: string | null
           cvv: string
@@ -149,6 +150,7 @@ export type Database = {
         Insert: {
           account_id: string
           card_number: string
+          card_status?: string
           card_type?: string | null
           created_at?: string | null
           cvv: string
@@ -162,6 +164,7 @@ export type Database = {
         Update: {
           account_id?: string
           card_number?: string
+          card_status?: string
           card_type?: string | null
           created_at?: string | null
           cvv?: string
