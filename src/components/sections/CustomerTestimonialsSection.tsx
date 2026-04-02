@@ -2,9 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
+  Carousel, CarouselContent, CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -12,54 +10,24 @@ export const CustomerTestimonialsSection = () => {
   const { t } = useTranslation();
 
   const testimonials = [
-    {
-      key: 'sarah',
-      avatar: '/placeholder.svg',
-    },
-    {
-      key: 'michael',
-      avatar: '/placeholder.svg',
-    },
-    {
-      key: 'jessica',
-      avatar: '/placeholder.svg',
-    },
-    {
-      key: 'david',
-      avatar: '/placeholder.svg',
-    },
-    {
-      key: 'emily',
-      avatar: '/placeholder.svg',
-    },
+    { key: 'sarah' }, { key: 'michael' }, { key: 'jessica' }, { key: 'david' }, { key: 'emily' },
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-light-gray">
+    <section className="py-16 lg:py-24 bg-muted/50">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="section-badge mx-auto mb-4">
+        <div className="text-center max-w-xl mx-auto mb-10">
+          <div className="section-badge mx-auto mb-3">
             <span className="w-2 h-2 bg-primary rounded-full" />
             {t('customer_testimonials.badge')}
           </div>
-          <h2 className="section-title text-foreground mb-6">
-            {t('customer_testimonials.title')}
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            {t('customer_testimonials.subtitle')}
-          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">{t('customer_testimonials.title')}</h2>
+          <p className="text-sm text-muted-foreground">{t('customer_testimonials.subtitle')}</p>
         </div>
 
         <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          plugins={[
-            Autoplay({
-              delay: 2000,
-            }),
-          ]}
+          opts={{ align: "start", loop: true }}
+          plugins={[Autoplay({ delay: 3000 })]}
           className="w-full"
         >
           <CarouselContent>
@@ -70,29 +38,25 @@ export const CustomerTestimonialsSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-card rounded-3xl p-8 h-full"
+                  className="bg-card rounded-xl p-6 h-full border border-border"
                 >
-                  <div className="flex items-center mb-6">
-                    <img src={item.avatar} alt={t(`customer_testimonials.items.${item.key}.name`)} className="w-14 h-14 rounded-full mr-4" />
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                      <span className="text-sm font-bold text-primary">
+                        {t(`customer_testimonials.items.${item.key}.name`).charAt(0)}
+                      </span>
+                    </div>
                     <div>
-                      <h3 className="font-bold text-lg text-foreground">
-                        {t(`customer_testimonials.items.${item.key}.name`)}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {t(`customer_testimonials.items.${item.key}.role`)}
-                      </p>
+                      <h3 className="font-semibold text-sm text-foreground">{t(`customer_testimonials.items.${item.key}.name`)}</h3>
+                      <p className="text-xs text-muted-foreground">{t(`customer_testimonials.items.${item.key}.role`)}</p>
                     </div>
                   </div>
-
-                  <div className="flex mb-4">
+                  <div className="flex mb-3">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                      <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-current" />
                     ))}
                   </div>
-
-                  <p className="text-muted-foreground">
-                    {t(`customer_testimonials.items.${item.key}.text`)}
-                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{t(`customer_testimonials.items.${item.key}.text`)}</p>
                 </motion.div>
               </CarouselItem>
             ))}
@@ -102,4 +66,3 @@ export const CustomerTestimonialsSection = () => {
     </section>
   );
 };
-
