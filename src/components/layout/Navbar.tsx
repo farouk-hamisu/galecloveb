@@ -27,12 +27,16 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-14 lg:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">N</span>
-            </div>
-            <span className="text-foreground font-bold text-sm hidden sm:block">NRBank</span>
-          </Link>
-
+  <img
+    src= "/logo.jpg"
+    alt="NRBank Logo"
+    className="w-7 h-7 object-contain"
+  />
+  <span className="text-foreground font-bold text-sm hidden sm:block">
+    NRBank
+  </span>
+</Link>
+          
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (

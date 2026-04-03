@@ -52,13 +52,19 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 pb-10 border-b border-background/10">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">N</span>
-              </div>
-              <span className="font-bold text-sm">NRBank</span>
-            </Link>
-            <p className="text-background/60 text-xs max-w-xs mb-5">
+           {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+  <img
+    src= "/logo.jpg"
+    alt="NRBank Logo"
+    className="w-7 h-7 object-contain"
+  />
+  <span className="text-foreground font-bold text-sm hidden sm:block">
+    NRBank
+  </span>
+</Link>
+
+                        <p className="text-background/60 text-xs max-w-xs mb-5">
               {t('footer.description')}
             </p>
             <div className="flex gap-2">

@@ -97,12 +97,19 @@ const Login = () => {
           >
             <div className="bg-card rounded-3xl p-8 lg:p-10 shadow-xl">
               <div className="text-center mb-8">
-                <Link to="/" className="inline-flex items-center gap-2 mb-6">
-                  <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-xl">N</span>
-                  </div>
-                </Link>
-                <h1 className="text-2xl font-bold text-foreground mb-2">
+               {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+  <img
+    src= "/logo.jpg"
+    alt="NRBank Logo"
+    className="w-11 h-11 object-contain"
+  />
+  <span className="text-foreground font-bold text-sm hidden sm:block">
+    NRBank
+  </span>
+</Link>
+
+                                <h1 className="text-2xl font-bold text-foreground mb-2">
                   {t('login_page.welcome_back')}
                 </h1>
                 <p className="text-muted-foreground">
