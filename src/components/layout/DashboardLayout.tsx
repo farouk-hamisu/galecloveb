@@ -97,13 +97,18 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-border">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">N</span>
-              </div>
-              <span className="font-bold text-lg text-foreground">NRBank</span>
-            </Link>
-          </div>
+           <Link to="/" className="flex items-center gap-2">
+  <img
+    src= "/logo.jpg"
+    alt="NRBank Logo"
+    className="w-7 h-7 object-contain"
+  />
+  <span className="text-foreground font-bold text-sm hidden sm:block">
+    NRBank
+  </span>
+</Link>
+
+                      </div>
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
