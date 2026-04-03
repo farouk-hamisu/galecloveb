@@ -123,7 +123,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-4.5 h-4.5" />
                   {item.label}
                 </Link>
               );
