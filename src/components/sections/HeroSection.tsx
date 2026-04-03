@@ -63,7 +63,7 @@ export const HeroSection = () => {
             <Button size="lg" asChild>
               <Link to="/signup">{t('hero.openAccount')}</Link>
             </Button>
-            <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10" asChild>
+            <Button variant="outline" size="lg" className="border-white/30 text-black  text-white bg-white/10 hover:bg-white/10 hover:text-white" asChild>
               <Link to="/about">{t('hero.learnMore')}</Link>
             </Button>
           </div>

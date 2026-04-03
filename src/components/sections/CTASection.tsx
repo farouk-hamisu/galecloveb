@@ -27,7 +27,7 @@ export const CTASection = () => {
               <Button size="lg" asChild>
                 <Link to="/signup">{t('cta.openVault')}</Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-background/20 text-background hover:bg-background/10" asChild>
+              <Button variant="outline" size="lg" className="border-background/20 text-white bg-black hover:bg-background/10" asChild>
                 <Link to="/about">{t('cta.learnMore')}</Link>
               </Button>
             </div>
