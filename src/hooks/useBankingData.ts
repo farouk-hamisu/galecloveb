@@ -297,7 +297,7 @@ export const useCreateCard = () => {
   const {user} = useAuth();
 
   return useMutation({
-    mutationFn: async ({accountId, pin}: {accountId: string; pin: string}) => {
+    mutationFn: async ({accountId}: {accountId: string}) => {
       if (!user?.id) throw new Error('Not authenticated');
 
       const cardNumber = `4${Math.random().toString().slice(2, 17).padEnd(15, '0')}`;
@@ -314,7 +314,6 @@ export const useCreateCard = () => {
           card_type: 'virtual',
           expiry_date: `${expiryMonth}/${expiryYear}`,
           cvv,
-          pin,
           spending_limit: 5000,
         })
         .select()
