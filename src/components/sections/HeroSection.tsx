@@ -18,63 +18,56 @@ export const HeroSection = () => {
   ];
 
   return (
-    <section className="bg-background pt-24 lg:pt-32 pb-16">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-muted-foreground text-sm font-medium mb-3 tracking-wide uppercase">
-              {t('hero.badge')}
-            </p>
+    <section className="relative min-h-[600px] lg:min-h-[700px] flex items-center">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Professional banking services"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+      </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5">
-              {t('hero.title')}
-            </h1>
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-24 lg:py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-xl"
+        >
+          <p className="text-white/70 text-xs font-medium mb-3 tracking-widest uppercase">
+            {t('hero.badge')}
+          </p>
 
-            <p className="text-muted-foreground text-base max-w-lg mb-8 leading-relaxed">
-              {t('hero.subtitle')}
-            </p>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
+            {t('hero.title')}
+          </h1>
 
-            {/* Highlights Grid */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
-              {highlights.map((item) => (
-                <div key={item} className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium text-foreground">{item}</span>
-                </div>
-              ))}
-            </div>
+          <p className="text-white/80 text-sm max-w-lg mb-8 leading-relaxed">
+            {t('hero.subtitle')}
+          </p>
 
-            <div className="flex flex-wrap gap-3">
-              <Button size="lg" asChild>
-                <Link to="/signup">{t('hero.openAccount')}</Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/about">{t('hero.learnMore')}</Link>
-              </Button>
-            </div>
-          </motion.div>
+          {/* Highlights Grid */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-8">
+            {highlights.map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="text-xs font-medium text-white/90">{item}</span>
+              </div>
+            ))}
+          </div>
 
-          {/* Right Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative hidden lg:block"
-          >
-            <img
-              src={heroImage}
-              alt="Professional banking services"
-              className="w-full h-auto rounded-2xl object-cover"
-              width={960}
-              height={640}
-            />
-          </motion.div>
-        </div>
+          <div className="flex flex-wrap gap-3">
+            <Button size="lg" asChild>
+              <Link to="/signup">{t('hero.openAccount')}</Link>
+            </Button>
+            <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10" asChild>
+              <Link to="/about">{t('hero.learnMore')}</Link>
+            </Button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useProfile, useUpdateProfile } from '@/hooks/useBankingData';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
-import { User } from 'lucide-react';
+import { User, Camera, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,9 +12,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Settings = () => {
   const { t } = useTranslation();
@@ -22,8 +24,11 @@ const Settings = () => {
   const { user } = useAuth();
   const updateProfile = useUpdateProfile();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -61,44 +66,100 @@ const Settings = () => {
     }
   };
 
-  const settingsSections = [
-    {
-      icon: User,
-      title: t('settings_page.sections.profile_info.title'),
-      description: t('settings_page.sections.profile_info.description'),
-      action: t('settings_page.sections.profile_info.action'),
-      onClick: () => setProfileDialogOpen(true),
-    },
-  ];
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user?.id) return;
+
+    setUploading(true);
+    try {
+      const ext = file.name.split('.').pop();
+      const filePath = `${user.id}/avatar.${ext}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      const avatarUrl = urlData.publicUrl + '?t=' + Date.now();
+
+      await supabase.from('profiles').update({ avatar_url: avatarUrl }).eq('id', user.id);
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+      toast({ title: 'Profile photo updated!' });
+    } catch (error) {
+      toast({ title: 'Upload failed', variant: 'destructive' });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const avatarUrl = profile?.avatar_url;
+  const initials = `${(profile?.first_name || 'U')[0]}${(profile?.last_name || '')[0] || ''}`.toUpperCase();
 
   return (
     <DashboardLayout>
       <div className="space-y-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-xl lg:text-2xl font-bold text-foreground mb-0.5">{t('settings_page.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('settings_page.subtitle')}</p>
+          <h1 className="text-lg lg:text-xl font-bold text-foreground mb-0.5">{t('settings_page.title')}</h1>
+          <p className="text-xs text-muted-foreground">{t('settings_page.subtitle')}</p>
         </motion.div>
 
+        {/* Profile Photo Section */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className="p-5 rounded-xl bg-card border border-border"
+        >
+          <div className="flex items-center gap-4">
+            <div className="relative group">
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="Profile" className="w-16 h-16 rounded-full object-cover border-2 border-border" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
+                  <span className="text-primary font-bold text-lg">{initials}</span>
+                </div>
+              )}
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                disabled={uploading}
+              >
+                {uploading ? <Loader2 className="w-5 h-5 text-white animate-spin" /> : <Camera className="w-5 h-5 text-white" />}
+              </button>
+              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-foreground">
+                {profile?.first_name || ''} {profile?.last_name || ''}
+              </h3>
+              <p className="text-xs text-muted-foreground">{user?.email}</p>
+              <button onClick={() => fileInputRef.current?.click()} className="text-xs text-primary mt-1 hover:underline">
+                Change photo
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Settings Cards */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           className="grid md:grid-cols-2 gap-4"
         >
-          {settingsSections.map((section, index) => (
-            <motion.div key={section.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index }}
-              className="p-5 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <section.icon className="w-5 h-5 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-foreground mb-0.5">{section.title}</h3>
-                  <p className="text-xs text-muted-foreground mb-3">{section.description}</p>
-                  <Button variant="outline" size="sm" className="text-xs" onClick={section.onClick}>{section.action}</Button>
-                </div>
+          <motion.div
+            className="p-5 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <User className="w-5 h-5 text-primary" />
               </div>
-            </motion.div>
-          ))}
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-foreground mb-0.5">{t('settings_page.sections.profile_info.title')}</h3>
+                <p className="text-xs text-muted-foreground mb-3">{t('settings_page.sections.profile_info.description')}</p>
+                <Button variant="outline" size="sm" className="text-xs" onClick={() => setProfileDialogOpen(true)}>{t('settings_page.sections.profile_info.action')}</Button>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 
