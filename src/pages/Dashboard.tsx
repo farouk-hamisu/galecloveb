@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 
+const BTC_PRICE = 67432.50;
+
 const Dashboard = () => {
   const { t } = useTranslation();
   const { data: profile } = useProfile();
@@ -28,8 +30,8 @@ const Dashboard = () => {
   const [btcAmount, setBtcAmount] = useState('');
 
   const totalBalance = accounts?.reduce((sum, acc) => sum + Number(acc.balance), 0) || 0;
-  const btcPrice = 67432.50; // Simulated BTC price
-  const totalBalanceBtc = totalBalance / btcPrice;
+  const btcBalance = btcWallet ? Number(btcWallet.btc_balance) : 0;
+  const totalBalanceBtc = (totalBalance / BTC_PRICE) + btcBalance;
   const recentTransactions = transactions?.slice(0, 5) || [];
 
   const currencySymbol = t('currency.symbol');
@@ -83,15 +85,27 @@ const Dashboard = () => {
     setBtcAmount('');
   };
 
+  const avatarUrl = profile?.avatar_url;
+  const initials = `${(profile?.first_name || 'U')[0]}${(profile?.last_name || '')[0] || ''}`.toUpperCase();
+
   return (
     <DashboardLayout>
       <div className="space-y-5">
-        {/* Welcome */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-lg lg:text-xl font-bold text-foreground mb-0.5">
-            {t('dashboard_page.welcome', { name: profile?.first_name || 'User' })}
-          </h1>
-          <p className="text-xs text-muted-foreground">{t('dashboard_page.subtitle')}</p>
+        {/* Welcome with Profile Image */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt="Profile" className="w-11 h-11 rounded-full object-cover border-2 border-border" />
+          ) : (
+            <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center border-2 border-border">
+              <span className="text-primary font-semibold text-sm">{initials}</span>
+            </div>
+          )}
+          <div>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-0.5">
+              {t('dashboard_page.welcome', { name: profile?.first_name || 'User' })}
+            </h1>
+            <p className="text-xs text-muted-foreground">{t('dashboard_page.subtitle')}</p>
+          </div>
         </motion.div>
 
         {/* Quick Actions */}
@@ -159,10 +173,10 @@ const Dashboard = () => {
               </div>
               <div>
                 <h3 className="text-xs font-semibold text-foreground">Bitcoin Wallet</h3>
-                <p className="text-[11px] text-muted-foreground">BTC Balance</p>
+                <p className="text-[11px] text-muted-foreground">≈ {formatCurrency(btcBalance * BTC_PRICE)}</p>
               </div>
             </div>
-            <p className="text-lg font-bold text-foreground">{btcWallet ? Number(btcWallet.btc_balance).toFixed(8) : '0.00000000'} BTC</p>
+            <p className="text-lg font-bold text-foreground">{totalBalanceBtc.toFixed(8)} BTC</p>
           </div>
 
           {/* Receive BTC - Wallet Address */}
