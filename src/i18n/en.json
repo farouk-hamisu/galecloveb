@@ -335,7 +335,7 @@
     }, 
 
   "transfer_page": {
-    "title": "Transfer Funds",
+    "title": "Send Money",
     "subtitle": "Send money quickly and securely to anyone",
     "internal_transfer": "Internal Transfer",
     "internal_subtitle": "Send money to another user within the bank",
@@ -1262,7 +1262,7 @@
   "history_appears_here": "Your transaction history will appear here."
 }, 
 "transfer_page": {
-  "title": "Transfer Funds",
+  "title": "Send Money",
   "subtitle": "Send money quickly and securely to anyone",
 
   "internal_transfer": "Internal Transfer",
