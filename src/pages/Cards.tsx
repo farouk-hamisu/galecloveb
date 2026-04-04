@@ -2,7 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useCards, useAccounts } from '@/hooks/useBankingData';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { CreditCard, Snowflake, Play, Settings, MoreHorizontal, Eye, XCircle, Clock, CheckCircle2, AlertCircle, Info } from 'lucide-react';
+import { CreditCard, Snowflake, Play, Settings, MoreHorizontal, Clock, CheckCircle2, AlertCircle, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const Cards = () => {
   const { t } = useTranslation();
@@ -31,14 +33,50 @@ const Cards = () => {
   const [selectedCard, setSelectedCard] = useState<any>(null);
   const [newLimit, setNewLimit] = useState('');
   const [applying, setApplying] = useState(false);
+  const [applicationOpen, setApplicationOpen] = useState(false);
+
+  // Application form state
+  const [formData, setFormData] = useState({
+    fullName: '',
+    dateOfBirth: '',
+    employmentStatus: '',
+    annualIncome: '',
+    monthlySpending: '',
+    purposeOfCard: '',
+    preferredLimit: '',
+    billingAddress: '',
+    agreeTerms: false,
+  });
 
   const currencySymbol = t('currency.symbol');
   const formatCurrency = (amount: number) =>
     `${currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
 
+  const updateForm = (field: string, value: string | boolean) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const isFormValid = () => {
+    return (
+      formData.fullName.trim() &&
+      formData.dateOfBirth &&
+      formData.employmentStatus &&
+      formData.annualIncome &&
+      formData.monthlySpending &&
+      formData.purposeOfCard &&
+      formData.preferredLimit &&
+      formData.billingAddress.trim() &&
+      formData.agreeTerms
+    );
+  };
+
   const handleApplyForCard = async () => {
     if (!accounts || accounts.length === 0 || !user?.id) {
       toast({ title: 'No accounts found', variant: 'destructive' });
+      return;
+    }
+    if (!isFormValid()) {
+      toast({ title: 'Please complete all fields', description: 'All fields are required to submit your application.', variant: 'destructive' });
       return;
     }
 
@@ -56,12 +94,17 @@ const Cards = () => {
         card_type: 'virtual',
         expiry_date: `${expiryMonth}/${expiryYear}`,
         cvv,
-        spending_limit: 5000,
+        spending_limit: parseFloat(formData.preferredLimit) || 5000,
         card_status: 'pending',
       });
 
       if (error) throw error;
       queryClient.invalidateQueries({ queryKey: ['cards'] });
+      setApplicationOpen(false);
+      setFormData({
+        fullName: '', dateOfBirth: '', employmentStatus: '', annualIncome: '',
+        monthlySpending: '', purposeOfCard: '', preferredLimit: '', billingAddress: '', agreeTerms: false,
+      });
       toast({ title: 'Application Submitted', description: 'Your virtual card application is pending admin approval.' });
     } catch {
       toast({ title: 'Failed to apply', variant: 'destructive' });
@@ -116,7 +159,7 @@ const Cards = () => {
             <h1 className="text-lg lg:text-xl font-bold text-foreground mb-0.5">{t('cards_page.title')}</h1>
             <p className="text-xs text-muted-foreground">{t('cards_page.subtitle')}</p>
           </div>
-          <Button onClick={handleApplyForCard} disabled={applying || hasPending} size="sm">
+          <Button onClick={() => setApplicationOpen(true)} disabled={applying || hasPending} size="sm">
             <CreditCard className="w-3.5 h-3.5 mr-1.5" />
             {hasPending ? 'Application Pending' : 'Apply for Virtual Card'}
           </Button>
@@ -132,7 +175,7 @@ const Cards = () => {
           </div>
           <div className="grid sm:grid-cols-3 gap-3">
             {[
-              { step: '1', title: 'Apply', desc: 'Click "Apply for Virtual Card" to submit your request' },
+              { step: '1', title: 'Apply', desc: 'Complete the application form with your details' },
               { step: '2', title: 'Admin Review', desc: 'Our team will review and approve your application' },
               { step: '3', title: 'Start Using', desc: 'Once approved, your card details will appear here' },
             ].map(s => (
@@ -245,6 +288,7 @@ const Cards = () => {
         </motion.div>
       </div>
 
+      {/* Spending Limit Dialog */}
       <Dialog open={limitDialogOpen} onOpenChange={setLimitDialogOpen}>
         <DialogContent>
           <DialogHeader><DialogTitle className="text-sm">Set Spending Limit</DialogTitle></DialogHeader>
@@ -253,6 +297,147 @@ const Cards = () => {
             <Input type="number" placeholder="New limit" value={newLimit} onChange={e => setNewLimit(e.target.value)} className="text-xs" />
             <Button className="w-full text-xs" onClick={handleUpdateLimit} disabled={updateLimit.isPending}>
               {updateLimit.isPending ? 'Updating...' : 'Update Limit'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Card Application Dialog */}
+      <Dialog open={applicationOpen} onOpenChange={setApplicationOpen}>
+        <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-sm flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-primary" />
+              Virtual Card Application
+            </DialogTitle>
+            <p className="text-xs text-muted-foreground">Please complete all fields below to submit your application for review.</p>
+          </DialogHeader>
+
+          <div className="space-y-4 pt-2">
+            {/* Personal Information */}
+            <div>
+              <h4 className="text-xs font-semibold text-foreground mb-2 pb-1 border-b border-border">Personal Information</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label className="text-xs">Full Legal Name</Label>
+                  <Input placeholder="As it appears on your ID" value={formData.fullName}
+                    onChange={e => updateForm('fullName', e.target.value)} className="text-xs mt-1" />
+                </div>
+                <div>
+                  <Label className="text-xs">Date of Birth</Label>
+                  <Input type="date" value={formData.dateOfBirth}
+                    onChange={e => updateForm('dateOfBirth', e.target.value)} className="text-xs mt-1" />
+                </div>
+                <div>
+                  <Label className="text-xs">Billing Address</Label>
+                  <Input placeholder="Street address, city, state, ZIP" value={formData.billingAddress}
+                    onChange={e => updateForm('billingAddress', e.target.value)} className="text-xs mt-1" />
+                </div>
+              </div>
+            </div>
+
+            {/* Employment & Income */}
+            <div>
+              <h4 className="text-xs font-semibold text-foreground mb-2 pb-1 border-b border-border">Employment & Income</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label className="text-xs">Employment Status</Label>
+                  <Select value={formData.employmentStatus} onValueChange={v => updateForm('employmentStatus', v)}>
+                    <SelectTrigger className="text-xs mt-1"><SelectValue placeholder="Select status" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="employed">Employed (Full-time)</SelectItem>
+                      <SelectItem value="part-time">Employed (Part-time)</SelectItem>
+                      <SelectItem value="self-employed">Self-Employed</SelectItem>
+                      <SelectItem value="business-owner">Business Owner</SelectItem>
+                      <SelectItem value="retired">Retired</SelectItem>
+                      <SelectItem value="student">Student</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs">Annual Income (USD)</Label>
+                  <Select value={formData.annualIncome} onValueChange={v => updateForm('annualIncome', v)}>
+                    <SelectTrigger className="text-xs mt-1"><SelectValue placeholder="Select range" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="under-25k">Under $25,000</SelectItem>
+                      <SelectItem value="25k-50k">$25,000 – $50,000</SelectItem>
+                      <SelectItem value="50k-75k">$50,000 – $75,000</SelectItem>
+                      <SelectItem value="75k-100k">$75,000 – $100,000</SelectItem>
+                      <SelectItem value="100k-150k">$100,000 – $150,000</SelectItem>
+                      <SelectItem value="150k-plus">$150,000+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Card Preferences */}
+            <div>
+              <h4 className="text-xs font-semibold text-foreground mb-2 pb-1 border-b border-border">Card Preferences</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label className="text-xs">Estimated Monthly Spending</Label>
+                  <Select value={formData.monthlySpending} onValueChange={v => updateForm('monthlySpending', v)}>
+                    <SelectTrigger className="text-xs mt-1"><SelectValue placeholder="Select range" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="under-500">Under $500</SelectItem>
+                      <SelectItem value="500-1000">$500 – $1,000</SelectItem>
+                      <SelectItem value="1000-2500">$1,000 – $2,500</SelectItem>
+                      <SelectItem value="2500-5000">$2,500 – $5,000</SelectItem>
+                      <SelectItem value="5000-10000">$5,000 – $10,000</SelectItem>
+                      <SelectItem value="10000-plus">$10,000+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs">Purpose of Card</Label>
+                  <Select value={formData.purposeOfCard} onValueChange={v => updateForm('purposeOfCard', v)}>
+                    <SelectTrigger className="text-xs mt-1"><SelectValue placeholder="Select purpose" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="personal">Personal Expenses</SelectItem>
+                      <SelectItem value="business">Business Expenses</SelectItem>
+                      <SelectItem value="online-shopping">Online Shopping</SelectItem>
+                      <SelectItem value="travel">Travel & Subscriptions</SelectItem>
+                      <SelectItem value="freelance">Freelance Payments</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs">Preferred Spending Limit (USD)</Label>
+                  <Select value={formData.preferredLimit} onValueChange={v => updateForm('preferredLimit', v)}>
+                    <SelectTrigger className="text-xs mt-1"><SelectValue placeholder="Select limit" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1000">$1,000</SelectItem>
+                      <SelectItem value="2500">$2,500</SelectItem>
+                      <SelectItem value="5000">$5,000</SelectItem>
+                      <SelectItem value="10000">$10,000</SelectItem>
+                      <SelectItem value="25000">$25,000</SelectItem>
+                      <SelectItem value="50000">$50,000</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Terms Agreement */}
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/50 border border-border">
+              <input
+                type="checkbox"
+                checked={formData.agreeTerms}
+                onChange={e => updateForm('agreeTerms', e.target.checked)}
+                className="mt-0.5 rounded border-border"
+              />
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                I confirm that all information provided is accurate and complete. I agree to the terms and conditions governing the use of virtual debit cards, including applicable fees and spending policies.
+              </p>
+            </div>
+
+            <Button className="w-full text-xs" onClick={handleApplyForCard}
+              disabled={applying || !isFormValid()}
+            >
+              {applying ? 'Submitting...' : 'Submit Application'}
             </Button>
           </div>
         </DialogContent>
