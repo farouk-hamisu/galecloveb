@@ -196,7 +196,7 @@ const Deposits = () => {
               <CheckCircle2 className="w-14 h-14 text-white" />
             </motion.div>
 
-            <h1 className="text-3xl font-bold text-foreground mb-2">{t('deposits_page.deposit_initiated')}</h1>
+            <h1 className="text-xl font-bold text-foreground mb-2">{t('deposits_page.deposit_initiated')}</h1>
             <p className="text-muted-foreground mb-8">{t('deposits_page.deposit_processed')}</p>
 
             <div className="bg-card border border-border rounded-2xl p-6 mb-6">
@@ -234,8 +234,8 @@ const Deposits = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('deposits_page.title')}</h1>
-            <p className="text-muted-foreground">{t('deposits_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('deposits_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('deposits_page.subtitle')}</p>
           </div>
           
           <Dialog open={newAccountDialogOpen} onOpenChange={setNewAccountDialogOpen}>
@@ -293,7 +293,7 @@ const Deposits = () => {
           transition={{ delay: 0.1 }}
           className="p-6 rounded-2xl bg-card border border-border"
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('deposits_page.your_deposit_info')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('deposits_page.your_deposit_info')}</h2>
           <p className="text-muted-foreground mb-6">{t('deposits_page.your_deposit_info_subtitle')}</p>
           <div className="space-y-4">
             <div>
@@ -350,7 +350,7 @@ const Deposits = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('deposits_page.choose_deposit_method')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('deposits_page.choose_deposit_method')}</h2>
           
           <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-4">
             {/* Cryptocurrency */}
@@ -379,7 +379,7 @@ const Deposits = () => {
             className="space-y-6"
           >
             <div className="p-6 rounded-2xl bg-card border border-border">
-              <h3 className="text-lg font-semibold text-foreground mb-6">{t('deposits_page.select_crypto')}</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-6">{t('deposits_page.select_crypto')}</h3>
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {(Object.keys(cryptoWallets) as Array<keyof typeof cryptoWallets>).map((crypto) => (
@@ -413,7 +413,7 @@ const Deposits = () => {
                 <div className="flex items-center gap-4 mb-6">
                   <CryptoIcon type={selectedCrypto} />
                   <div>
-                    <h3 className="text-lg font-semibold text-foreground">
+                    <h3 className="text-sm font-semibold text-foreground">
                       {t('deposits_page.crypto_deposit_title', { cryptoName: cryptoWallets[selectedCrypto].name })}
                     </h3>
                     <p className="text-sm text-muted-foreground">

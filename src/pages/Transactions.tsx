@@ -54,8 +54,8 @@ const Transactions = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('transactions_page.title')}</h1>
-            <p className="text-muted-foreground">{t('transactions_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('transactions_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('transactions_page.subtitle')}</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline">
@@ -187,8 +187,8 @@ const Transactions = () => {
           ) : (
             <div className="text-center py-12">
               <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">{t('transactions_page.no_transactions')}</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-sm font-semibold text-foreground mb-2">{t('transactions_page.no_transactions')}</h3>
+              <p className="text-xs text-muted-foreground">
                 {searchTerm || filterType !== 'all' 
                   ? t('transactions_page.adjust_filters')
                   : t('transactions_page.history_appears_here')}

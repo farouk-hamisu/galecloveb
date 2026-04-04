@@ -187,8 +187,8 @@ const Statements = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('statements_page.title')}</h1>
-            <p className="text-muted-foreground">{t('statements_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('statements_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('statements_page.subtitle')}</p>
           </div>
           <Button variant="outline" onClick={handleExportCSV}>
             <FileDown className="w-4 h-4 mr-2" />
@@ -228,7 +228,7 @@ const Statements = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('statements_page.monthly_statements')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('statements_page.monthly_statements')}</h2>
           {statementPeriods.length > 0 ? (
             <div className="space-y-3">
               {statementPeriods.map((statement, index) => (
@@ -264,7 +264,7 @@ const Statements = () => {
           ) : (
             <div className="text-center py-8 rounded-xl bg-card border border-border">
               <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">{t('statements_page.no_statements')}</p>
+              <p className="text-xs text-muted-foreground">{t('statements_page.no_statements')}</p>
             </div>
           )}
         </motion.div>
@@ -275,7 +275,7 @@ const Statements = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('statements_page.recent_receipts')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('statements_page.recent_receipts')}</h2>
           {transactions && transactions.length > 0 ? (
             <div className="space-y-3">
               {transactions.slice(0, 5).map((tx, index) => (
@@ -311,7 +311,7 @@ const Statements = () => {
           ) : (
             <div className="text-center py-8 rounded-xl bg-card border border-border">
               <FileText className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <p className="text-muted-foreground">{t('statements_page.no_receipts')}</p>
+              <p className="text-xs text-muted-foreground">{t('statements_page.no_receipts')}</p>
             </div>
           )}
         </motion.div>
