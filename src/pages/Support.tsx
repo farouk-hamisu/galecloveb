@@ -124,8 +124,8 @@ const Support = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('support_page.title')}</h1>
-            <p className="text-muted-foreground">{t('support_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('support_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('support_page.subtitle')}</p>
           </div>
           <Button variant="hero" onClick={() => setShowForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
@@ -160,7 +160,7 @@ const Support = () => {
             transition={{ delay: 0.2 }}
             className="p-6 rounded-2xl bg-card border border-border"
         >
-            <h2 className="text-lg font-semibold text-foreground mb-4">{t('support_page.faq_title')}</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-4">{t('support_page.faq_title')}</h2>
             <Accordion type="single" collapsible className="w-full">
                 {faqData.map((item, index) => (
                     <AccordionItem value={`item-${index}`} key={index}>
@@ -181,7 +181,7 @@ const Support = () => {
             animate={{ opacity: 1, y: 0 }}
             className="p-6 rounded-2xl bg-card border border-border"
           >
-            <h2 className="text-lg font-semibold text-foreground mb-6">{t('support_page.submit_ticket_title')}</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-6">{t('support_page.submit_ticket_title')}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -241,7 +241,7 @@ const Support = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('support_page.your_tickets')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('support_page.your_tickets')}</h2>
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
@@ -285,7 +285,7 @@ const Support = () => {
           ) : (
             <div className="text-center py-12 rounded-xl bg-card border border-border">
               <HelpCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">{t('support_page.no_tickets_title')}</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-2">{t('support_page.no_tickets_title')}</h3>
               <p className="text-muted-foreground mb-4">{t('support_page.no_tickets_subtitle')}</p>
               <Button variant="hero" onClick={() => setShowForm(true)}>
                 <Plus className="w-4 h-4 mr-2" />

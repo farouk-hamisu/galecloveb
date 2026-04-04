@@ -62,8 +62,8 @@ const Accounts = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('accounts_page.title')}</h1>
-            <p className="text-muted-foreground">{t('accounts_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('accounts_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('accounts_page.subtitle')}</p>
           </div>
           
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -144,7 +144,7 @@ const Accounts = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-lg font-semibold text-foreground mb-4">{t('accounts_page.your_accounts')}</h2>
+          <h2 className="text-sm font-semibold text-foreground mb-4">{t('accounts_page.your_accounts')}</h2>
           
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -189,7 +189,7 @@ const Accounts = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-semibold text-foreground capitalize mb-1">
+                    <h3 className="text-sm font-semibold text-foreground capitalize mb-1">
                       {t(`accounts_page.${account.account_type}_account`)}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">
@@ -198,7 +198,7 @@ const Accounts = () => {
 
                     <div className="pt-4 border-t border-border">
                       <p className="text-sm text-muted-foreground mb-1">{t('accounts_page.available_balance')}</p>
-                      <p className="text-2xl font-bold text-foreground">
+                      <p className="text-xl font-bold text-foreground">
                         {formatCurrency(Number(account.balance))}
                       </p>
                     </div>
@@ -209,7 +209,7 @@ const Accounts = () => {
           ) : (
             <div className="text-center py-12 rounded-2xl bg-card border border-border">
               <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">{t('accounts_page.no_accounts_title')}</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-2">{t('accounts_page.no_accounts_title')}</h3>
               <p className="text-muted-foreground mb-4">{t('accounts_page.no_accounts_subtitle')}</p>
               <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogTrigger asChild>

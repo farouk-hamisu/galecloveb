@@ -6,6 +6,20 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
+import testimonialSarah from '@/assets/testimonial-sarah.jpg';
+import testimonialMichael from '@/assets/testimonial-michael.jpg';
+import testimonialJessica from '@/assets/testimonial-jessica.jpg';
+import testimonialDavid from '@/assets/testimonial-david.jpg';
+import testimonialEmily from '@/assets/testimonial-emily.jpg';
+
+const testimonialImages: Record<string, string> = {
+  sarah: testimonialSarah,
+  michael: testimonialMichael,
+  jessica: testimonialJessica,
+  david: testimonialDavid,
+  emily: testimonialEmily,
+};
+
 export const CustomerTestimonialsSection = () => {
   const { t } = useTranslation();
 
@@ -41,11 +55,14 @@ export const CustomerTestimonialsSection = () => {
                   className="bg-card rounded-xl p-6 h-full border border-border"
                 >
                   <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3">
-                      <span className="text-sm font-bold text-primary">
-                        {t(`customer_testimonials.items.${item.key}.name`).charAt(0)}
-                      </span>
-                    </div>
+                    <img
+                      src={testimonialImages[item.key]}
+                      alt={t(`customer_testimonials.items.${item.key}.name`)}
+                      className="w-11 h-11 rounded-full object-cover mr-3"
+                      loading="lazy"
+                      width={44}
+                      height={44}
+                    />
                     <div>
                       <h3 className="font-semibold text-sm text-foreground">{t(`customer_testimonials.items.${item.key}.name`)}</h3>
                       <p className="text-xs text-muted-foreground">{t(`customer_testimonials.items.${item.key}.role`)}</p>

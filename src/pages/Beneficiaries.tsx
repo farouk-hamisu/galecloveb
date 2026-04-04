@@ -77,8 +77,8 @@ const Beneficiaries = () => {
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">{t('beneficiaries_page.title')}</h1>
-            <p className="text-muted-foreground">{t('beneficiaries_page.subtitle')}</p>
+            <h1 className="text-lg lg:text-xl font-bold text-foreground mb-1">{t('beneficiaries_page.title')}</h1>
+            <p className="text-xs text-muted-foreground">{t('beneficiaries_page.subtitle')}</p>
           </div>
           <Button variant="hero" onClick={() => setShowForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
@@ -93,7 +93,7 @@ const Beneficiaries = () => {
             animate={{ opacity: 1, y: 0 }}
             className="p-6 rounded-2xl bg-card border border-border"
           >
-            <h2 className="text-lg font-semibold text-foreground mb-6">{t('beneficiaries_page.add_new_beneficiary')}</h2>
+            <h2 className="text-sm font-semibold text-foreground mb-6">{t('beneficiaries_page.add_new_beneficiary')}</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -238,7 +238,7 @@ const Beneficiaries = () => {
           ) : (
             <div className="text-center py-12 rounded-2xl bg-card border border-border">
               <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">{t('beneficiaries_page.no_beneficiaries')}</h3>
+              <h3 className="text-sm font-semibold text-foreground mb-2">{t('beneficiaries_page.no_beneficiaries')}</h3>
               <p className="text-muted-foreground mb-4">{t('beneficiaries_page.no_beneficiaries_subtitle')}</p>
               <Button variant="hero" onClick={() => setShowForm(true)}>
                 <Plus className="w-4 h-4 mr-2" />
