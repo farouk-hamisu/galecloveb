@@ -248,15 +248,15 @@ const Transfer = () => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-sm w-full text-center space-y-5">
             <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto" />
             <div>
-              <h2 className="text-sm font-semibold text-foreground">Processing Transfer</h2>
+              <h2 className="text-sm font-semibold text-foreground">{t('transfer_page.processing_title')}</h2>
               <p className="text-xs text-muted-foreground mt-1">
-                {processingProgress < 40 ? 'Verifying account details...' :
-                  processingProgress < 70 ? 'Deducting funds...' :
-                    processingProgress < 95 ? 'Finalizing transaction...' : 'Almost done...'}
+                {processingProgress < 40 ? t('transfer_page.processing_verifying') :
+                  processingProgress < 70 ? t('transfer_page.processing_deducting') :
+                    processingProgress < 95 ? t('transfer_page.processing_finalizing') : t('transfer_page.processing_almost')}
               </p>
             </div>
             <Progress value={processingProgress} className="w-full h-2" />
-            <p className="text-[10px] text-muted-foreground">Please do not close this window</p>
+            <p className="text-[10px] text-muted-foreground">{t('transfer_page.processing_warning')}</p>
           </motion.div>
         </div>
       </DashboardLayout>
