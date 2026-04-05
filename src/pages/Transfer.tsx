@@ -112,21 +112,21 @@ const Transfer = () => {
   const handleTransfer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fromAccount || !amount) {
-      toast({ title: 'Missing info', description: 'Please fill in all required fields.', variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.missing_info_title'), description: t('transfer_page.toasts.missing_info_desc'), variant: 'destructive' });
       return;
     }
     const transferAmount = parseFloat(amount);
     if (isNaN(transferAmount) || transferAmount <= 0) {
-      toast({ title: 'Invalid amount', variant: 'destructive' }); return;
+      toast({ title: t('transfer_page.toasts.invalid_amount_title'), description: t('transfer_page.toasts.invalid_amount_desc'), variant: 'destructive' }); return;
     }
     if (transferType === 'internal' && !toIdentifier.trim()) {
-      toast({ title: 'Missing recipient', description: 'Please enter the recipient email.', variant: 'destructive' }); return;
+      toast({ title: t('transfer_page.toasts.missing_recipient_title'), description: t('transfer_page.toasts.missing_recipient_desc'), variant: 'destructive' }); return;
     }
     if (transferType === 'international') {
       const requiredFields = methodFields[selectedMethod] || [];
       for (const f of requiredFields) {
         if (!methodFieldValues[f.key]?.trim()) {
-          toast({ title: 'Missing info', description: `Please fill in ${f.label}.`, variant: 'destructive' }); return;
+          toast({ title: t('transfer_page.toasts.missing_info_title'), description: t('transfer_page.toasts.missing_field', { field: f.label }), variant: 'destructive' }); return;
         }
       }
     }
@@ -138,7 +138,7 @@ const Transfer = () => {
       });
       setShowPinDialog(true);
     } catch (error) {
-      toast({ title: 'Failed to send PIN', description: (error as Error).message, variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.pin_send_failed_title'), description: (error as Error).message, variant: 'destructive' });
     }
   };
 
@@ -193,7 +193,7 @@ const Transfer = () => {
       resetForm();
     } catch (error) {
       setStep('form');
-      toast({ title: 'Transfer Failed', description: (error as Error).message, variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.transfer_failed_title'), description: (error as Error).message, variant: 'destructive' });
     } finally { setIsVerifyingPin(false); }
   };
 
@@ -209,8 +209,8 @@ const Transfer = () => {
               className="w-14 h-14 border-4 border-primary/20 border-t-primary rounded-full mx-auto"
             />
             <div>
-              <h2 className="text-sm font-semibold text-foreground">Preparing Transfer</h2>
-              <p className="text-xs text-muted-foreground mt-1">Setting up secure connection...</p>
+              <h2 className="text-sm font-semibold text-foreground">{t('transfer_page.loading_title')}</h2>
+              <p className="text-xs text-muted-foreground mt-1">{t('transfer_page.loading_subtitle')}</p>
             </div>
           </motion.div>
         </div>
@@ -228,11 +228,11 @@ const Transfer = () => {
               <Shield className="w-7 h-7 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-foreground">Identity Verified</h2>
-              <p className="text-xs text-muted-foreground mt-1">Your session has been securely authenticated. You may proceed with your transfer.</p>
+              <h2 className="text-lg font-bold text-foreground">{t('transfer_page.verify_title')}</h2>
+              <p className="text-xs text-muted-foreground mt-1">{t('transfer_page.verify_subtitle')}</p>
             </div>
             <Button onClick={handleVerified} className="w-full text-xs" size="sm">
-              Continue to Transfer <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              {t('transfer_page.continue_to_transfer')} <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
             </Button>
           </motion.div>
         </div>
@@ -248,15 +248,15 @@ const Transfer = () => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-sm w-full text-center space-y-5">
             <Loader2 className="w-12 h-12 text-primary animate-spin mx-auto" />
             <div>
-              <h2 className="text-sm font-semibold text-foreground">Processing Transfer</h2>
+              <h2 className="text-sm font-semibold text-foreground">{t('transfer_page.processing_title')}</h2>
               <p className="text-xs text-muted-foreground mt-1">
-                {processingProgress < 40 ? 'Verifying account details...' :
-                  processingProgress < 70 ? 'Deducting funds...' :
-                    processingProgress < 95 ? 'Finalizing transaction...' : 'Almost done...'}
+                {processingProgress < 40 ? t('transfer_page.processing_verifying') :
+                  processingProgress < 70 ? t('transfer_page.processing_deducting') :
+                    processingProgress < 95 ? t('transfer_page.processing_finalizing') : t('transfer_page.processing_almost')}
               </p>
             </div>
             <Progress value={processingProgress} className="w-full h-2" />
-            <p className="text-[10px] text-muted-foreground">Please do not close this window</p>
+            <p className="text-[10px] text-muted-foreground">{t('transfer_page.processing_warning')}</p>
           </motion.div>
         </div>
       </DashboardLayout>
@@ -275,34 +275,34 @@ const Transfer = () => {
             >
               <CheckCircle2 className="w-10 h-10 text-primary-foreground" />
             </motion.div>
-            <h1 className="text-xl font-bold text-foreground mb-1">Transfer Successful</h1>
-            <p className="text-xs text-muted-foreground mb-5">Your money has been sent successfully</p>
+            <h1 className="text-xl font-bold text-foreground mb-1">{t('transfer_page.success_title')}</h1>
+            <p className="text-xs text-muted-foreground mb-5">{t('transfer_page.success_subtitle')}</p>
             <div className="bg-card border border-border rounded-xl p-4 mb-4">
               <div className="text-2xl font-bold text-foreground mb-3">{sym}{successDetails.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
               <div className="space-y-2 text-left text-xs">
                 <div className="flex justify-between py-1 border-b border-border">
-                  <span className="text-muted-foreground">Recipient</span>
+                  <span className="text-muted-foreground">{t('transfer_page.recipient')}</span>
                   <span className="font-medium text-foreground">{successDetails.recipientName}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-border">
-                  <span className="text-muted-foreground">Reference</span>
+                  <span className="text-muted-foreground">{t('transfer_page.reference')}</span>
                   <span className="font-mono text-[11px] text-foreground">{successDetails.referenceNumber}</span>
                 </div>
                 {successDetails.method !== 'internal' && (
                   <div className="flex justify-between py-1 border-b border-border">
-                    <span className="text-muted-foreground">Method</span>
+                    <span className="text-muted-foreground">{t('transfer_page.method')}</span>
                     <span className="font-medium text-foreground capitalize">{transferMethods.find(m => m.id === successDetails.method)?.name || successDetails.method}</span>
                   </div>
                 )}
                 <div className="flex justify-between py-1">
-                  <span className="text-muted-foreground">Status</span>
-                  <span className="text-emerald-600 font-medium">Completed</span>
+                  <span className="text-muted-foreground">{t('transfer_page.status')}</span>
+                  <span className="text-emerald-600 font-medium">{t('transfer_page.completed')}</span>
                 </div>
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1 text-xs" size="sm" onClick={() => { setStep('form'); setSuccessDetails(null); }}>New Transfer</Button>
-              <Button className="flex-1 text-xs" size="sm" asChild><Link to="/transactions">View Transactions</Link></Button>
+              <Button variant="outline" className="flex-1 text-xs" size="sm" onClick={() => { setStep('form'); setSuccessDetails(null); }}>{t('transfer_page.new_transfer')}</Button>
+              <Button className="flex-1 text-xs" size="sm" asChild><Link to="/transactions">{t('transfer_page.view_transactions')}</Link></Button>
             </div>
           </motion.div>
         </div>
@@ -354,7 +354,7 @@ const Transfer = () => {
         {/* International: Transfer Methods Grid */}
         {transferType === 'international' && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-            <p className="text-xs font-medium text-foreground mb-2">Select Transfer Method</p>
+            <p className="text-xs font-medium text-foreground mb-2">{t('transfer_page.select_transfer_method')}</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {transferMethods.map(method => (
                 <button key={method.id} onClick={() => { setSelectedMethod(method.id); setMethodFieldValues({}); }}
@@ -396,7 +396,7 @@ const Transfer = () => {
             {transferType === 'internal' && (
               <div>
                 <label className="block text-[11px] font-medium text-foreground mb-1">
-                  <Mail className="w-3 h-3 inline mr-1" /> Recipient Email
+                  <Mail className="w-3 h-3 inline mr-1" /> {t('transfer_page.recipient_email')}
                 </label>
                 <input type="email" value={toIdentifier} onChange={e => setToIdentifier(e.target.value)}
                   placeholder="recipient@example.com"
@@ -468,9 +468,9 @@ const Transfer = () => {
             </InputOTP>
           </div>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => { setShowPinDialog(false); setPin(''); }} className="text-xs">Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => { setShowPinDialog(false); setPin(''); }} className="text-xs">{t('transfer_page.pin_dialog.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handlePinVerification} disabled={pin.length < 6 || isVerifyingPin} className="text-xs">
-              {isVerifyingPin ? <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" /> : null} Verify
+              {isVerifyingPin ? <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" /> : null} {isVerifyingPin ? t('transfer_page.pin_dialog.verifying') : t('transfer_page.pin_dialog.verify')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

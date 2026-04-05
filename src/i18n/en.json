@@ -346,21 +346,37 @@
     "send_to": "Send To",
     "account_number": "Account Number",
     "email_address": "Email Address",
+    "recipient_email": "Recipient Email",
     "beneficiary": "Beneficiary",
     "add_new": "Add New",
     "select_beneficiary": "Select a beneficiary",
     "amount": "Amount",
     "description": "Description",
+    "description_placeholder": "Payment for...",
     "payment_for": "Payment for...",
     "note": "Note:",
     "international_note": "International transfers may take additional processing time and may incur extra fees.",
     "cancel": "Cancel",
     "processing": "Processing...",
     "send_transfer": "Send Transfer",
+    "send_money": "Send Money",
+    "select_transfer_method": "Select Transfer Method",
+    "loading_title": "Preparing Transfer",
+    "loading_subtitle": "Setting up secure connection...",
+    "verify_title": "Identity Verified",
+    "verify_subtitle": "Your session has been securely authenticated. You may proceed with your transfer.",
+    "continue_to_transfer": "Continue to Transfer",
+    "processing_title": "Processing Transfer",
+    "processing_verifying": "Verifying account details...",
+    "processing_deducting": "Deducting funds...",
+    "processing_finalizing": "Finalizing transaction...",
+    "processing_almost": "Almost done...",
+    "processing_warning": "Please do not close this window",
     "success_title": "Transfer Successful",
-    "success_subtitle": "Your transfer was completed successfully.",
+    "success_subtitle": "Your money has been sent successfully",
     "recipient": "Recipient",
     "reference": "Reference",
+    "method": "Method",
     "status": "Status",
     "completed": "Completed",
     "new_transfer": "New Transfer",
@@ -368,15 +384,17 @@
     "toasts": {
       "missing_info_title": "Missing Information",
       "missing_info_desc": "Please fill in all required fields.",
-      "missing_recipient_desc": "Please enter a valid recipient account or email.",
+      "missing_recipient_title": "Missing Recipient",
+      "missing_recipient_desc": "Please enter the recipient email.",
       "missing_beneficiary_desc": "Please select a beneficiary.",
       "invalid_amount_title": "Invalid Amount",
       "invalid_amount_desc": "Please enter a valid transfer amount.",
-      "pin_send_failed_title": "PIN Send Failed",
+      "pin_send_failed_title": "Failed to send PIN",
       "invalid_pin_desc": "The PIN you entered is incorrect.",
       "pin_verify_failed_title": "PIN Verification Failed",
       "transfer_failed_title": "Transfer Failed",
-      "transfer_failed_desc": "An error occurred during the transfer."
+      "transfer_failed_desc": "An error occurred during the transfer.",
+      "missing_field": "Please fill in {{field}}."
     },
     "pin_dialog": {
       "title": "Enter Transfer PIN",
@@ -1261,66 +1279,6 @@
   "adjust_filters": "Try adjusting your filters or search term.",
   "history_appears_here": "Your transaction history will appear here."
 }, 
-"transfer_page": {
-  "title": "Send Money",
-  "subtitle": "Send money quickly and securely to anyone",
-
-  "internal_transfer": "Internal Transfer",
-  "internal_subtitle": "Send money to another user within the bank",
-
-  "international_transfer": "International Transfer",
-  "international_subtitle": "Send money to beneficiaries abroad",
-
-  "from_account": "From Account",
-  "select_account": "Select an account",
-
-  "send_to": "Send To",
-  "account_number": "Account Number",
-  "email_address": "Email Address",
-
-  "beneficiary": "Beneficiary",
-  "add_new": "Add New",
-  "select_beneficiary": "Select a beneficiary",
-
-  "amount": "Amount",
-  "description": "Description",
-  "payment_for": "Payment for...",
-
-  "note": "Note:",
-  "international_note": "International transfers may take additional processing time and may incur extra fees.",
-
-  "cancel": "Cancel",
-  "processing": "Processing...",
-  "send_transfer": "Send Transfer",
-
-  "success_title": "Transfer Successful",
-  "success_subtitle": "Your transfer was completed successfully.",
-  "recipient": "Recipient",
-  "reference": "Reference",
-  "status": "Status",
-  "completed": "Completed",
-  "new_transfer": "New Transfer",
-  "view_transactions": "View Transactions",
-
-  "toasts": {
-    "missing_info_title": "Missing Information",
-    "missing_info_desc": "Please fill in all required fields.",
-    "missing_recipient_desc": "Please enter a valid recipient account or email.",
-    "missing_beneficiary_desc": "Please select a beneficiary.",
-    "invalid_amount_title": "Invalid Amount",
-    "invalid_amount_desc": "Please enter a valid transfer amount.",
-    "pin_send_failed_title": "PIN Send Failed",
-    "invalid_pin_desc": "The PIN you entered is incorrect.",
-    "pin_verify_failed_title": "PIN Verification Failed"
-  },
-
-  "pin_dialog": {
-    "title": "Enter Transfer PIN",
-    "description": "A 6-digit verification PIN was sent to your email. Enter it below to continue.",
-    "cancel": "Cancel",
-    "verifying": "Verifying...",
-    "verify": "Verify"
-  }, 
 "beneficiaries_page": {
   "title": "Beneficiaries",
   "subtitle": "Manage the people and accounts you can send money to",
@@ -1363,8 +1321,6 @@
     "error_title": "Error",
     "error_desc": "Unable to add beneficiary. Please try again."
   }
-}
-  
 }, 
 "cards_page": {
   "title": "Your Cards",
