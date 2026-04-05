@@ -354,7 +354,7 @@ const Transfer = () => {
         {/* International: Transfer Methods Grid */}
         {transferType === 'international' && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
-            <p className="text-xs font-medium text-foreground mb-2">Select Transfer Method</p>
+            <p className="text-xs font-medium text-foreground mb-2">{t('transfer_page.select_transfer_method')}</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {transferMethods.map(method => (
                 <button key={method.id} onClick={() => { setSelectedMethod(method.id); setMethodFieldValues({}); }}
