@@ -193,7 +193,7 @@ const Transfer = () => {
       resetForm();
     } catch (error) {
       setStep('form');
-      toast({ title: 'Transfer Failed', description: (error as Error).message, variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.transfer_failed_title'), description: (error as Error).message, variant: 'destructive' });
     } finally { setIsVerifyingPin(false); }
   };
 
