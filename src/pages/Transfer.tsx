@@ -229,10 +229,10 @@ const Transfer = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold text-foreground">{t('transfer_page.verify_title')}</h2>
-              <p className="text-xs text-muted-foreground mt-1">Your session has been securely authenticated. You may proceed with your transfer.</p>
+              <p className="text-xs text-muted-foreground mt-1">{t('transfer_page.verify_subtitle')}</p>
             </div>
             <Button onClick={handleVerified} className="w-full text-xs" size="sm">
-              Continue to Transfer <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              {t('transfer_page.continue_to_transfer')} <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
             </Button>
           </motion.div>
         </div>
