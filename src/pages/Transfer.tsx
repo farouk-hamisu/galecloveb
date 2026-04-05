@@ -396,7 +396,7 @@ const Transfer = () => {
             {transferType === 'internal' && (
               <div>
                 <label className="block text-[11px] font-medium text-foreground mb-1">
-                  <Mail className="w-3 h-3 inline mr-1" /> Recipient Email
+                  <Mail className="w-3 h-3 inline mr-1" /> {t('transfer_page.recipient_email')}
                 </label>
                 <input type="email" value={toIdentifier} onChange={e => setToIdentifier(e.target.value)}
                   placeholder="recipient@example.com"
