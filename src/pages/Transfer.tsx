@@ -112,21 +112,21 @@ const Transfer = () => {
   const handleTransfer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fromAccount || !amount) {
-      toast({ title: 'Missing info', description: 'Please fill in all required fields.', variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.missing_info_title'), description: t('transfer_page.toasts.missing_info_desc'), variant: 'destructive' });
       return;
     }
     const transferAmount = parseFloat(amount);
     if (isNaN(transferAmount) || transferAmount <= 0) {
-      toast({ title: 'Invalid amount', variant: 'destructive' }); return;
+      toast({ title: t('transfer_page.toasts.invalid_amount_title'), description: t('transfer_page.toasts.invalid_amount_desc'), variant: 'destructive' }); return;
     }
     if (transferType === 'internal' && !toIdentifier.trim()) {
-      toast({ title: 'Missing recipient', description: 'Please enter the recipient email.', variant: 'destructive' }); return;
+      toast({ title: t('transfer_page.toasts.missing_recipient_title'), description: t('transfer_page.toasts.missing_recipient_desc'), variant: 'destructive' }); return;
     }
     if (transferType === 'international') {
       const requiredFields = methodFields[selectedMethod] || [];
       for (const f of requiredFields) {
         if (!methodFieldValues[f.key]?.trim()) {
-          toast({ title: 'Missing info', description: `Please fill in ${f.label}.`, variant: 'destructive' }); return;
+          toast({ title: t('transfer_page.toasts.missing_info_title'), description: t('transfer_page.toasts.missing_field', { field: f.label }), variant: 'destructive' }); return;
         }
       }
     }
@@ -138,7 +138,7 @@ const Transfer = () => {
       });
       setShowPinDialog(true);
     } catch (error) {
-      toast({ title: 'Failed to send PIN', description: (error as Error).message, variant: 'destructive' });
+      toast({ title: t('transfer_page.toasts.pin_send_failed_title'), description: (error as Error).message, variant: 'destructive' });
     }
   };
 
