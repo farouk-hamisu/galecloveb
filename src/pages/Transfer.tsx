@@ -275,34 +275,34 @@ const Transfer = () => {
             >
               <CheckCircle2 className="w-10 h-10 text-primary-foreground" />
             </motion.div>
-            <h1 className="text-xl font-bold text-foreground mb-1">Transfer Successful</h1>
-            <p className="text-xs text-muted-foreground mb-5">Your money has been sent successfully</p>
+            <h1 className="text-xl font-bold text-foreground mb-1">{t('transfer_page.success_title')}</h1>
+            <p className="text-xs text-muted-foreground mb-5">{t('transfer_page.success_subtitle')}</p>
             <div className="bg-card border border-border rounded-xl p-4 mb-4">
               <div className="text-2xl font-bold text-foreground mb-3">{sym}{successDetails.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
               <div className="space-y-2 text-left text-xs">
                 <div className="flex justify-between py-1 border-b border-border">
-                  <span className="text-muted-foreground">Recipient</span>
+                  <span className="text-muted-foreground">{t('transfer_page.recipient')}</span>
                   <span className="font-medium text-foreground">{successDetails.recipientName}</span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-border">
-                  <span className="text-muted-foreground">Reference</span>
+                  <span className="text-muted-foreground">{t('transfer_page.reference')}</span>
                   <span className="font-mono text-[11px] text-foreground">{successDetails.referenceNumber}</span>
                 </div>
                 {successDetails.method !== 'internal' && (
                   <div className="flex justify-between py-1 border-b border-border">
-                    <span className="text-muted-foreground">Method</span>
+                    <span className="text-muted-foreground">{t('transfer_page.method')}</span>
                     <span className="font-medium text-foreground capitalize">{transferMethods.find(m => m.id === successDetails.method)?.name || successDetails.method}</span>
                   </div>
                 )}
                 <div className="flex justify-between py-1">
-                  <span className="text-muted-foreground">Status</span>
-                  <span className="text-emerald-600 font-medium">Completed</span>
+                  <span className="text-muted-foreground">{t('transfer_page.status')}</span>
+                  <span className="text-emerald-600 font-medium">{t('transfer_page.completed')}</span>
                 </div>
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1 text-xs" size="sm" onClick={() => { setStep('form'); setSuccessDetails(null); }}>New Transfer</Button>
-              <Button className="flex-1 text-xs" size="sm" asChild><Link to="/transactions">View Transactions</Link></Button>
+              <Button variant="outline" className="flex-1 text-xs" size="sm" onClick={() => { setStep('form'); setSuccessDetails(null); }}>{t('transfer_page.new_transfer')}</Button>
+              <Button className="flex-1 text-xs" size="sm" asChild><Link to="/transactions">{t('transfer_page.view_transactions')}</Link></Button>
             </div>
           </motion.div>
         </div>
