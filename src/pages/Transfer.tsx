@@ -468,9 +468,9 @@ const Transfer = () => {
             </InputOTP>
           </div>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => { setShowPinDialog(false); setPin(''); }} className="text-xs">Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => { setShowPinDialog(false); setPin(''); }} className="text-xs">{t('transfer_page.pin_dialog.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handlePinVerification} disabled={pin.length < 6 || isVerifyingPin} className="text-xs">
-              {isVerifyingPin ? <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" /> : null} Verify
+              {isVerifyingPin ? <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" /> : null} {isVerifyingPin ? t('transfer_page.pin_dialog.verifying') : t('transfer_page.pin_dialog.verify')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
