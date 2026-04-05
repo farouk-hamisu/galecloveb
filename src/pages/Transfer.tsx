@@ -228,7 +228,7 @@ const Transfer = () => {
               <Shield className="w-7 h-7 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-foreground">Identity Verified</h2>
+              <h2 className="text-lg font-bold text-foreground">{t('transfer_page.verify_title')}</h2>
               <p className="text-xs text-muted-foreground mt-1">Your session has been securely authenticated. You may proceed with your transfer.</p>
             </div>
             <Button onClick={handleVerified} className="w-full text-xs" size="sm">
