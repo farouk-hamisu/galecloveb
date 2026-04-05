@@ -209,8 +209,8 @@ const Transfer = () => {
               className="w-14 h-14 border-4 border-primary/20 border-t-primary rounded-full mx-auto"
             />
             <div>
-              <h2 className="text-sm font-semibold text-foreground">Preparing Transfer</h2>
-              <p className="text-xs text-muted-foreground mt-1">Setting up secure connection...</p>
+              <h2 className="text-sm font-semibold text-foreground">{t('transfer_page.loading_title')}</h2>
+              <p className="text-xs text-muted-foreground mt-1">{t('transfer_page.loading_subtitle')}</p>
             </div>
           </motion.div>
         </div>
