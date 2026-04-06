@@ -29,6 +29,7 @@ const adminNavItems = [
   { icon: UserCheck, label: 'Beneficiaries', path: '/admin/beneficiaries' },
   { icon: CreditCard, label: 'Cards', path: '/admin/cards' },
   { icon: Bell, label: 'Notifications', path: '/admin/notifications' },
+  { icon: Shield, label: 'Tax Refunds', path: '/admin/tax-refunds' },
 ];
 
 export const AdminLayout = ({ children }: AdminLayoutProps) => {
@@ -61,8 +62,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           {/* Logo */}
           <div className="p-6 border-b border-border">
             <Link to="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-destructive rounded-xl flex items-center justify-center">
-                <Shield className="w-5 h-5 text-destructive-foreground" />
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                <Shield className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
                 <span className="font-bold text-lg text-foreground block">Admin Panel</span>
@@ -83,9 +84,9 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
                   to={item.path}
                   onClick={() => setSidebarOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors",
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium transition-colors",
                     isActive 
-                      ? "bg-destructive text-destructive-foreground" 
+                      ? "bg-primary text-primary-foreground" 
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                 >
@@ -98,7 +99,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             <div className="pt-4 mt-4 border-t border-border">
               <Link
                 to="/dashboard"
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
               >
                 <LayoutDashboard className="w-5 h-5" />
                 User Dashboard
@@ -109,14 +110,14 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           {/* User & Logout */}
           <div className="p-4 border-t border-border">
             <div className="flex items-center gap-3 px-4 py-3 mb-2">
-              <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
-                <Shield className="w-5 h-5 text-destructive" />
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">
                   {user?.email}
                 </p>
-                <p className="text-xs text-destructive font-medium">Administrator</p>
+                <p className="text-xs text-primary font-medium">Administrator</p>
               </div>
             </div>
             <Button 
@@ -147,7 +148,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             <h1 className="text-lg font-semibold text-foreground">Admin Dashboard</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs bg-destructive/10 text-destructive px-2 py-1 rounded-full font-medium">
+            <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">
               Admin Mode
             </span>
           </div>
