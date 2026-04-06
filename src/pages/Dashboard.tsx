@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { 
   ArrowUpRight, ArrowDownRight, CreditCard, TrendingUp, PiggyBank,
-  Send, Download, Plus, Bitcoin, Copy, ArrowLeftRight, ExternalLink
+  Send, Download, Plus, Bitcoin, Copy, ArrowLeftRight, ExternalLink, Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -73,12 +73,18 @@ const Dashboard = () => {
     }
   };
 
-  const handleSendBtc = () => {
+  const [isSendingBtc, setIsSendingBtc] = useState(false);
+
+  const handleSendBtc = async () => {
     const amt = parseFloat(btcAmount);
     if (!btcRecipient || isNaN(amt) || amt <= 0) {
       toast({ title: 'Please enter a valid address and amount', variant: 'destructive' });
       return;
     }
+    setIsSendingBtc(true);
+    // Simulate processing
+    await new Promise(r => setTimeout(r, 2500));
+    setIsSendingBtc(false);
     toast({ title: 'BTC Sent Successfully', description: `${amt} BTC sent to ${btcRecipient.slice(0, 10)}...` });
     setSendBtcOpen(false);
     setBtcRecipient('');
@@ -319,19 +325,29 @@ const Dashboard = () => {
           <DialogHeader>
             <DialogTitle className="text-sm">Send Bitcoin</DialogTitle>
           </DialogHeader>
-          <div className="space-y-3 pt-2">
-            <div>
-              <label className="text-xs font-medium text-foreground mb-1 block">Recipient Wallet Address</label>
-              <Input placeholder="bc1q..." value={btcRecipient} onChange={e => setBtcRecipient(e.target.value)} className="text-xs" />
+          {isSendingBtc ? (
+            <div className="flex flex-col items-center justify-center py-8 space-y-4">
+              <Loader2 className="w-10 h-10 text-primary animate-spin" />
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">Processing Transaction</p>
+                <p className="text-xs text-muted-foreground mt-1">Sending BTC to recipient...</p>
+              </div>
             </div>
-            <div>
-              <label className="text-xs font-medium text-foreground mb-1 block">Amount (BTC)</label>
-              <Input type="number" placeholder="0.00000000" step="0.00000001" value={btcAmount} onChange={e => setBtcAmount(e.target.value)} className="text-xs" />
+          ) : (
+            <div className="space-y-3 pt-2">
+              <div>
+                <label className="text-xs font-medium text-foreground mb-1 block">Recipient Wallet Address</label>
+                <Input placeholder="bc1q..." value={btcRecipient} onChange={e => setBtcRecipient(e.target.value)} className="text-xs" />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-foreground mb-1 block">Amount (BTC)</label>
+                <Input type="number" placeholder="0.00000000" step="0.00000001" value={btcAmount} onChange={e => setBtcAmount(e.target.value)} className="text-xs" />
+              </div>
+              <Button className="w-full text-xs" onClick={handleSendBtc} disabled={isSendingBtc}>
+                <ExternalLink className="w-3.5 h-3.5 mr-1.5" /> Send BTC
+              </Button>
             </div>
-            <Button className="w-full text-xs" onClick={handleSendBtc}>
-              <ExternalLink className="w-3.5 h-3.5 mr-1.5" /> Send BTC
-            </Button>
-          </div>
+          )}
         </DialogContent>
       </Dialog>
     </DashboardLayout>
