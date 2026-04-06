@@ -109,6 +109,8 @@ const Transfer = () => {
     setStep('form');
   };
 
+  const [isSendingPin, setIsSendingPin] = useState(false);
+
   const handleTransfer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fromAccount || !amount) {
@@ -131,13 +133,16 @@ const Transfer = () => {
       }
     }
 
+    setIsSendingPin(true);
     try {
       await fetch('https://national-credit-union-1.onrender.com/send-transfer-pin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email }),
       });
+      setIsSendingPin(false);
       setShowPinDialog(true);
     } catch (error) {
+      setIsSendingPin(false);
       toast({ title: t('transfer_page.toasts.pin_send_failed_title'), description: (error as Error).message, variant: 'destructive' });
     }
   };
@@ -448,8 +453,12 @@ const Transfer = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full text-xs" size="sm" disabled={transferMutation.isPending}>
-              <ArrowRight className="w-3.5 h-3.5 mr-1.5" /> {t('transfer_page.send_money')}
+            <Button type="submit" className="w-full text-xs" size="sm" disabled={transferMutation.isPending || isSendingPin}>
+              {isSendingPin ? (
+                <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> Sending Transfer PIN...</>
+              ) : (
+                <><ArrowRight className="w-3.5 h-3.5 mr-1.5" /> {t('transfer_page.send_money')}</>
+              )}
             </Button>
           </form>
         </motion.div>

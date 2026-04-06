@@ -14,7 +14,12 @@ export const FeaturesSection = () => {
     { icon: Shield, title: t('features.security.title'), description: t('features.security.description') },
   ];
 
-  const loanTypes = ['Gold Loans', 'Home Loans', 'Payday Loans', 'Small Business Loan'];
+  const loanTypes = [
+    { label: 'Gold Loans', path: '/contact?type=gold-loan' },
+    { label: 'Home Loans', path: '/contact?type=home-loan' },
+    { label: 'Payday Loans', path: '/contact?type=payday-loan' },
+    { label: 'Small Business Loan', path: '/contact?type=small-business-loan' },
+  ];
 
   return (
     <section className="py-16 lg:py-24 bg-background">
@@ -29,14 +34,15 @@ export const FeaturesSection = () => {
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {loanTypes.map((type, i) => (
-              <button
-                key={type}
+              <Link
+                key={type.label}
+                to={type.path}
                 className={`px-5 py-2 rounded-md text-sm font-medium transition-colors ${
                   i === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground hover:bg-muted/80'
                 }`}
               >
-                {type.toUpperCase()}
-              </button>
+                {type.label.toUpperCase()}
+              </Link>
             ))}
           </div>
         </div>
