@@ -396,8 +396,8 @@ app.post("/verify-transfer-pin", async (req, res) => {
       return res.status(400).json({error: "Email & PIN required"});
 
     const emailLower = email.trim().toLowerCase();
+    const cleanPin = String(pin).trim();
 
-    // Get latest PIN record
     const {data: rows, error} = await db
       .from("transfer_pins")
       .select("*")
@@ -408,29 +408,37 @@ app.post("/verify-transfer-pin", async (req, res) => {
     if (error || !rows.length)
       return res.status(400).json({error: "Invalid PIN"});
 
-    const record = rows[0];
+    let matchedRecord = null;
 
-    // Compare PIN
-    const valid = await bcrypt.compare(pin, record.pin_hash);
-    if (!valid) return res.status(400).json({error: "Invalid PIN"});
+    for (const row of rows) {
+      const isMatch = await bcrypt.compare(cleanPin, row.pin_hash);
 
-    // Check expiry
-    if (new Date(record.expires_at) < new Date())
-      return res.status(400).json({error: "PIN expired"});
+      if (isMatch) {
+        if (new Date(row.expires_at) < new Date()) {
+          return res.status(400).json({error: "PIN expired"});
+        }
 
-    // Mark consumed
+        matchedRecord = row;
+        break;
+      }
+    }
+
+    if (!matchedRecord) {
+      return res.status(400).json({error: "Invalid PIN"});
+    }
+
     await db
       .from("transfer_pins")
       .update({consumed: true})
-      .eq("id", record.id);
+      .eq("id", matchedRecord.id);
 
     return res.json({success: true, message: "PIN verified"});
+
   } catch (err) {
     console.error("VERIFY TRANSFER PIN ERROR:", err);
     return res.status(500).json({error: err.toString()});
   }
 });
-
 // ---------------------------
 // ROUTE: VERIFY OTP
 // POST /verify-otp
