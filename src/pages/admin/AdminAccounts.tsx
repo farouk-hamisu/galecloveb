@@ -25,9 +25,11 @@ import {
   useAdminProfiles,
   useUpdateAccountBalance,
   useToggleAccountStatus,
+  useAdminBtcWallets,
+  useUpdateBtcWallet,
   AdminAccount 
 } from '@/hooks/useAdminData';
-import { Search, Edit, Power, Wallet } from 'lucide-react';
+import { Search, Edit, Power, Wallet, Bitcoin } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
@@ -35,12 +37,16 @@ const AdminAccounts = () => {
   const { t } = useTranslation();
   const { data: accounts, isLoading } = useAdminAccounts();
   const { data: profiles } = useAdminProfiles();
+  const { data: btcWallets } = useAdminBtcWallets();
   const updateBalance = useUpdateAccountBalance();
   const toggleStatus = useToggleAccountStatus();
+  const updateBtcWallet = useUpdateBtcWallet();
   
   const [searchTerm, setSearchTerm] = useState('');
   const [editingAccount, setEditingAccount] = useState<AdminAccount | null>(null);
   const [newBalance, setNewBalance] = useState('');
+  const [editingBtcUserId, setEditingBtcUserId] = useState<string | null>(null);
+  const [newBtcBalance, setNewBtcBalance] = useState('');
 
   const getProfileEmail = (userId: string) => {
     const profile = profiles?.find(p => p.id === userId);
@@ -51,6 +57,23 @@ const AdminAccounts = () => {
     a.account_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
     getProfileEmail(a.user_id).toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const getBtcBalance = (userId: string) => {
+    const wallet = btcWallets?.find(w => w.user_id === userId);
+    return wallet?.btc_balance || 0;
+  };
+
+  const handleUpdateBtcBalance = async () => {
+    if (!editingBtcUserId || !newBtcBalance) return;
+    try {
+      await updateBtcWallet.mutateAsync({ userId: editingBtcUserId, btcBalance: parseFloat(newBtcBalance) });
+      toast.success('BTC balance updated');
+      setEditingBtcUserId(null);
+      setNewBtcBalance('');
+    } catch {
+      toast.error('Failed to update BTC balance');
+    }
+  };
 
   const handleUpdateBalance = async () => {
     if (!editingAccount || !newBalance) return;
@@ -111,13 +134,14 @@ const AdminAccounts = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>{t('admin_accounts_page.account')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.user')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.type')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.balance')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.currency')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.status')}</TableHead>
-                      <TableHead>{t('admin_accounts_page.actions')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.account')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.user')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.type')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.balance')}</TableHead>
+                      <TableHead className="text-xs">BTC Balance</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.currency')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.status')}</TableHead>
+                      <TableHead className="text-xs">{t('admin_accounts_page.actions')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -133,10 +157,13 @@ const AdminAccounts = () => {
                         </TableCell>
                         <TableCell>{getProfileEmail(account.user_id)}</TableCell>
                         <TableCell className="capitalize">{account.account_type}</TableCell>
-                        <TableCell className="font-semibold">
+                        <TableCell className="text-xs font-semibold">
                           ${(account.balance || 0).toLocaleString()}
                         </TableCell>
-                        <TableCell>{account.currency}</TableCell>
+                        <TableCell className="text-xs font-semibold text-amber-600">
+                          {getBtcBalance(account.user_id).toFixed(8)} BTC
+                        </TableCell>
+                        <TableCell className="text-xs">{account.currency}</TableCell>
                         <TableCell>
                           <Badge variant={account.is_active ? 'default' : 'destructive'}>
                             {account.is_active ? t('admin_accounts_page.active') : t('admin_accounts_page.suspended')}
@@ -177,6 +204,30 @@ const AdminAccounts = () => {
                                   <Button className="w-full" onClick={handleUpdateBalance}>
                                     {t('admin_accounts_page.update_balance')}
                                   </Button>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                            {/* BTC Balance Edit */}
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="ghost" size="icon" onClick={() => { setEditingBtcUserId(account.user_id); setNewBtcBalance(String(getBtcBalance(account.user_id))); }}>
+                                  <Bitcoin className="w-4 h-4 text-amber-600" />
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle className="text-sm">Edit BTC Balance</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4 pt-4">
+                                  <div className="space-y-2">
+                                    <Label className="text-xs">User</Label>
+                                    <Input value={getProfileEmail(account.user_id)} disabled className="text-xs" />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label className="text-xs">New BTC Balance</Label>
+                                    <Input type="number" step="0.00000001" value={newBtcBalance} onChange={e => setNewBtcBalance(e.target.value)} className="text-xs" />
+                                  </div>
+                                  <Button className="w-full text-xs" onClick={handleUpdateBtcBalance}>Update BTC Balance</Button>
                                 </div>
                               </DialogContent>
                             </Dialog>
