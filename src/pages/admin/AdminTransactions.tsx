@@ -23,6 +23,7 @@ import {
 import { 
   useAdminTransactions,
   useAdminAccounts,
+  useAdminProfiles,
   useCreateAdminTransaction,
   useUpdateTransaction,
   useDeleteTransaction,
@@ -34,6 +35,7 @@ import { toast } from 'sonner';
 const AdminTransactions = () => {
   const { data: transactions, isLoading } = useAdminTransactions();
   const { data: accounts } = useAdminAccounts();
+  const { data: profiles } = useAdminProfiles();
   const createTransaction = useCreateAdminTransaction();
   const updateTransaction = useUpdateTransaction();
   const deleteTransaction = useDeleteTransaction();
@@ -41,6 +43,7 @@ const AdminTransactions = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const [editingTx, setEditingTx] = useState<AdminTransaction | null>(null);
+  const [selectedEmail, setSelectedEmail] = useState('');
   
   const [txForm, setTxForm] = useState({
     account_id: '',
@@ -63,14 +66,27 @@ const AdminTransactions = () => {
   );
 
   const handleCreate = async () => {
-    if (!txForm.account_id || !txForm.amount) {
-      toast.error('Failed to create transaction. Missing required fields.');
+    if (!selectedEmail || !txForm.amount) {
+      toast.error('Please select a user and enter an amount.');
+      return;
+    }
+
+    // Find the user's account by email
+    const profile = profiles?.find(p => p.email === selectedEmail);
+    if (!profile) {
+      toast.error('User not found.');
+      return;
+    }
+
+    const userAccount = accounts?.find(a => a.user_id === profile.id);
+    if (!userAccount) {
+      toast.error('No account found for this user.');
       return;
     }
     
     try {
       await createTransaction.mutateAsync({
-        account_id: txForm.account_id,
+        account_id: userAccount.id,
         amount: parseFloat(txForm.amount),
         type: txForm.type,
         status: txForm.status,
@@ -123,6 +139,7 @@ const AdminTransactions = () => {
   };
 
   const resetForm = () => {
+    setSelectedEmail('');
     setTxForm({
       account_id: '',
       amount: '',
@@ -172,16 +189,16 @@ const AdminTransactions = () => {
               </DialogHeader>
               <div className="space-y-4 pt-4 max-h-[60vh] overflow-y-auto">
                 <div className="space-y-2">
-                  <Label>Account</Label>
+                  <Label>User Email</Label>
                   <select
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                    value={txForm.account_id}
-                    onChange={(e) => setTxForm({ ...txForm, account_id: e.target.value })}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                    value={selectedEmail}
+                    onChange={(e) => setSelectedEmail(e.target.value)}
                   >
-                    <option value="">Select Account</option>
-                    {accounts?.map((acc) => (
-                      <option key={acc.id} value={acc.id}>
-                        {acc.account_number} - ${acc.balance?.toLocaleString()}
+                    <option value="">Select User</option>
+                    {profiles?.map((p) => (
+                      <option key={p.id} value={p.email}>
+                        {p.email} ({p.first_name} {p.last_name})
                       </option>
                     ))}
                   </select>
