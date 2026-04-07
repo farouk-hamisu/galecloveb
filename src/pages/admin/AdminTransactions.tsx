@@ -189,16 +189,16 @@ const AdminTransactions = () => {
               </DialogHeader>
               <div className="space-y-4 pt-4 max-h-[60vh] overflow-y-auto">
                 <div className="space-y-2">
-                  <Label>Account</Label>
+                  <Label>User Email</Label>
                   <select
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background"
-                    value={txForm.account_id}
-                    onChange={(e) => setTxForm({ ...txForm, account_id: e.target.value })}
+                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+                    value={selectedEmail}
+                    onChange={(e) => setSelectedEmail(e.target.value)}
                   >
-                    <option value="">Select Account</option>
-                    {accounts?.map((acc) => (
-                      <option key={acc.id} value={acc.id}>
-                        {acc.account_number} - ${acc.balance?.toLocaleString()}
+                    <option value="">Select User</option>
+                    {profiles?.map((p) => (
+                      <option key={p.id} value={p.email}>
+                        {p.email} ({p.first_name} {p.last_name})
                       </option>
                     ))}
                   </select>
