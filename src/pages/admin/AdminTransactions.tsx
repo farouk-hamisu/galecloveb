@@ -23,6 +23,7 @@ import {
 import { 
   useAdminTransactions,
   useAdminAccounts,
+  useAdminProfiles,
   useCreateAdminTransaction,
   useUpdateTransaction,
   useDeleteTransaction,
@@ -34,6 +35,7 @@ import { toast } from 'sonner';
 const AdminTransactions = () => {
   const { data: transactions, isLoading } = useAdminTransactions();
   const { data: accounts } = useAdminAccounts();
+  const { data: profiles } = useAdminProfiles();
   const createTransaction = useCreateAdminTransaction();
   const updateTransaction = useUpdateTransaction();
   const deleteTransaction = useDeleteTransaction();
@@ -41,6 +43,7 @@ const AdminTransactions = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const [editingTx, setEditingTx] = useState<AdminTransaction | null>(null);
+  const [selectedEmail, setSelectedEmail] = useState('');
   
   const [txForm, setTxForm] = useState({
     account_id: '',
