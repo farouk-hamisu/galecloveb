@@ -139,6 +139,7 @@ const AdminTransactions = () => {
   };
 
   const resetForm = () => {
+    setSelectedEmail('');
     setTxForm({
       account_id: '',
       amount: '',
