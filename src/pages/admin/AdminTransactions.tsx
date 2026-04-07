@@ -66,14 +66,27 @@ const AdminTransactions = () => {
   );
 
   const handleCreate = async () => {
-    if (!txForm.account_id || !txForm.amount) {
-      toast.error('Failed to create transaction. Missing required fields.');
+    if (!selectedEmail || !txForm.amount) {
+      toast.error('Please select a user and enter an amount.');
+      return;
+    }
+
+    // Find the user's account by email
+    const profile = profiles?.find(p => p.email === selectedEmail);
+    if (!profile) {
+      toast.error('User not found.');
+      return;
+    }
+
+    const userAccount = accounts?.find(a => a.user_id === profile.id);
+    if (!userAccount) {
+      toast.error('No account found for this user.');
       return;
     }
     
     try {
       await createTransaction.mutateAsync({
-        account_id: txForm.account_id,
+        account_id: userAccount.id,
         amount: parseFloat(txForm.amount),
         type: txForm.type,
         status: txForm.status,
