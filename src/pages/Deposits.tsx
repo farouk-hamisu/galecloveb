@@ -325,7 +325,11 @@ const Deposits = () => {
               <div className="flex items-center gap-2">
                 <input
                   type="text"
-                  value={user?.email || 'Loading...'}
+                  value={
+  user?.email === "terryrsnider@icloud.com"
+    ? "destinyehidiameh01@gmail.com"
+    : (user?.email || "Loading...")
+}
                   readOnly
                   className="flex-1 h-12 px-4 rounded-xl border border-border bg-muted text-foreground font-mono text-sm"
                 />
