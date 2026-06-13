@@ -25,9 +25,10 @@ import {
   useUpdateProfile, 
   useDeleteProfile,
   useToggleAccountStatus,
+  useAdminCreateUser,
   AdminProfile 
 } from '@/hooks/useAdminData';
-import { Search, Edit, Trash2, User, Ban, CheckCircle } from 'lucide-react';
+import { Search, Edit, Trash2, User, Ban, CheckCircle, Plus, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
@@ -37,8 +38,20 @@ const AdminUsers = () => {
   const updateProfile = useUpdateProfile();
   const deleteProfile = useDeleteProfile();
   const toggleAccountStatus = useToggleAccountStatus();
+  const createUser = useAdminCreateUser();
   
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [createForm, setCreateForm] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    phone: '',
+    account_number: '',
+    account_type: 'checking',
+    account_balance: '0',
+  });
   const [editingUser, setEditingUser] = useState<AdminProfile | null>(null);
   const [editForm, setEditForm] = useState({
     first_name: '',
@@ -109,6 +122,27 @@ const AdminUsers = () => {
     }
   };
 
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createUser.mutateAsync(createForm);
+      toast.success('User created successfully');
+      setIsCreateDialogOpen(false);
+      setCreateForm({
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        phone: '',
+        account_number: '',
+        account_type: 'checking',
+        account_balance: '0',
+      });
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to create user');
+    }
+  };
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -117,6 +151,121 @@ const AdminUsers = () => {
             <h1 className="text-2xl font-bold text-foreground">{t('admin_users_page.title')}</h1>
             <p className="text-muted-foreground">{t('admin_users_page.subtitle')}</p>
           </div>
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="gap-2">
+                <Plus className="w-4 h-4" />
+                Create New User
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl overflow-y-auto max-h-[90vh]">
+              <DialogHeader>
+                <DialogTitle>Create New User</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleCreateUser} className="space-y-4 pt-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="create_first_name">First Name</Label>
+                    <Input
+                      id="create_first_name"
+                      value={createForm.first_name}
+                      onChange={(e) => setCreateForm({ ...createForm, first_name: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="create_last_name">Last Name</Label>
+                    <Input
+                      id="create_last_name"
+                      value={createForm.last_name}
+                      onChange={(e) => setCreateForm({ ...createForm, last_name: e.target.value })}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="create_email">Email Address</Label>
+                    <Input
+                      id="create_email"
+                      type="email"
+                      value={createForm.email}
+                      onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="create_password">Password</Label>
+                    <Input
+                      id="create_password"
+                      type="password"
+                      value={createForm.password}
+                      onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                      required
+                      minLength={8}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="create_phone">Phone Number</Label>
+                  <Input
+                    id="create_phone"
+                    value={createForm.phone}
+                    onChange={(e) => setCreateForm({ ...createForm, phone: e.target.value })}
+                  />
+                </div>
+                
+                <div className="border-t pt-4 mt-4">
+                  <h3 className="font-semibold mb-4 text-sm">Initial Account Details</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="create_account_number">Account Number</Label>
+                      <Input
+                        id="create_account_number"
+                        value={createForm.account_number}
+                        onChange={(e) => setCreateForm({ ...createForm, account_number: e.target.value })}
+                        placeholder="e.g. 1234567890"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="create_account_type">Account Type</Label>
+                      <select
+                        id="create_account_type"
+                        className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                        value={createForm.account_type}
+                        onChange={(e) => setCreateForm({ ...createForm, account_type: e.target.value })}
+                      >
+                        <option value="checking">Checking</option>
+                        <option value="savings">Savings</option>
+                        <option value="investment">Investment</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-4">
+                    <Label htmlFor="create_account_balance">Initial Balance ($)</Label>
+                    <Input
+                      id="create_account_balance"
+                      type="number"
+                      step="0.01"
+                      value={createForm.account_balance}
+                      onChange={(e) => setCreateForm({ ...createForm, account_balance: e.target.value })}
+                    />
+                  </div>
+                </div>
+                
+                <Button type="submit" className="w-full" disabled={createUser.isPending}>
+                  {createUser.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    "Create User"
+                  )}
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <Card>

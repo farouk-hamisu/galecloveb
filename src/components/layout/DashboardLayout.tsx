@@ -100,11 +100,11 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
            <Link to="/" className="flex items-center gap-2">
   <img
     src= "/logo.jpg"
-    alt="NRBank Logo"
+    alt="Galecloveb Logo"
     className="w-7 h-7 object-contain"
   />
   <span className="text-foreground font-bold text-sm hidden sm:block">
-    NRBank
+    Galecloveb
   </span>
 </Link>
 

@@ -29,6 +29,7 @@ const adminNavItems = [
   { icon: UserCheck, label: 'Beneficiaries', path: '/admin/beneficiaries' },
   { icon: CreditCard, label: 'Cards', path: '/admin/cards' },
   { icon: Bell, label: 'Notifications', path: '/admin/notifications' },
+  { icon: Settings, label: 'Site Settings', path: '/admin/settings' },
   { icon: Shield, label: 'Tax Refunds', path: '/admin/tax-refunds' },
 ];
 
@@ -67,7 +68,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
               </div>
               <div>
                 <span className="font-bold text-lg text-foreground block">Admin Panel</span>
-                <span className="text-xs text-muted-foreground">NRBank</span>
+                <span className="text-xs text-muted-foreground">Galecloveb</span>
               </div>
             </Link>
           </div>

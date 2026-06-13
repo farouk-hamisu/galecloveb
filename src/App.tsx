@@ -39,6 +39,7 @@ import AdminBeneficiaries from "./pages/admin/AdminBeneficiaries";
 import AdminCards from "./pages/admin/AdminCards";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminTaxRefunds from "./pages/admin/AdminTaxRefunds";
+import AdminSettings from "./pages/admin/AdminSettings";
 import VerifyEmail from "./pages/VerifyEmail";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -91,6 +92,7 @@ const App = () => (
             <Route path="/admin/cards" element={<ProtectedAdminRoute><AdminCards /></ProtectedAdminRoute>} />
             <Route path="/admin/notifications" element={<ProtectedAdminRoute><AdminNotifications /></ProtectedAdminRoute>} />
             <Route path="/admin/tax-refunds" element={<ProtectedAdminRoute><AdminTaxRefunds /></ProtectedAdminRoute>} />
+            <Route path="/admin/settings" element={<ProtectedAdminRoute><AdminSettings /></ProtectedAdminRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -101,11 +101,11 @@ const Login = () => {
           <Link to="/" className="flex items-center gap-2">
   <img
     src= "/logo.jpg"
-    alt="NRBank Logo"
+    alt="Galecloveb Logo"
     className="w-11 h-11 object-contain"
   />
   <span className="text-foreground font-bold text-sm hidden sm:block">
-    NRBank
+    Galecloveb
   </span>
 </Link>
 

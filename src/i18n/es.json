@@ -92,7 +92,7 @@
   "hero": {
     "badge": "Seguro, Protegido, Simple",
     "title": "Banca más Inteligente. Ahorra más Rápido. Invierte Mejor.",
-    "subtitle": "NationalRegionBank empodera a individuos y empresas con banca sin complicaciones y transferencias sin esfuerzo.",
+    "subtitle": "Galecloveb empodera a individuos y empresas con banca sin complicaciones y transferencias sin esfuerzo.",
     "openAccount": "Abrir Cuenta",
     "learnMore": "Más Información",
     "trustedBy": "Empresas que confían en nosotros"
@@ -117,11 +117,11 @@
   },
   "whyUs": {
     "badge": "Por qué Elegirnos",
-    "title": "Por qué los Clientes Eligen NationalRegionBank.",
+    "title": "Por qué los Clientes Eligen Galecloveb.",
     "accounts": {
       "value": "100K+",
       "label": "Cuentas abiertas globalmente.",
-      "description": "Únete a más de 120,000 clientes satisfechos que confían en NRBank para sus metas financieras."
+      "description": "Únete a más de 120,000 clientes satisfechos que confían en Galecloveb para sus metas financieras."
     },
     "fees": {
       "value": "Cero",
@@ -153,7 +153,7 @@
   "stats": {
     "badge": "Nuestros Números",
     "title": "Banca que Trabaja para Ti.",
-    "subtitle": "En NationalRegionBank, no somos solo números, sino una historia de confianza, innovación y seguridad.",
+    "subtitle": "En Galecloveb, no somos solo números, sino una historia de confianza, innovación y seguridad.",
     "interest": {
       "value": "2%",
       "label": "Interés en cuentas de ahorro."
@@ -210,14 +210,14 @@
     }
   },
   "cta": {
-    "badge": "Únete a NRBank",
+    "badge": "Únete a Galecloveb",
     "title": "¿Listo para Desbloquear tu Potencial Financiero?",
-    "subtitle": "Toma el control de tus finanzas con NationalRegionBank hoy y experimenta una forma más inteligente y sin esfuerzo de administrar tu dinero como nunca antes.",
+    "subtitle": "Toma el control de tus finanzas con Galecloveb hoy y experimenta una forma más inteligente y sin esfuerzo de administrar tu dinero como nunca antes.",
     "openVault": "Abrir Bóveda al Instante",
     "learnMore": "Más Información"
   },
   "footer": {
-    "description": "NationalRegionBank - Tu socio de confianza en banca moderna. Seguro, simple y creado para ti.",
+    "description": "Galecloveb - Tu socio de confianza en banca moderna. Seguro, simple y creado para ti.",
     "solutions": "Soluciones",
     "personalBanking": "Banca Personal",
     "businessBanking": "Banca Empresarial",
@@ -234,7 +234,7 @@
     "teams": "Equipos",
     "partners": "Socios",
     "followUs": "Síguenos",
-    "copyright": "© NationalRegionBank 2024. Todos los Derechos Reservados. Términos y Privacidad"
+    "copyright": "© Galecloveb 2024. Todos los Derechos Reservados. Términos y Privacidad"
   },
   "currency": {
     "symbol": "€",
@@ -629,27 +629,27 @@
   "customer_testimonials": {
     "badge": "Lo que dicen nuestros clientes",
     "title": "Confiado por miles en todo el mundo",
-    "subtitle": "Historias reales de usuarios reales de NRBank",
+    "subtitle": "Historias reales de usuarios reales de Galecloveb",
     "items": {
       "sarah": {
         "name": "Sarah T.",
         "role": "Diseñadora Freelance",
-        "text": "NRBank ha revolucionado cómo administro mis finanzas. La aplicación es intuitiva y el soporte 24/7 es una salvación. ¡Sin tarifas ocultas realmente significa sin tarifas ocultas!"
+        "text": "Galecloveb ha revolucionado cómo administro mis finanzas. La aplicación es intuitiva y el soporte 24/7 es una salvación. ¡Sin tarifas ocultas realmente significa sin tarifas ocultas!"
       },
       "michael": {
         "name": "Michael B.",
         "role": "Propietario de Pequeña Empresa",
-        "text": "Cambiar a NRBank para mi negocio fue la mejor decisión. Las transferencias internacionales son fluidas y las tarjetas virtuales brindan una capa extra de seguridad para mis compras en línea."
+        "text": "Cambiar a Galecloveb para mi negocio fue la mejor decisión. Las transferencias internacionales son fluidas y las tarjetas virtuales brindan una capa extra de seguridad para mis compras en línea."
       },
       "jessica": {
         "name": "Jessica L.",
         "role": "Estudiante",
-        "text": "Como estudiante, necesito un banco simple y accesible. El plan básico de NRBank es perfecto para mí. Me encanta la función de bóvedas de ahorro, que me ayuda a presupuestar mis metas."
+        "text": "Como estudiante, necesito un banco simple y accesible. El plan básico de Galecloveb es perfecto para mí. Me encanta la función de bóvedas de ahorro, que me ayuda a presupuestar mis metas."
       },
       "david": {
         "name": "David R.",
         "role": "Emprendedor Tecnológico",
-        "text": "Las integraciones API que ofrece NRBank han sido un cambio total para mi negocio. Ahora puedo automatizar mis flujos financieros y enfocarme en hacer crecer mi empresa."
+        "text": "Las integraciones API que ofrece Galecloveb han sido un cambio total para mi negocio. Ahora puedo automatizar mis flujos financieros y enfocarme en hacer crecer mi empresa."
       },
       "emily": {
         "name": "Emily S.",
@@ -660,7 +660,7 @@
   },
   "admin_login_page": {
     "title": "Inicio de Sesión de Administrador",
-    "subtitle": "Inicia sesión en tu cuenta de administrador de NRBank",
+    "subtitle": "Inicia sesión en tu cuenta de administrador de Galecloveb",
     "email": "Correo electrónico",
     "enter_email": "Ingresa tu correo electrónico",
     "password": "Contraseña",

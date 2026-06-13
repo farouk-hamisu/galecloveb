@@ -597,3 +597,22 @@ export const useUpdateTaxRefundRequest = () => {
     },
   });
 };
+
+export const useAdminCreateUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (userData: any) => {
+      const { data, error } = await supabase.functions.invoke('create-user', {
+        body: userData,
+      });
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminProfiles'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAccounts'] });
+    },
+  });
+};

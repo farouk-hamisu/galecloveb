@@ -1,9 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
 
 export const Footer = () => {
   const { t } = useTranslation();
+  const { settings } = useSiteSettings();
+
+  const siteName = settings?.site_name || 'Galecloveb';
 
   const footerSections = [
     {
@@ -56,16 +60,16 @@ export const Footer = () => {
           <Link to="/" className="flex items-center gap-2">
   <img
     src= "/logo.jpg"
-    alt="NRBank Logo"
+    alt={`${siteName} Logo`}
     className="w-7 h-7 object-contain"
   />
   <span className="text-foreground font-bold text-sm hidden sm:block">
-    NRBank
+    {siteName}
   </span>
 </Link>
 
                         <p className="text-background/60 text-xs max-w-xs mb-5">
-              {t('footer.description')}
+              {siteName} - {t('footer.description')}
             </p>
             <div className="flex gap-2">
               <Link to="/login" className="px-3 py-1.5 text-xs font-medium bg-background/10 hover:bg-background/20 rounded-full transition-colors">
@@ -96,7 +100,9 @@ export const Footer = () => {
 
         {/* Bottom Row */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-6 gap-3">
-          <p className="text-background/40 text-xs">{t('footer.copyright')}</p>
+          <p className="text-background/40 text-xs">
+            © {new Date().getFullYear()} {siteName}. All Rights Reserved. Terms & Privacy
+          </p>
           <div className="flex items-center gap-1.5">
             <span className="text-background/60 text-xs mr-1">{t('footer.followUs')}</span>
             {socialLinks.map(({ icon: Icon, href }, index) => (

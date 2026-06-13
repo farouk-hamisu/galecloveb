@@ -9,10 +9,12 @@ import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
 
 const Contact = () => {
   const { t } = useTranslation();
   const { toast } = useToast();
+  const { settings } = useSiteSettings();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -42,21 +44,21 @@ const Contact = () => {
       icon: Mail,
       title: t('contact_page.email_us'),
       description: t('contact_page.general_inquiries'),
-      value: 'support@nrbank.com',
-      action: 'mailto:support@nrbank.com',
+      value: settings?.support_email || 'support@galecloveb.com',
+      action: `mailto:${settings?.support_email || 'support@galecloveb.com'}`,
     },
     {
       icon: Phone,
       title: t('contact_page.call_us'),
       description: t('contact_page.support_24_7'),
-      value: '+1 (800) NRB-BANK',
-      action: 'tel:+18006282265',
+      value: settings?.phone_number || '+1 (808) 206-5163',
+      action: `tel:${(settings?.phone_number || '+18082065163').replace(/\D/g, '')}`,
     },
     {
       icon: MapPin,
       title: t('contact_page.visit_us'),
       description: t('contact_page.headquarters'),
-      value: '123 Financial District, New York, NY 10005',
+      value: settings?.address || 'Tampa, Florida',
       action: '#',
     },
     {
@@ -227,7 +229,7 @@ const Contact = () => {
                     </div>
                     <div className="flex items-center gap-3 text-hero-foreground/80">
                       <Phone className="w-5 h-5" />
-                      <span>{t('contact_page.business_phone')}</span>
+                      <span>{settings?.phone_number || '+1 (808) 206-5163'}</span>
                     </div>
                   </div>
                 </div>

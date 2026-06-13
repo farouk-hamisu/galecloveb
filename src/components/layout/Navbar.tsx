@@ -4,10 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
 
 export const Navbar = () => {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { settings } = useSiteSettings();
+
+  const siteName = settings?.site_name || 'Galecloveb';
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === 'en' ? 'es' : 'en');
@@ -29,11 +33,11 @@ export const Navbar = () => {
           <Link to="/" className="flex items-center gap-2">
   <img
     src= "/logo.jpg"
-    alt="NRBank Logo"
+    alt={`${siteName} Logo`}
     className="w-7 h-7 object-contain"
   />
   <span className="text-foreground font-bold text-sm hidden sm:block">
-    NRBank
+    {siteName}
   </span>
 </Link>
           

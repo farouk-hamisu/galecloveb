@@ -241,7 +241,7 @@ app.post("/forgot-password", async (req, res) => {
     }
 
     // Send password reset email
-    const resetLink = `https://nationalregionb.com/reset-password?token=${resetToken}&email=${encodeURIComponent(emailLower)}`; // Frontend URL
+    const resetLink = `https://galecloveb.com/reset-password?token=${resetToken}&email=${encodeURIComponent(emailLower)}`; // Frontend URL
     const emailHtml = passwordResetEmailTemplate.replace('{{resetLink}}', resetLink);
     await resend.emails.send({
       from: RESEND_FROM,

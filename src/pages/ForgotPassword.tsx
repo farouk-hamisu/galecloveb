@@ -55,7 +55,7 @@ const ForgotPassword = () => {
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-xl">N</span>
           </div>
-          <span className="text-hero-foreground font-bold text-xl">NRBank</span>
+          <span className="text-hero-foreground font-bold text-xl">Galecloveb</span>
         </Link>
 
         <div>
@@ -84,7 +84,7 @@ const ForgotPassword = () => {
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-xl">N</span>
               </div>
-              <span className="text-foreground font-bold text-xl">NRBank</span>
+              <span className="text-foreground font-bold text-xl">Galecloveb</span>
             </Link>
 
             {!isSuccess ? (

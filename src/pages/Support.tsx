@@ -12,10 +12,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { useTranslation } from 'react-i18next';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
 
 const Support = () => {
   const { t } = useTranslation();
   const { data: tickets, isLoading } = useSupportTickets();
+  const { settings } = useSiteSettings();
   const createTicket = useCreateSupportTicket();
   const { toast } = useToast();
   
@@ -140,10 +142,10 @@ const Support = () => {
           transition={{ delay: 0.1 }}
           className="grid sm:grid-cols-2 gap-4"
         >
-          <a href="mailto:support@nationalregionb.com" className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <a href={`mailto:${settings?.support_email || 'support@galecloveb.com'}`} className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
             <Mail className="w-6 h-6 text-primary mb-3" />
             <h3 className="font-semibold text-foreground mb-1">{t('support_page.email_support')}</h3>
-            <p className="text-sm text-muted-foreground">support@nationalregionb.com</p>
+            <p className="text-sm text-muted-foreground">{settings?.support_email || 'support@galecloveb.com'}</p>
           </a>
           <div className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer">
             <HelpCircle className="w-6 h-6 text-primary mb-3" />

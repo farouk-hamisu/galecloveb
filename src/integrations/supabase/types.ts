@@ -427,6 +427,33 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          address: string
+          id: number
+          phone_number: string
+          site_name: string
+          support_email: string
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string
+          id?: number
+          phone_number?: string
+          site_name?: string
+          support_email?: string
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string
+          id?: number
+          phone_number?: string
+          site_name?: string
+          support_email?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

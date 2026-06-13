@@ -15,7 +15,7 @@
   "hero": {
     "badge": "Safe, Secure, Simple",
     "title": "Bank Smarter. Save Faster. Invest Better.",
-    "subtitle": "NationalRegionBank empowers individuals and businesses with seamless banking and effortless transfers.",
+    "subtitle": "Galecloveb empowers individuals and businesses with seamless banking and effortless transfers.",
     "openAccount": "Open Account",
     "learnMore": "Learn More",
     "trustedBy": "Trusted by leading companies"
@@ -39,12 +39,12 @@
     }
   },
   "whyUs": {
-    "badge": "Why Choose NRBank",
-    "title": "Why Customers Choose NationalRegionBank.",
+    "badge": "Why Choose Galecloveb",
+    "title": "Why Customers Choose Galecloveb.",
     "accounts": {
       "value": "100K+",
       "label": "Accounts opened globally.",
-      "description": "Join the ranks of over 120,000 satisfied customers who trust NRBank for their financial goals."
+      "description": "Join the ranks of over 120,000 satisfied customers who trust Galecloveb for their financial goals."
     },
     "fees": {
       "value": "Zero",
@@ -76,7 +76,7 @@
   "stats": {
     "badge": "Our Numbers",
     "title": "Banking That Works for You.",
-    "subtitle": "At NationalRegionBank, we're not just numbers, but a story of trust, innovation, and security.",
+    "subtitle": "At Galecloveb, we're not just numbers, but a story of trust, innovation, and security.",
     "interest": {
       "value": "2%",
       "label": "Interest on savings accounts."
@@ -133,16 +133,16 @@
     }
   },
   "cta": {
-    "badge": "Join NRBank",
+    "badge": "Join Galecloveb",
     "title": "Ready to Unlock Your Financial Potential?",
-    "subtitle": "Take charge of your finances with NationalRegionBank today and experience a smarter, effortless way to manage your money like never before.",
+    "subtitle": "Take charge of your finances with Galecloveb today and experience a smarter, effortless way to manage your money like never before.",
     "openVault": "Open Vault Instantly",
     "learnMore": "Learn More"
   },
  "account_frozen_warning": "Your account is currently frozen. You cannot perform outgoing transactions.",
 
   "footer": {
-    "description": "NationalRegionBank - Your trusted partner in modern banking. Secure, simple, and built for you.",
+    "description": "Galecloveb - Your trusted partner in modern banking. Secure, simple, and built for you.",
     "solutions": "Solutions",
     "personalBanking": "Personal Banking",
     "businessBanking": "Business Banking",
@@ -159,7 +159,7 @@
     "teams": "Teams",
     "partners": "Partners",
     "followUs": "Follow Us",
-    "copyright": "© NationalRegionBank 2024. All Rights Reserved. Terms & Privacy"
+    "copyright": "© Galecloveb 2024. All Rights Reserved. Terms & Privacy"
   },
   "deposits_page": {
     "title": "Make a Deposit",
@@ -637,7 +637,7 @@
   },
   "signup_page": {
     "create_account": "Create your account",
-    "start_journey": "Start your banking journey with NRBank",
+    "start_journey": "Start your banking journey with Galecloveb",
     "first_name": "First Name",
     "john": "John",
     "last_name": "Last Name",
@@ -672,15 +672,15 @@
   "about_page": {
     "badge": "About Us",
     "title": "Banking Reimagined for the Modern World",
-    "subtitle": "NationalRegionBank was founded with a simple mission: to make banking accessible, transparent, and empowering for everyone. We believe financial services should work for you, not against you.",
+    "subtitle": "Galecloveb was founded with a simple mission: to make banking accessible, transparent, and empowering for everyone. We believe financial services should work for you, not against you.",
     "story_title": "Our Story",
-    "story_p1": "Founded in 2020, NRBank emerged from a vision to transform how people interact with their money. Our founders, veterans of traditional banking, saw firsthand the frustrations customers faced with hidden fees, poor service, and outdated systems.",
+    "story_p1": "Founded in 2020, Galecloveb emerged from a vision to transform how people interact with their money. Our founders, veterans of traditional banking, saw firsthand the frustrations customers faced with hidden fees, poor service, and outdated systems.",
     "story_p2": "Today, we serve over 100,000 customers across 10+ countries, processing more than $500 million in transactions every month. Our commitment to transparency, security, and innovation drives everything we do.",
     "happy_customers": "Happy Customers",
     "countries": "Countries",
     "monthly_volume": "Monthly Volume",
     "values_title": "Our Values",
-    "values_subtitle": "The principles that guide everything we do at NationalRegionBank.",
+    "values_subtitle": "The principles that guide everything we do at Galecloveb.",
     "security_first_title": "Security First",
     "security_first_desc": "Your security is our top priority. We use bank-grade encryption and multi-factor authentication.",
     "customer_focused_title": "Customer Focused",
@@ -692,18 +692,18 @@
   },
   "pricing_page": {
     "title": "Loved by Customers Worldwide",
-    "subtitle": "Don't just take our word for it. Here's what our customers have to say about their experience with NationalRegionBank."
+    "subtitle": "Don't just take our word for it. Here's what our customers have to say about their experience with Galecloveb."
   },
   "faq_page": {
     "badge": "Help Center",
     "title": "Frequently Asked Questions",
-    "subtitle": "Find answers to common questions about NRBank. Can't find what you're looking for? Contact our 24/7 support team.",
+    "subtitle": "Find answers to common questions about Galecloveb. Can't find what you're looking for? Contact our 24/7 support team.",
     "categories": [
       {
         "category": "Account & Getting Started",
         "questions": [
           {
-            "q": "How do I open an account with NRBank?",
+            "q": "How do I open an account with Galecloveb?",
             "a": "Opening an account is simple! Click on 'Open Account' or 'Sign Up' and follow the guided process. You'll need to provide basic personal information, verify your identity (KYC), and you'll be ready to bank within minutes."
           },
           {
@@ -725,7 +725,7 @@
           },
           {
             "q": "Are there any fees for transfers?",
-            "a": "Internal transfers between NRBank accounts are always free. International transfers have transparent fees displayed before you confirm. Premium members enjoy 0% FX fees."
+            "a": "Internal transfers between Galecloveb accounts are always free. International transfers have transparent fees displayed before you confirm. Premium members enjoy 0% FX fees."
           },
           {
             "q": "What currencies do you support?",
@@ -788,7 +788,7 @@
   },
   "login_page": {
     "welcome_back": "Welcome back",
-    "sign_in_account": "Sign in to your NRBank account",
+    "sign_in_account": "Sign in to your Galecloveb account",
     "email": "Email",
     "enter_email": "Enter your email",
     "password": "Password",
@@ -807,7 +807,7 @@
   "customer_testimonials": {
     "badge": "Testimonials",
     "title": "What Our Customers Say",
-    "subtitle": "We are trusted by thousands of customers worldwide. Here's what they have to say about their experience with NationalRegionBank."
+    "subtitle": "We are trusted by thousands of customers worldwide. Here's what they have to say about their experience with Galecloveb."
   },
   "contact_page": {
     "badge": "Get in Touch",
@@ -837,25 +837,25 @@
     "start_live_chat": "Start Live Chat",
     "business_inquiries_title": "Business Inquiries",
     "business_inquiries_subtitle": "For partnerships, enterprise solutions, or business accounts, please contact our dedicated business team.",
-    "business_email": "business@nrbank.com",
-    "business_phone": "+1 (800) NRB-CORP",
+    "business_email": "support@galecloveb.com",
+    "business_phone": "+1 (808) 206-5163",
     "toast_success_title": "Message sent!",
     "toast_success_description": "We'll get back to you within 24 hours."
   },
   "terms_of_service_page": {
     "title": "Terms of Service",
-    "welcome": "Welcome to NRBank! These terms and conditions outline the rules and regulations for the use of NRBank's Website, located at nrbank.com.",
-    "acceptance": "By accessing this website we assume you accept these terms and conditions. Do not continue to use NRBank if you do not agree to take all of the terms and conditions stated on this page.",
+    "welcome": "Welcome to Galecloveb! These terms and conditions outline the rules and regulations for the use of Galecloveb's Website, located at galecloveb.com.",
+    "acceptance": "By accessing this website we assume you accept these terms and conditions. Do not continue to use Galecloveb if you do not agree to take all of the terms and conditions stated on this page.",
     "cookies_title": "Cookies",
-    "cookies_p1": "We employ the use of cookies. By accessing NRBank, you agreed to use cookies in agreement with the NRBank's Privacy Policy.",
+    "cookies_p1": "We employ the use of cookies. By accessing Galecloveb, you agreed to use cookies in agreement with the Galecloveb's Privacy Policy.",
     "cookies_p2": "Most interactive websites use cookies to let us retrieve the user’s details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.",
     "license_title": "License",
-    "license_p1": "Unless otherwise stated, NRBank and/or its licensors own the intellectual property rights for all material on NRBank. All intellectual property rights are reserved. You may access this from NRBank for your own personal use subjected to restrictions set in these terms and conditions.",
+    "license_p1": "Unless otherwise stated, Galecloveb and/or its licensors own the intellectual property rights for all material on Galecloveb. All intellectual property rights are reserved. You may access this from Galecloveb for your own personal use subjected to restrictions set in these terms and conditions.",
     "license_p2": "You must not:",
-    "license_l1": "Republish material from NRBank",
-    "license_l2": "Sell, rent or sub-license material from NRBank",
-    "license_l3": "Reproduce, duplicate or copy material from NRBank",
-    "license_l4": "Redistribute content from NRBank",
+    "license_l1": "Republish material from Galecloveb",
+    "license_l2": "Sell, rent or sub-license material from Galecloveb",
+    "license_l3": "Reproduce, duplicate or copy material from Galecloveb",
+    "license_l4": "Redistribute content from Galecloveb",
     "iframes_title": "iFrames",
     "iframes_p1": "Without prior approval and written permission, you may not create frames around our Webpages that alter in any way the visual presentation or appearance of our Website.",
     "content_liability_title": "Content Liability",
@@ -863,20 +863,20 @@
   },
   "privacy_policy_page": {
     "title": "Privacy Policy",
-    "intro_p1": "At NRBank, accessible from nrbank.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by NRBank and how we use it.",
+    "intro_p1": "At Galecloveb, accessible from galecloveb.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Galecloveb and how we use it.",
     "intro_p2": "If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.",
     "log_files_title": "Log Files",
-    "log_files_p1": "NRBank follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.",
+    "log_files_p1": "Galecloveb follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.",
     "cookies_title": "Cookies and Web Beacons",
-    "cookies_p1": "Like any other website, NRBank uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.",
+    "cookies_p1": "Like any other website, Galecloveb uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.",
     "third_party_title": "Third Party Privacy Policies",
-    "third_party_p1": "NRBank's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.",
+    "third_party_p1": "Galecloveb's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.",
     "third_party_p2": "You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites."
   },
   "forgot_password_page": {
     "title": "Reset Your Password",
     "subtitle": "Enter your email and we’ll send you instructions to reset your password.",
-    "all_rights_reserved": "© {year} NationalRegionBank. All rights reserved.",
+    "all_rights_reserved": "© {year} Galecloveb. All rights reserved.",
     "forgot_password": "Forgot Password?",
     "enter_email_instructions": "Enter your email address and we’ll send you reset instructions.",
     "email_address": "Email Address",
@@ -906,7 +906,7 @@
     "verification_failed": "Verification failed",
     "invalid_code": "Invalid code",
     "email_verified": "Email verified",
-    "welcome": "Welcome to NRBank",
+    "welcome": "Welcome to Galecloveb",
     "code_resent": "Code resent",
     "check_inbox": "Check your email inbox",
     "resend_failed": "Resend failed",
@@ -1066,6 +1066,15 @@
     "user_update_failed": "Failed to update user",
     "user_deleted": "User deleted successfully",
     "user_delete_failed": "Failed to delete user",
+    "create_user": "Create New User",
+    "user_created": "User created successfully",
+    "user_create_failed": "Failed to create user",
+    "password": "Password",
+    "initial_account_details": "Initial Account Details",
+    "account_number": "Account Number",
+    "account_type": "Account Type",
+    "initial_balance": "Initial Balance ($)",
+    "creating": "Creating...",
     "confirm_freeze": "Confirm Account Freeze",
     "freeze_warning": "Are you sure you want to freeze this account? The user will not be able to perform outgoing transactions.",
     "freeze_account": "Freeze Account",
@@ -1200,7 +1209,22 @@
     "delete_beneficiary_confirm": "Are you sure you want to delete this beneficiary?",
     "beneficiary_deleted": "Beneficiary deleted successfully",
     "beneficiary_delete_failed": "Failed to delete beneficiary"
-  }, 
+  },
+  "admin_settings_page": {
+    "title": "Site Settings",
+    "subtitle": "Manage global platform information and branding.",
+    "platform_info": "Platform Information",
+    "platform_info_desc": "These values are reflected across the entire website, dashboard, and notifications.",
+    "site_name": "Site Name",
+    "phone_number": "Phone Number",
+    "address": "Site Address",
+    "support_email": "Support Email",
+    "save_changes": "Save Changes",
+    "updating": "Updating...",
+    "settings_updated": "Settings updated",
+    "settings_updated_desc": "Site settings have been successfully updated.",
+    "update_failed": "Update failed"
+  },
 "dashboard_page": {
   "welcome": "Welcome back, {{name}}!",
   "subtitle": "Here’s what’s happening with your accounts",
@@ -1589,28 +1613,28 @@
 "customer_testimonials": {
   "badge": "What our customers say",
   "title": "Trusted by thousands worldwide",
-  "subtitle": "Real stories from real NRBank users",
+  "subtitle": "Real stories from real Galecloveb users",
   
   "items": {
     "sarah": {
       "name": "Sarah T.",
       "role": "Freelance Designer",
-      "text": "NRBank has revolutionized how I manage my finances. The app is intuitive, and the 24/7 support is a lifesaver. No hidden fees truly means no hidden fees!"
+      "text": "Galecloveb has revolutionized how I manage my finances. The app is intuitive, and the 24/7 support is a lifesaver. No hidden fees truly means no hidden fees!"
     },
     "michael": {
       "name": "Michael B.",
       "role": "Small Business Owner",
-      "text": "Switching to NRBank for my business was the best decision. International transfers are seamless, and the virtual cards provide an extra layer of security for my online purchases."
+      "text": "Switching to Galecloveb for my business was the best decision. International transfers are seamless, and the virtual cards provide an extra layer of security for my online purchases."
     },
     "jessica": {
       "name": "Jessica L.",
       "role": "Student",
-      "text": "As a student, I need a bank that is simple and affordable. NRBank’s basic plan is perfect for me. I love the savings vaults feature, which helps me budget for my goals."
+      "text": "As a student, I need a bank that is simple and affordable. Galecloveb’s basic plan is perfect for me. I love the savings vaults feature, which helps me budget for my goals."
     },
     "david": {
       "name": "David R.",
       "role": "Tech Entrepreneur",
-      "text": "The API integrations offered by NRBank have been a game-changer for my business. I can now automate my financial workflows and focus on growing my company."
+      "text": "The API integrations offered by Galecloveb have been a game-changer for my business. I can now automate my financial workflows and focus on growing my company."
     },
     "emily": {
       "name": "Emily S.",

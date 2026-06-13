@@ -18,25 +18,25 @@ const Pricing = () => {
     {
       name: 'Sarah T.',
       role: 'Freelance Designer',
-      review: 'NRBank has revolutionized how I manage my finances. The app is intuitive, and the 24/7 support is a lifesaver. No hidden fees truly means no hidden fees!',
+      review: 'Galecloveb has revolutionized how I manage my finances. The app is intuitive, and the 24/7 support is a lifesaver. No hidden fees truly means no hidden fees!',
       avatar: '/placeholder.svg',
     },
     {
       name: 'Michael B.',
       role: 'Small Business Owner',
-      review: 'Switching to NRBank for my business was the best decision. International transfers are seamless, and the virtual cards provide an extra layer of security for my online purchases.',
+      review: 'Switching to Galecloveb for my business was the best decision. International transfers are seamless, and the virtual cards provide an extra layer of security for my online purchases.',
       avatar: '/placeholder.svg',
     },
     {
       name: 'Jessica L.',
       role: 'Student',
-      review: 'As a student, I need a bank that is simple and affordable. NRBank’s basic plan is perfect for me. I love the savings vaults feature, which helps me budget for my goals.',
+      review: 'As a student, I need a bank that is simple and affordable. Galecloveb’s basic plan is perfect for me. I love the savings vaults feature, which helps me budget for my goals.',
       avatar: '/placeholder.svg',
     },
     {
         name: 'David R.',
         role: 'Tech Entrepreneur',
-        review: 'The API integrations offered by NRBank have been a game-changer for my business. I can now automate my financial workflows and focus on growing my company.',
+        review: 'The API integrations offered by Galecloveb have been a game-changer for my business. I can now automate my financial workflows and focus on growing my company.',
         avatar: '/placeholder.svg',
     },
     {
