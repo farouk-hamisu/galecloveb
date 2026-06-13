@@ -8,7 +8,6 @@ import { StatsSection } from '@/components/sections/StatsSection';
 import { CustomerTestimonialsSection } from '@/components/sections/CustomerTestimonialsSection';
 import { FAQPreviewSection } from '@/components/sections/FAQPreviewSection';
 import { CTASection } from '@/components/sections/CTASection';
-import BrevoConversations from "@/components/BrevoConversations";
 const Index = () => {
   return (
     <div className="min-h-screen">
@@ -22,7 +21,6 @@ const Index = () => {
         <CustomerTestimonialsSection />
         <FAQPreviewSection />
         <CTASection />
-        <BrevoConversations />
       </main>
       <Footer />
     </div>
