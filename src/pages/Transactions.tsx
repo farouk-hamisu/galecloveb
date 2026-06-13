@@ -2,6 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useTransactions, useAccounts } from '@/hooks/useBankingData';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { isCreditTransaction } from '@/lib/utils';
 import { 
   ArrowUpRight, 
   ArrowDownRight, 
@@ -35,14 +36,14 @@ const Transactions = () => {
   }) || [];
 
   const getTransactionIcon = (type: string) => {
-    if (type.includes('in') || type === 'deposit') {
+    if (isCreditTransaction(type)) {
       return <ArrowDownRight className="w-5 h-5 text-green-500" />;
     }
     return <ArrowUpRight className="w-5 h-5 text-red-500" />;
   };
 
   const getTransactionColor = (type: string) => {
-    return type.includes('in') || type === 'deposit' ? 'text-green-500' : 'text-foreground';
+    return isCreditTransaction(type) ? 'text-green-500' : 'text-foreground';
   };
 
   return (
@@ -135,7 +136,7 @@ const Transactions = () => {
                     <tr key={tx.id} className="border-b border-border last:border-b-0 hover:bg-muted/50">
                       <td className="p-4">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          tx.type.includes('in') || tx.type === 'deposit'
+                          isCreditTransaction(tx.type)
                             ? 'bg-green-500/10'
                             : 'bg-red-500/10'
                         }`}>
@@ -175,7 +176,7 @@ const Transactions = () => {
                       </td>
                       <td className="p-4 text-right">
                         <span className={`font-semibold ${getTransactionColor(tx.type)}`}>
-                          {tx.type.includes('in') || tx.type === 'deposit' ? '+' : '-'}
+                          {isCreditTransaction(tx.type) ? '+' : '-'}
                           {formatCurrency(Number(tx.amount))}
                         </span>
                       </td>

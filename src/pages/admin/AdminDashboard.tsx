@@ -6,6 +6,7 @@ import {
   useAdminTransactions, 
   useAdminCards 
 } from '@/hooks/useAdminData';
+import { isCreditTransaction } from '@/lib/utils';
 import { Users, Wallet, ArrowLeftRight, CreditCard, TrendingUp, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -159,8 +160,8 @@ const AdminDashboard = () => {
                       <p className="text-sm text-muted-foreground">{tx.reference_number}</p>
                     </div>
                     <div className="text-right">
-                      <p className={`font-semibold ${tx.type === 'credit' || tx.type === 'deposit' ? 'text-green-500' : 'text-foreground'}`}>
-                        {tx.type === 'credit' || tx.type === 'deposit' ? '+' : '-'}${Math.abs(tx.amount).toLocaleString()}
+                      <p className={`font-semibold ${isCreditTransaction(tx.type) ? 'text-green-500' : 'text-foreground'}`}>
+                        {isCreditTransaction(tx.type) ? '+' : '-'}${Math.abs(tx.amount).toLocaleString()}
                       </p>
                       <p className="text-xs text-muted-foreground">{tx.status}</p>
                     </div>

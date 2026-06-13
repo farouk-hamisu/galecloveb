@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { isCreditTransaction } from '@/lib/utils';
 import {
   useAdminTransactions,
   useCreateAdminTransactionByEmail,
@@ -290,11 +291,11 @@ const AdminTransactions = () => {
                         <TableCell className="capitalize">{tx.type}</TableCell>
 
                         <TableCell className={`font-semibold ${
-                          tx.type === 'credit' || tx.type === 'deposit'
+                          isCreditTransaction(tx.type)
                             ? 'text-green-500'
                             : ''
                         }`}>
-                          {tx.type === 'credit' || tx.type === 'deposit' ? '+' : '-'}
+                          {isCreditTransaction(tx.type) ? '+' : '-'}
                           ${Math.abs(tx.amount).toLocaleString()}
                         </TableCell>
 

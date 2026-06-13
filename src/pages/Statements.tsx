@@ -3,6 +3,7 @@ import { useAccounts, useTransactions } from '@/hooks/useBankingData';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { isCreditTransaction } from '@/lib/utils';
 import { FileText, Download, Calendar, FileDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -104,7 +105,7 @@ const Statements = () => {
       userName: user?.email || 'Account Holder',
       transactions: periodTransactions.map((tx) => ({
         id: tx.id,
-        type: tx.type.includes('in') || tx.type === 'deposit' || tx.type === 'credit' ? 'credit' : 'debit',
+        type: isCreditTransaction(tx.type) ? 'credit' : 'debit',
         amount: Number(tx.amount),
         currency: currencyCode,
         description: tx.description || undefined,
@@ -128,7 +129,7 @@ const Statements = () => {
   const handleDownloadReceipt = (tx: Transaction) => {
     const receipt = {
       id: tx.id,
-      type: tx.type.includes('in') || tx.type === 'deposit' || tx.type === 'credit' ? 'credit' : 'debit',
+      type: isCreditTransaction(tx.type) ? 'credit' : 'debit',
       amount: Number(tx.amount),
       currency: currencyCode,
       description: tx.description || undefined,
@@ -294,11 +295,11 @@ const Statements = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className={`font-semibold ${
-                      tx.type.includes('in') || tx.type === 'deposit' || tx.type === 'credit'
+                      isCreditTransaction(tx.type)
                         ? 'text-green-500' 
                         : 'text-foreground'
                     }`}>
-                      {tx.type.includes('in') || tx.type === 'deposit' || tx.type === 'credit' ? '+' : '-'}
+                      {isCreditTransaction(tx.type) ? '+' : '-'}
                       {formatCurrency(Number(tx.amount))}
                     </span>
                     <Button variant="ghost" size="sm" onClick={() => handleDownloadReceipt(tx)}>

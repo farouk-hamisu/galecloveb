@@ -2,6 +2,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useProfile, useAccounts, useTransactions, useCards, useBtcWallet } from '@/hooks/useBankingData';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { isCreditTransaction } from '@/lib/utils';
 import { 
   ArrowUpRight, ArrowDownRight, CreditCard, TrendingUp, PiggyBank,
   Send, Download, Plus, Bitcoin, Copy, ArrowLeftRight, ExternalLink, Loader2
@@ -53,8 +54,8 @@ const Dashboard = () => {
     return d.getMonth() === lastMonth && d.getFullYear() === lastMonthYear;
   }) || [];
 
-  const getIncome = (txs: any[]) => txs.filter(tx => tx.type === 'transfer_in' || tx.type === 'deposit').reduce((s, tx) => s + Number(tx.amount), 0);
-  const getExpenses = (txs: any[]) => txs.filter(tx => tx.type === 'transfer_out' || tx.type === 'withdrawal' || tx.type === 'card_payment').reduce((s, tx) => s + Number(tx.amount), 0);
+  const getIncome = (txs: any[]) => txs.filter(tx => isCreditTransaction(tx.type)).reduce((s, tx) => s + Number(tx.amount), 0);
+  const getExpenses = (txs: any[]) => txs.filter(tx => !isCreditTransaction(tx.type)).reduce((s, tx) => s + Number(tx.amount), 0);
 
   const thisMonthIncome = getIncome(currentMonthTransactions);
   const thisMonthExpenses = getExpenses(currentMonthTransactions);
@@ -256,9 +257,9 @@ const Dashboard = () => {
                   <div key={tx.id} className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className={`w-7 h-7 rounded-full flex items-center justify-center ${
-                        tx.type.includes('in') || tx.type === 'deposit' ? 'bg-emerald-500/10' : 'bg-red-500/10'
+                        isCreditTransaction(tx.type) ? 'bg-emerald-500/10' : 'bg-red-500/10'
                       }`}>
-                        {tx.type.includes('in') || tx.type === 'deposit' ? <ArrowDownRight className="w-3.5 h-3.5 text-emerald-600" /> : <ArrowUpRight className="w-3.5 h-3.5 text-red-500" />}
+                        {isCreditTransaction(tx.type) ? <ArrowDownRight className="w-3.5 h-3.5 text-emerald-600" /> : <ArrowUpRight className="w-3.5 h-3.5 text-red-500" />}
                       </div>
                       <div>
                         <p className="text-[11px] font-medium text-foreground">
@@ -267,8 +268,8 @@ const Dashboard = () => {
                         <p className="text-[10px] text-muted-foreground">{new Date(tx.created_at).toLocaleDateString()}</p>
                       </div>
                     </div>
-                    <span className={`text-[11px] font-semibold ${tx.type.includes('in') || tx.type === 'deposit' ? 'text-emerald-600' : 'text-foreground'}`}>
-                      {tx.type.includes('in') || tx.type === 'deposit' ? '+' : '-'}{formatCurrency(Number(tx.amount))}
+                    <span className={`text-[11px] font-semibold ${isCreditTransaction(tx.type) ? 'text-emerald-600' : 'text-foreground'}`}>
+                      {isCreditTransaction(tx.type) ? '+' : '-'}{formatCurrency(Number(tx.amount))}
                     </span>
                   </div>
                 ))
