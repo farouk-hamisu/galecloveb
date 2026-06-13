@@ -20,11 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { 
+import {
   useAdminTransactions,
-  useAdminAccounts,
-  useAdminProfiles,
-  useCreateAdminTransaction,
+  useCreateAdminTransactionByEmail,
   useUpdateTransaction,
   useDeleteTransaction,
   AdminTransaction 
@@ -34,30 +32,24 @@ import { toast } from 'sonner';
 
 const AdminTransactions = () => {
   const { data: transactions, isLoading } = useAdminTransactions();
-  const { data: accounts } = useAdminAccounts();
-  const { data: profiles } = useAdminProfiles();
-  const createTransaction = useCreateAdminTransaction();
+  const createTransaction = useCreateAdminTransactionByEmail();
   const updateTransaction = useUpdateTransaction();
   const deleteTransaction = useDeleteTransaction();
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const [editingTx, setEditingTx] = useState<AdminTransaction | null>(null);
-  const [selectedEmail, setSelectedEmail] = useState('');
-  
+  const [userEmail, setUserEmail] = useState('');
+
   const [txForm, setTxForm] = useState({
-    account_id: '',
     amount: '',
     type: 'credit',
     status: 'completed',
     description: '',
     recipient_name: '',
     recipient_account: '',
-    reference_number: '',
     currency: 'USD',
   });
-
-  const generateRef = () => `TXN${Date.now()}${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
   const filteredTransactions = transactions?.filter(t => 
     t.reference_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -66,47 +58,32 @@ const AdminTransactions = () => {
   );
 
   const handleCreate = async () => {
-    if (!selectedEmail || !txForm.amount) {
-      toast.error('Please select a user and enter an amount.');
+    if (!userEmail || !txForm.amount) {
+      toast.error('Please enter a user email and an amount.');
       return;
     }
 
-    // Find the user's account by email
-    const profile = profiles?.find(p => p.email === selectedEmail);
-    if (!profile) {
-      toast.error('User not found.');
-      return;
-    }
-
-    const userAccount = accounts?.find(a => a.user_id === profile.id);
-    if (!userAccount) {
-      toast.error('No account found for this user.');
-      return;
-    }
-    
     try {
       await createTransaction.mutateAsync({
-        account_id: userAccount.id,
+        email: userEmail,
         amount: parseFloat(txForm.amount),
         type: txForm.type,
         status: txForm.status,
-        description: txForm.description || null,
-        recipient_name: txForm.recipient_name || null,
-        recipient_account: txForm.recipient_account || null,
-        reference_number: txForm.reference_number || generateRef(),
-        currency: txForm.currency,
+        description: txForm.description,
+        recipient_name: txForm.recipient_name,
+        recipient_account: txForm.recipient_account,
       });
       toast.success('Transaction created successfully.');
       setShowCreate(false);
       resetForm();
-    } catch (error) {
-      toast.error('Failed to create transaction.');
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to create transaction.');
     }
   };
 
   const handleUpdate = async () => {
     if (!editingTx) return;
-    
+
     try {
       await updateTransaction.mutateAsync({
         id: editingTx.id,
@@ -129,7 +106,7 @@ const AdminTransactions = () => {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this transaction?')) return;
-    
+
     try {
       await deleteTransaction.mutateAsync(id);
       toast.success('Transaction deleted.');
@@ -139,16 +116,14 @@ const AdminTransactions = () => {
   };
 
   const resetForm = () => {
-    setSelectedEmail('');
+    setUserEmail('');
     setTxForm({
-      account_id: '',
       amount: '',
       type: 'credit',
       status: 'completed',
       description: '',
       recipient_name: '',
       recipient_account: '',
-      reference_number: '',
       currency: 'USD',
     });
   };
@@ -156,14 +131,12 @@ const AdminTransactions = () => {
   const handleEdit = (tx: AdminTransaction) => {
     setEditingTx(tx);
     setTxForm({
-      account_id: tx.account_id,
       amount: String(tx.amount),
       type: tx.type,
       status: tx.status || 'completed',
       description: tx.description || '',
       recipient_name: tx.recipient_name || '',
       recipient_account: tx.recipient_account || '',
-      reference_number: tx.reference_number,
       currency: tx.currency || 'USD',
     });
   };
@@ -190,18 +163,12 @@ const AdminTransactions = () => {
               <div className="space-y-4 pt-4 max-h-[60vh] overflow-y-auto">
                 <div className="space-y-2">
                   <Label>User Email</Label>
-                  <select
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-                    value={selectedEmail}
-                    onChange={(e) => setSelectedEmail(e.target.value)}
-                  >
-                    <option value="">Select User</option>
-                    {profiles?.map((p) => (
-                      <option key={p.id} value={p.email}>
-                        {p.email} ({p.first_name} {p.last_name})
-                      </option>
-                    ))}
-                  </select>
+                  <Input
+                    placeholder="user@example.com"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                  />
+                  <p className="text-[10px] text-muted-foreground">Enter the registered email of the user.</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -228,7 +195,6 @@ const AdminTransactions = () => {
                     </select>
                   </div>
                 </div>
-
                 <div>
                   <Label>Status</Label>
                   <select

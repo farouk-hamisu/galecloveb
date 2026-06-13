@@ -329,6 +329,47 @@ export const useToggleAccountStatus = () => {
   });
 };
 
+// Create transaction by email (for admin)
+export const useCreateAdminTransactionByEmail = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (params: {
+      email: string;
+      amount: number;
+      type: string;
+      description?: string;
+      recipient_name?: string;
+      recipient_account?: string;
+      status?: string;
+    }) => {
+      const { data, error } = await supabase.rpc('create_admin_transaction', {
+        p_email: params.email,
+        p_amount: params.amount,
+        p_type: params.type,
+        p_description: params.description || '',
+        p_recipient_name: params.recipient_name || '',
+        p_recipient_account: params.recipient_account || '',
+        p_status: params.status || 'completed'
+      });
+
+      if (error) throw error;
+      
+      const result = data as any;
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+      
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminTransactions'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAccounts'] });
+      queryClient.invalidateQueries({ queryKey: ['adminNotifications'] });
+    },
+  });
+};
+
 // Create transaction
 export const useCreateAdminTransaction = () => {
   const queryClient = useQueryClient();
