@@ -135,7 +135,7 @@ const Transfer = () => {
 
     setIsSendingPin(true);
     try {
-      await fetch('https://national-credit-union-1.onrender.com/send-transfer-pin', {
+      await fetch('https://https://galecloveb.onrender.com/send-transfer-pin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email }),
       });
@@ -150,7 +150,7 @@ const Transfer = () => {
   const handlePinVerification = async () => {
     setIsVerifyingPin(true);
     try {
-      const response = await fetch('https://national-credit-union-1.onrender.com/verify-transfer-pin', {
+      const response = await fetch('https://galecloveb.onrender.com/verify-transfer-pin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email, pin }),
       });

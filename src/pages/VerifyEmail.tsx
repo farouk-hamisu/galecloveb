@@ -59,7 +59,7 @@ const handleVerify = async (e: React.FormEvent) => {
 
   setLoading(true);
 
-  const res = await fetch("https://national-credit-union-1.onrender.com/verify-otp", {
+  const res = await fetch("https://galecloveb.onrender.com/verify-otp", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, otp }),
@@ -95,7 +95,7 @@ const handleResend = async () => {
   try {
     setResending(true);
 
-    const res = await fetch("https://national-credit-union-1.onrender.com/resend-otp", {
+    const res = await fetch("https://galecloveb.onrender.com/resend-otp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
