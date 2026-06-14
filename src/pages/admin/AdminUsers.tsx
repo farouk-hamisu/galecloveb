@@ -23,7 +23,7 @@ import {
 import { 
   useAdminProfiles, 
   useUpdateProfile, 
-  useDeleteProfile,
+  useAdminDeleteUser,
   useToggleAccountStatus,
   useAdminCreateUser,
   AdminProfile 
@@ -36,7 +36,7 @@ const AdminUsers = () => {
   const { t } = useTranslation();
   const { data: profiles, isLoading } = useAdminProfiles();
   const updateProfile = useUpdateProfile();
-  const deleteProfile = useDeleteProfile();
+  const deleteUser = useAdminDeleteUser();
   const toggleAccountStatus = useToggleAccountStatus();
   const createUser = useAdminCreateUser();
   
@@ -113,14 +113,16 @@ const AdminUsers = () => {
 
   const handleDelete = async (id: string) => {
     if (!confirm(t('admin_users_page.delete_user_confirm'))) return;
-    
+
     try {
-      await deleteProfile.mutateAsync(id);
-      toast.success(t('admin_users_page.user_deleted'));
-    } catch (error) {
-      toast.error(t('admin_users_page.user_delete_failed'));
+      await deleteUser.mutateAsync(id);
+      toast.success('User and all associated data deleted successfully');
+    } catch (error: any) {
+      console.error('Delete user error:', error);
+      toast.error(error.message || t('admin_users_page.user_delete_failed'));
     }
   };
+
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();

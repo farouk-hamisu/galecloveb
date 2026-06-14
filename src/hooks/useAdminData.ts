@@ -272,21 +272,30 @@ export const useUpdateProfile = () => {
   });
 };
 
-// Delete profile
-export const useDeleteProfile = () => {
+// Delete user (Auth and Profile)
+export const useAdminDeleteUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: string) => {
-      const {error} = await supabase
-        .from('profiles')
-        .delete()
-        .eq('id', id);
+    mutationFn: async (userId: string) => {
+      const { data, error } = await supabase.functions.invoke('delete-user', {
+        body: { userId },
+      });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Edge function error:', error);
+        throw error;
+      }
+      
+      if (data?.error) {
+        throw new Error(data.error);
+      }
+      
+      return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['adminProfiles']});
+      queryClient.invalidateQueries({ queryKey: ['adminProfiles'] });
+      queryClient.invalidateQueries({ queryKey: ['adminAccounts'] });
     },
   });
 };
