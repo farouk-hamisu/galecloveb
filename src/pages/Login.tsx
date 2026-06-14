@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
+import { supabase } from '@/integrations/supabase/client';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -57,9 +58,9 @@ const Login = () => {
 
     setLoading(true);
     const { error } = await signIn(email, password);
-    setLoading(false);
-
+    
     if (error) {
+      setLoading(false);
       toast({
         title: t('login_page.sign_in_failed'),
         description:
@@ -68,13 +69,38 @@ const Login = () => {
             : error.message,
         variant: 'destructive',
       });
-    } else {
-      toast({
-        title: t('login_page.welcome_toast'),
-        description: t('login_page.login_success_toast'),
-      });
-      // ❌ DO NOT navigate here
+      return;
     }
+
+    // After signing in, check if user is admin
+    const { data: { user: signedInUser } } = await supabase.auth.getUser();
+    
+    if (signedInUser) {
+      const { data: roleData } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', signedInUser.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+
+      if (roleData) {
+        // User is admin, sign them out and show error
+        await supabase.auth.signOut();
+        setLoading(false);
+        toast({
+          title: "Access Denied",
+          description: "Administrators must use the dedicated admin login page.",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
+    setLoading(false);
+    toast({
+      title: t('login_page.welcome_toast'),
+      description: t('login_page.login_success_toast'),
+    });
   };
 
   if (authLoading) {

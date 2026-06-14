@@ -40,33 +40,27 @@ serve(async (req) => {
 
     const userId = authUser.user.id
 
-    // 2. Profile should be created by a trigger, but let's update it with provided info
-    // We'll wait a bit or just use upsert to be safe
+    // 2. Update or Create Profile
+    // The handle_new_user trigger usually creates the profile, but we upsert to be sure
+    // and to include any extra fields like phone.
     const { error: profileError } = await supabaseClient
       .from('profiles')
-      .update({
+      .upsert({
+        id: userId,
+        email,
         first_name,
         last_name,
         phone,
       })
-      .eq('id', userId)
 
     if (profileError) {
-      // If profile doesn't exist yet (trigger delay), try upsert
-      const { error: upsertError } = await supabaseClient
-        .from('profiles')
-        .upsert({
-          id: userId,
-          email,
-          first_name,
-          last_name,
-          phone,
-        })
-      if (upsertError) throw upsertError
+      console.error("Profile sync error:", profileError)
+      throw new Error(`Failed to sync profile: ${profileError.message}`)
     }
 
     // 3. Create account if details provided
     if (account_type && account_number) {
+      console.log(`Creating ${account_type} account for user ${userId} with number ${account_number}`)
       const { error: accountError } = await supabaseClient
         .from('accounts')
         .insert({
@@ -74,11 +68,14 @@ serve(async (req) => {
           account_number,
           account_type,
           balance: parseFloat(account_balance) || 0,
-          status: 'active',
+          is_active: true,
           currency: 'USD'
         })
 
-      if (accountError) throw accountError
+      if (accountError) {
+        console.error("Account creation error:", accountError)
+        throw new Error(`Failed to create account: ${accountError.message}`)
+      }
     }
 
     return new Response(
@@ -87,8 +84,12 @@ serve(async (req) => {
     )
 
   } catch (error) {
+    console.error("Function error:", error)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: error.description || error.toString()
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
     )
   }
