@@ -15,6 +15,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import BrevoConversations from "@/components/BrevoConversations"; 
 
 const BTC_PRICE = 67432.50;
 
@@ -351,6 +352,7 @@ const Dashboard = () => {
           )}
         </DialogContent>
       </Dialog>
+      <BrevoConversations />
     </DashboardLayout>
   );
 };

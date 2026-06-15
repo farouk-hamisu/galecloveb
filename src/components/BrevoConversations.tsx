@@ -10,7 +10,7 @@ declare global {
 const BrevoConversations = () => {
   useEffect(() => {
     (function(d, w, c) {
-      w.BrevoConversationsID ='69d4268c2237e76f090c827e';
+      w.BrevoConversationsID ='6a2fb1334d37609f4b0a5017';
       w[c] = w[c] || function() {
         (w[c].q = w[c].q || []).push(arguments);
       };
