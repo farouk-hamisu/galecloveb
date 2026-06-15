@@ -34,7 +34,7 @@ export const Navbar = () => {
             <img
               src="/logo.PNG"
               alt={`${siteName} Logo`}
-              className="h-12 lg:h-16 w-auto object-contain"
+              className="h-24 lg:h-24 w-auto object-contain"
             />
           </Link>
           
