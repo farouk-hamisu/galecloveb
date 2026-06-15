@@ -96,19 +96,15 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       )}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-6 border-b border-border">
-           <Link to="/" className="flex items-center gap-2">
-  <img
-    src= "/logo.jpg"
-    alt="Galecloveb Logo"
-    className="w-7 h-7 object-contain"
-  />
-  <span className="text-foreground font-bold text-sm hidden sm:block">
-    Galecloveb
-  </span>
-</Link>
-
-                      </div>
+          <div className="p-6 border-b border-border flex justify-center">
+           <Link to="/">
+             <img
+               src="/logo.PNG"
+               alt="Galecloveb Logo"
+               className="h-14 w-auto object-contain"
+             />
+           </Link>
+          </div>
 
           {/* Navigation */}
           <nav className="flex-1 p-4 space-y-1 overflow-y-auto">

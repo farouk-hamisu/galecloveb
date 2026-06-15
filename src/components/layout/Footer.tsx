@@ -57,16 +57,13 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
            {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-  <img
-    src= "/logo.jpg"
-    alt={`${siteName} Logo`}
-    className="w-7 h-7 object-contain"
-  />
-  <span className="text-foreground font-bold text-sm hidden sm:block">
-    {siteName}
-  </span>
-</Link>
+           <Link to="/" className="flex items-center mb-4">
+           <img
+             src="/logo.PNG"
+             alt={`${siteName} Logo`}
+             className="h-14 w-auto object-contain brightness-0 invert"
+           />
+           </Link>
 
                         <p className="text-background/60 text-xs max-w-xs mb-5">
               {siteName} - {t('footer.description')}

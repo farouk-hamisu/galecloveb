@@ -107,15 +107,12 @@ description: typeof data.error === "string"
             <div className="bg-card rounded-3xl p-8 lg:p-10 shadow-xl">
               <div className="text-center mb-8">
                {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center justify-center mb-6">
   <img
-    src= "/logo.jpg"
+    src= "/logo.PNG"
     alt="Galecloveb Logo"
-    className="w-11 h-11 object-contain"
+    className="h-24 w-auto object-contain"
   />
-  <span className="text-foreground font-bold text-sm hidden sm:block">
-    Galecloveb
-  </span>
 </Link>
 
                 

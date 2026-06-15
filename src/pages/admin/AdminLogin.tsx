@@ -105,10 +105,9 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
       <nav className="fixed top-0 w-full z-50 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="Logo" className="w-10 h-10 object-contain" />
-            <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">Galecloveb</span>
+        <div className="container mx-auto px-4 h-24 flex items-center justify-between">
+          <Link to="/" className="flex items-center">
+            <img src="/logo.PNG" alt="Logo" className="h-16 w-auto object-contain" />
           </Link>
           <Link to="/">
             <Button variant="ghost" size="sm" className="text-slate-600 dark:text-slate-400">
@@ -126,8 +125,8 @@ const AdminLogin = () => {
         >
           <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-10 lg:p-14 shadow-2xl border border-slate-100 dark:border-slate-800">
             <div className="text-center mb-10">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-primary/10 mb-6">
-                <ShieldCheck className="w-10 h-10 text-primary" />
+              <div className="inline-flex items-center justify-center mb-6">
+                <img src="/logo.PNG" alt="Logo" className="h-32 w-auto object-contain" />
               </div>
               <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-3">
                 Admin Gateway

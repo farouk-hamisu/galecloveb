@@ -62,14 +62,12 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-border">
-            <Link to="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <Shield className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <div>
-                <span className="font-bold text-lg text-foreground block">Admin Panel</span>
-                <span className="text-xs text-muted-foreground">Galecloveb</span>
-              </div>
+            <Link to="/admin" className="flex items-center justify-center">
+              <img
+                src="/logo.PNG"
+                alt="Galecloveb Admin"
+                className="h-16 w-auto object-contain"
+              />
             </Link>
           </div>
 
@@ -136,7 +134,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       {/* Main Content */}
       <div className="flex-1 lg:ml-64">
         {/* Top Bar */}
-        <header className="sticky top-0 z-30 h-16 bg-card/80 backdrop-blur-lg border-b border-border flex items-center justify-between px-4 lg:px-8">
+        <header className="sticky top-0 z-30 h-20 bg-card/80 backdrop-blur-lg border-b border-border flex items-center justify-between px-4 lg:px-8">
           <div className="flex items-center gap-4">
             <Button 
               variant="ghost" 
@@ -146,7 +144,10 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             >
               <Menu className="w-5 h-5" />
             </Button>
-            <h1 className="text-lg font-semibold text-foreground">Admin Dashboard</h1>
+            <div className="flex items-center gap-2">
+              <img src="/logo.PNG" alt="Logo" className="h-10 w-auto lg:hidden" />
+              <h1 className="text-lg font-semibold text-foreground">Admin Dashboard</h1>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">
