@@ -135,7 +135,7 @@ const Transfer = () => {
 
     setIsSendingPin(true);
     try {
-      await fetch('https://https://galecloveb.onrender.com/send-transfer-pin', {
+      await fetch('https://galecloveb.onrender.com/send-transfer-pin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email }),
       });
