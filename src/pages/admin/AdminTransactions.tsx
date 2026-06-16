@@ -50,6 +50,7 @@ const AdminTransactions = () => {
     recipient_name: '',
     recipient_account: '',
     currency: 'USD',
+    created_at: new Date().toISOString().slice(0, 16),
   });
 
   const filteredTransactions = transactions?.filter(t => 
@@ -73,6 +74,7 @@ const AdminTransactions = () => {
         description: txForm.description,
         recipient_name: txForm.recipient_name,
         recipient_account: txForm.recipient_account,
+        created_at: new Date(txForm.created_at).toISOString(),
       });
       toast.success('Transaction created successfully.');
       setShowCreate(false);
@@ -95,6 +97,7 @@ const AdminTransactions = () => {
           description: txForm.description || null,
           recipient_name: txForm.recipient_name || null,
           recipient_account: txForm.recipient_account || null,
+          created_at: new Date(txForm.created_at).toISOString(),
         },
       });
       toast.success('Transaction updated successfully.');
@@ -126,6 +129,7 @@ const AdminTransactions = () => {
       recipient_name: '',
       recipient_account: '',
       currency: 'USD',
+      created_at: new Date().toISOString().slice(0, 16),
     });
   };
 
@@ -139,6 +143,7 @@ const AdminTransactions = () => {
       recipient_name: tx.recipient_name || '',
       recipient_account: tx.recipient_account || '',
       currency: tx.currency || 'USD',
+      created_at: tx.created_at ? new Date(tx.created_at).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16),
     });
   };
 
@@ -214,6 +219,15 @@ const AdminTransactions = () => {
                   <Input
                     value={txForm.description}
                     onChange={(e) => setTxForm({ ...txForm, description: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <Label>Date and Time</Label>
+                  <Input
+                    type="datetime-local"
+                    value={txForm.created_at}
+                    onChange={(e) => setTxForm({ ...txForm, created_at: e.target.value })}
                   />
                 </div>
 
@@ -393,6 +407,17 @@ const AdminTransactions = () => {
                                       value={txForm.description}
                                       onChange={(e) =>
                                         setTxForm({ ...txForm, description: e.target.value })
+                                      }
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <Label>Date and Time</Label>
+                                    <Input
+                                      type="datetime-local"
+                                      value={txForm.created_at}
+                                      onChange={(e) =>
+                                        setTxForm({ ...txForm, created_at: e.target.value })
                                       }
                                     />
                                   </div>

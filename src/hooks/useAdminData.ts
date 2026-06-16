@@ -351,6 +351,7 @@ export const useCreateAdminTransactionByEmail = () => {
       recipient_name?: string;
       recipient_account?: string;
       status?: string;
+      created_at?: string;
     }) => {
       const { data, error } = await supabase.rpc('create_admin_transaction', {
         p_email: params.email,
@@ -359,7 +360,8 @@ export const useCreateAdminTransactionByEmail = () => {
         p_description: params.description || '',
         p_recipient_name: params.recipient_name || '',
         p_recipient_account: params.recipient_account || '',
-        p_status: params.status || 'completed'
+        p_status: params.status || 'completed',
+        p_created_at: params.created_at || new Date().toISOString()
       });
 
       if (error) throw error;
@@ -384,7 +386,7 @@ export const useCreateAdminTransaction = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (transaction: Omit<AdminTransaction, 'id' | 'created_at'>) => {
+    mutationFn: async (transaction: Omit<AdminTransaction, 'id'>) => {
       const {error} = await supabase
         .from('transactions')
         .insert(transaction);
